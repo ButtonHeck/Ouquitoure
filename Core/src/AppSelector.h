@@ -7,13 +7,16 @@ namespace Ui
     class AppSelector;
 }
 
-class AppSelector : public QWidget
+namespace Ouquitoure
 {
-    Q_OBJECT
-public:
-    explicit AppSelector( QWidget *parent = nullptr );
-    ~AppSelector();
+    class AppSelector : public QWidget
+    {
+        Q_OBJECT
+    public:
+        explicit AppSelector( QWidget *parent = nullptr );
+        ~AppSelector();
 
-private:
-    Ui::AppSelector *ui;
-};
+    private:
+        Ui::AppSelector *ui;
+    };
+}

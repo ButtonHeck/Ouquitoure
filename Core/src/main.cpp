@@ -5,8 +5,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    CoreAppWindow w;
-    w.setWindowTitle("Rename me");
-    w.show();
+
+    Ouquitoure::CoreAppWindow window;
+    window.setWindowTitle("Rename me");
+    window.show();
+
     return a.exec();
 }
