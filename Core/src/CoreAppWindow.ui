@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>919</width>
-    <height>935</height>
+    <width>915</width>
+    <height>931</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -78,16 +78,16 @@
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>6</number>
+          <number>4</number>
          </property>
          <property name="topMargin">
-          <number>6</number>
+          <number>4</number>
          </property>
          <property name="rightMargin">
-          <number>6</number>
+          <number>4</number>
          </property>
          <property name="bottomMargin">
-          <number>6</number>
+          <number>4</number>
          </property>
          <item>
           <layout class="QHBoxLayout" name="appLibraryMainLayout">
@@ -216,6 +216,52 @@
                 </attribute>
                </widget>
               </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="launchAppLayout">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <property name="leftMargin">
+                <number>2</number>
+               </property>
+               <property name="topMargin">
+                <number>2</number>
+               </property>
+               <property name="rightMargin">
+                <number>2</number>
+               </property>
+               <property name="bottomMargin">
+                <number>2</number>
+               </property>
+               <item alignment="Qt::AlignLeft">
+                <widget class="QPushButton" name="launchAppButton">
+                 <property name="text">
+                  <string>Launch</string>
+                 </property>
+                </widget>
+               </item>
+               <item alignment="Qt::AlignLeft">
+                <widget class="QPushButton" name="launchAppSettingsButton">
+                 <property name="text">
+                  <string>App settings...</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="launchAppSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
              </item>
             </layout>
            </item>
@@ -368,7 +414,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>919</width>
+     <width>915</width>
      <height>20</height>
     </rect>
    </property>
