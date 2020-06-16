@@ -9,6 +9,8 @@ namespace Ui
 
 namespace Ouquitoure
 {
+    class AppCollectionModel;
+
     class CoreAppWindow : public QMainWindow
     {
         Q_OBJECT
@@ -18,6 +20,8 @@ namespace Ouquitoure
 
     private:
         Ui::CoreAppWindow *ui;
+        AppCollectionModel * OpenGLAppsCollectionModel;
+        AppCollectionModel * softwareAppsCollectionModel;
     };
 }
 

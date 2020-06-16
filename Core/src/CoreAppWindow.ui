@@ -205,12 +205,12 @@
                <property name="currentIndex">
                 <number>0</number>
                </property>
-               <widget class="Ouquitoure::AppSelector" name="OpenGLApps">
+               <widget class="Ouquitoure::AppCollectionView" name="OpenGLApps">
                 <attribute name="title">
                  <string>OpenGL</string>
                 </attribute>
                </widget>
-               <widget class="Ouquitoure::AppSelector" name="SoftwareApps">
+               <widget class="Ouquitoure::AppCollectionView" name="SoftwareApps">
                 <attribute name="title">
                  <string>Software</string>
                 </attribute>
@@ -388,9 +388,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>Ouquitoure::AppSelector</class>
+   <class>Ouquitoure::AppCollectionView</class>
    <extends>QWidget</extends>
-   <header>appselector.h</header>
+   <header>AppCollectionView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
