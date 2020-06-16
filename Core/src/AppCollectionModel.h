@@ -4,6 +4,8 @@
 
 namespace Ouquitoure
 {
+    using AppData = QPair<QString, QString>;
+
     class AppCollectionModel : public QAbstractTableModel
     {
         Q_OBJECT
@@ -11,6 +13,7 @@ namespace Ouquitoure
         explicit AppCollectionModel( QObject * parent = nullptr );
 
         void addNewAppData(const QString & appName, const QString & appTags);
+        AppData getCurrentAppData() const;
 
         int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
         int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
@@ -25,7 +28,8 @@ namespace Ouquitoure
         void debugMouseClickSlot(const QModelIndex & index);
 
     private:
-        using AppData = QPair<QString, QString>;
         QVector<AppData> testData;
+
+        AppData currentAppData;
     };
 }

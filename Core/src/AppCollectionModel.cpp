@@ -6,6 +6,7 @@ namespace Ouquitoure
 
     AppCollectionModel::AppCollectionModel(QObject * parent)
         : QAbstractTableModel(parent)
+        , currentAppData("", "")
     {
     }
 
@@ -14,6 +15,11 @@ namespace Ouquitoure
         beginInsertRows(QModelIndex(), testData.size(), testData.size() );
         testData.push_back( AppData( appName,appTags ) );
         endInsertRows();
+    }
+
+    AppData AppCollectionModel::getCurrentAppData() const
+    {
+        return currentAppData;
     }
 
     int AppCollectionModel::rowCount(const QModelIndex & parent) const
@@ -67,6 +73,7 @@ namespace Ouquitoure
         }
         output << index.data(Qt::DisplayRole).toString();
         qDebug() << output.join(" ");
+        currentAppData = testData[index.row()];
     }
 
     void AppCollectionModel::debugDoubleMouseClickSlot(const QModelIndex & index)
@@ -78,5 +85,6 @@ namespace Ouquitoure
         }
         output << index.data(Qt::DisplayRole).toString();
         qDebug() << output.join(" ");
+        currentAppData = testData[index.row()];
     }
 }
