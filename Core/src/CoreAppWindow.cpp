@@ -1,8 +1,9 @@
 #include "CoreAppWindow.h"
 #include "ui_CoreAppWindow.h"
 #include "AppCollectionModel.h"
-#include "src/HelloApp.h"
+#include "HelloApp.h"
 #include <QDebug>
+#include <QToolBar>
 
 namespace Ouquitoure
 {
@@ -24,6 +25,19 @@ namespace Ouquitoure
         OpenGLAppsCollectionModel->addNewAppData("fucking awesome app!", "holy shit this is amazing!!");
 
         connect(ui->launchAppButton, SIGNAL(clicked()), SLOT(launchApp()));
+        connect(ui->OpenGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
+
+        QToolBar * toolbar = new QToolBar("Toolbar", this);
+        addToolBar(toolbar);
+        toolbar->setIconSize(QSize(32, 32));
+
+        const QIcon LOG_ICON {":/icons/log_icon.png"};
+        toolbar->addAction(LOG_ICON, "Log", this, SLOT(switchLogVisibility()));
+        const QIcon LOG_SETTINGS_ICON{":/icons/settings.png"};
+        toolbar->addAction(LOG_SETTINGS_ICON, "Log settings");
+
+        addDockWidget(Qt::BottomDockWidgetArea, ui->logDockWidget);
+        ui->logDockWidget->setWindowTitle("Log window");
     }
 
     CoreAppWindow::~CoreAppWindow()
@@ -56,5 +70,10 @@ namespace Ouquitoure
             return true;
         }
         return false;
+    }
+
+    void CoreAppWindow::switchLogVisibility()
+    {
+        ui->logDockWidget->setVisible(!ui->logDockWidget->isVisible());
     }
 }

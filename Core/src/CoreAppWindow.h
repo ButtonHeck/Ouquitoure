@@ -21,6 +21,7 @@ namespace Ouquitoure
 
     private slots:
         bool launchApp();
+        void switchLogVisibility();
 
     private:
         Ui::CoreAppWindow *ui;

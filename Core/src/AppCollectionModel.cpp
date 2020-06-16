@@ -55,7 +55,6 @@ namespace Ouquitoure
 
     QVariant AppCollectionModel::headerData(int section, Qt::Orientation orientation, int role) const
     {
-        static constexpr const char * HEADER_NAMES[MODEL_COLUMNS] {"App name", "Tags"};
         if (orientation == Qt::Horizontal &&
             role == Qt::DisplayRole)
         {

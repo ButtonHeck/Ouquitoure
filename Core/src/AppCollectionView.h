@@ -10,7 +10,5 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         explicit AppCollectionView( QWidget *parent = nullptr );
-
-    private:
     };
 }

@@ -21,5 +21,8 @@ win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../AppCollection/relea
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../AppCollection/debug/ -lAppCollection
 else:unix:!macx: LIBS += -L$$OUT_PWD/../AppCollection/ -lAppCollection
 
-INCLUDEPATH += $$PWD/../AppCollection
+INCLUDEPATH += $$PWD/../AppCollection/src
 DEPENDPATH += $$PWD/../AppCollection
+
+RESOURCES += \
+    res/icons.qrc

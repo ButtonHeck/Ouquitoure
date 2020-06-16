@@ -22,6 +22,7 @@ namespace Ouquitoure
 
     private:
         static constexpr int MODEL_COLUMNS = 2;
+        static constexpr const char * HEADER_NAMES[MODEL_COLUMNS] {"App name", "Tags"};
 
     private slots:
         void debugDoubleMouseClickSlot(const QModelIndex & index);
@@ -29,7 +30,6 @@ namespace Ouquitoure
 
     private:
         QVector<AppData> testData;
-
         AppData currentAppData;
     };
 }
