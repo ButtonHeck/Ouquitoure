@@ -4,6 +4,7 @@
 #include "HelloApp.h"
 #include <QDebug>
 #include <QToolBar>
+#include "logger.h"
 
 namespace Ouquitoure
 {
@@ -27,7 +28,7 @@ namespace Ouquitoure
         connect(ui->launchAppButton, SIGNAL(clicked()), SLOT(launchApp()));
         connect(ui->OpenGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
 
-        QToolBar * toolbar = new QToolBar("Toolbar", this);
+        QToolBar * toolbar = new QToolBar{"Toolbar", this};
         addToolBar(toolbar);
         toolbar->setIconSize(QSize(32, 32));
 
@@ -38,6 +39,24 @@ namespace Ouquitoure
 
         addDockWidget(Qt::BottomDockWidgetArea, ui->logDockWidget);
         ui->logDockWidget->setWindowTitle("Log window");
+
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        sizePolicy2.setHorizontalStretch(1);
+        sizePolicy2.setVerticalStretch(1);
+        sizePolicy2.setHeightForWidth(ui->logDockWidget->sizePolicy().hasHeightForWidth());
+        ui->logDockWidget->setSizePolicy(sizePolicy2);
+
+        Logger::instantiateCoreLogger(ui->logDockWidgetContents);
+        QTextEdit & coreLogger = Logger::getCoreLogger();
+        coreLogger.setObjectName(QString::fromUtf8("logWindow"));
+        sizePolicy2.setHeightForWidth(coreLogger.sizePolicy().hasHeightForWidth());
+        coreLogger.setSizePolicy(sizePolicy2);
+        coreLogger.setReadOnly(true);
+        QLayout * horizontalLayout_2 = ui->logDockWidgetContents->layout();
+        horizontalLayout_2->setSpacing(0);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(1, 1, 1, 1);
+        horizontalLayout_2->addWidget(&coreLogger);
     }
 
     CoreAppWindow::~CoreAppWindow()

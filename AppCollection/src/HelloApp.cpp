@@ -14,5 +14,5 @@ HelloApp::HelloApp(QWidget * parent)
 
 HelloApp::~HelloApp()
 {
-    qDebug() << "Hello app dtor";
+    qDebug() << "HelloApp dtor";
 }
