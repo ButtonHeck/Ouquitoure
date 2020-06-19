@@ -2,7 +2,6 @@
 
 #include "AppCollection_global.h"
 #include <QMainWindow>
-#include <Qt3DCore/QNodePtr>
 
 class APPCOLLECTION_EXPORT HelloApp : public QMainWindow
 {

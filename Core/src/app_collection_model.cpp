@@ -1,50 +1,49 @@
 #include "app_collection_model.h"
-#include <QDebug>
+#include "logger.h"
 
 namespace Ouquitoure
 {
 
     AppCollectionModel::AppCollectionModel(QObject * parent)
         : QAbstractTableModel(parent)
-        , currentAppData("", "")
-    {
-    }
+        , currentAppTableToken("", "")
+    {}
 
-    void AppCollectionModel::addNewAppData(const QString & appName, const QString & appTags)
+    void AppCollectionModel::addAppTableToken(const QString & appName, const QString & appTags)
     {
-        beginInsertRows(QModelIndex(), testData.size(), testData.size() );
-        testData.push_back( AppData( appName,appTags ) );
+        beginInsertRows(QModelIndex(), appsTableTokens.size(), appsTableTokens.size() );
+        appsTableTokens << AppTableToken{ appName,appTags };
         endInsertRows();
     }
 
-    AppData AppCollectionModel::getCurrentAppData() const
+    AppTableToken AppCollectionModel::getCurrentAppTableToken() const noexcept
     {
-        return currentAppData;
+        return currentAppTableToken;
     }
 
     int AppCollectionModel::rowCount(const QModelIndex & parent) const
     {
         Q_UNUSED(parent);
-        return testData.size();
+        return appsTableTokens.size();
     }
 
     int AppCollectionModel::columnCount(const QModelIndex & parent) const
     {
         Q_UNUSED(parent);
-        return MODEL_COLUMNS;
+        return NUM_COLUMNS;
     }
 
     QVariant AppCollectionModel::data(const QModelIndex & index, int role) const
     {
         if (role == Qt::DisplayRole)
         {
-            if (index.column() == 0)
+            if (index.column() == APP_NAME)
             {
-                return testData[index.row()].first;
+                return appsTableTokens[index.row()].first;
             }
             else
             {
-                return testData[index.row()].second;
+                return appsTableTokens[index.row()].second;
             }
         }
         else
@@ -58,32 +57,24 @@ namespace Ouquitoure
         if (orientation == Qt::Horizontal &&
             role == Qt::DisplayRole)
         {
-            return HEADER_NAMES[section];
+            return MODEL_COLUMNS_NAMES[section];
         }
         return QVariant{};
     }
 
-    void AppCollectionModel::debugMouseClickSlot(const QModelIndex & index)
+    void AppCollectionModel::tableTokenClick(const QModelIndex & index)
     {
+#ifdef QT_DEBUG
         QStringList output{"Mouse click:"};
-        if (index.column() == 1)
+        output << " sender(" << sender()->objectName() << "): ";
+        if (index.column() == APP_TAGS)
         {
             output << "(Tags)";
         }
         output << index.data(Qt::DisplayRole).toString();
         qInfo() << output.join(" ");
-        currentAppData = testData[index.row()];
+#endif
+        currentAppTableToken = appsTableTokens[index.row()];
     }
 
-    void AppCollectionModel::debugDoubleMouseClickSlot(const QModelIndex & index)
-    {
-        QStringList output{"Double mouse click:"};
-        if (index.column() == 1)
-        {
-            output << "(Tags)";
-        }
-        output << index.data(Qt::DisplayRole).toString();
-        qInfo() << output.join(" ");
-        currentAppData = testData[index.row()];
-    }
 }

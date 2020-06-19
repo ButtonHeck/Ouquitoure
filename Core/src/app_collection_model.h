@@ -4,7 +4,7 @@
 
 namespace Ouquitoure
 {
-    using AppData = QPair<QString, QString>;
+    using AppTableToken = QPair<QString, QString>;
 
     class AppCollectionModel : public QAbstractTableModel
     {
@@ -12,8 +12,8 @@ namespace Ouquitoure
     public:
         explicit AppCollectionModel( QObject * parent = nullptr );
 
-        void addNewAppData(const QString & appName, const QString & appTags);
-        AppData getCurrentAppData() const;
+        void addAppTableToken(const QString & appName, const QString & appTags);
+        AppTableToken getCurrentAppTableToken() const noexcept;
 
         int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
         int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
@@ -21,15 +21,19 @@ namespace Ouquitoure
         QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
     private:
-        static constexpr int MODEL_COLUMNS = 2;
-        static constexpr const char * HEADER_NAMES[MODEL_COLUMNS] {"App name", "Tags"};
+        enum MODEL_COLUMNS
+        {
+            APP_NAME = 0,
+            APP_TAGS = 1,
+            NUM_COLUMNS
+        };
+        static constexpr const char * MODEL_COLUMNS_NAMES[MODEL_COLUMNS::NUM_COLUMNS] {"App name", "Tags"};
 
     private slots:
-        void debugDoubleMouseClickSlot(const QModelIndex & index);
-        void debugMouseClickSlot(const QModelIndex & index);
+        void tableTokenClick(const QModelIndex & index);
 
     private:
-        QVector<AppData> testData;
-        AppData currentAppData;
+        QVector<AppTableToken> appsTableTokens;
+        AppTableToken currentAppTableToken;
     };
 }

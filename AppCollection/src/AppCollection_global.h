@@ -1,5 +1,4 @@
-#ifndef APPCOLLECTION_GLOBAL_H
-#define APPCOLLECTION_GLOBAL_H
+#pragma once
 
 #include <QtCore/qglobal.h>
 
@@ -8,5 +7,3 @@
 #else
 #  define APPCOLLECTION_EXPORT Q_DECL_IMPORT
 #endif
-
-#endif // APPCOLLECTION_GLOBAL_H

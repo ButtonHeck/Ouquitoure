@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QSet>
+#include <QVector>
 
 namespace Ui
 {
@@ -25,10 +25,12 @@ namespace Ouquitoure
 
     private:
         Ui::CoreAppWindow *ui;
-        AppCollectionModel * OpenGLAppsCollectionModel;
+        AppCollectionModel * openGLAppsCollectionModel;
         AppCollectionModel * softwareAppsCollectionModel;
 
-        QSet<QPair<QString, QMainWindow*>> apps;
+        using AppEntry = QPair<QString, QMainWindow*>;
+        QVector<AppEntry> apps;
+
         QWidget invisibleParentForApps;
     };
 }

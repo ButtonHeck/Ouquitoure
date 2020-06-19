@@ -12,10 +12,6 @@ namespace Ouquitoure
         auto & coreLogger = Ouquitoure::Logger::getCoreLogger();
         QTime time = QTime::currentTime();
         QString outputString = time.toString(Qt::TextDate).append(": ");
-        QString file{logContext.file};
-        file = file.right(file.size() - file.lastIndexOf('\\') - 1 );
-        QString func{logContext.function};
-        func = func.right( func.size() - func.lastIndexOf(':') - 1 );
         switch(messageType)
         {
         case QtDebugMsg:
@@ -38,14 +34,20 @@ namespace Ouquitoure
         QTextCursor cursor = coreLogger.textCursor();
         QTextCharFormat boldFormat;
         boldFormat.setFontWeight(QFont::Bold);
-        QTextCharFormat plainFormat;        
+        QTextCharFormat plainFormat;
 
+#ifdef QT_DEBUG
+        QString file{logContext.file};
+        file = file.right(file.size() - file.lastIndexOf('\\') - 1 );
+        QString func{logContext.function};
+        func = func.right( func.size() - func.lastIndexOf(':') - 1 );
         outputString.append(file)
                     .append(" (line ")
                     .append(QString::number(logContext.line))
                     .append(") in ")
                     .append(func)
                     .append(": ");
+#endif
         cursor.insertText(outputString, plainFormat);
         cursor.insertText(message, boldFormat);
         cursor.insertText("\n");

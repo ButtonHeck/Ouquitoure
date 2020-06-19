@@ -1,62 +1,70 @@
 #include "core_app_window.h"
+
+#include <QToolBar>
+
 #include "ui_core_app_window.h"
 #include "app_collection_model.h"
-#include "hello_app.h"
-#include <QDebug>
-#include <QToolBar>
 #include "logger.h"
+#include "hello_app.h"
 
 namespace Ouquitoure
 {
     CoreAppWindow::CoreAppWindow( QWidget * parent )
         : QMainWindow(parent)
         , ui( new Ui::CoreAppWindow )
-        , OpenGLAppsCollectionModel( new AppCollectionModel(this) )
-        , softwareAppsCollectionModel( new AppCollectionModel(this) )
+        , openGLAppsCollectionModel( new AppCollectionModel{this} )
+        , softwareAppsCollectionModel( new AppCollectionModel{this} )
         , invisibleParentForApps()
     {
         ui->setupUi(this);
-        ui->openGLApps->setModel(OpenGLAppsCollectionModel);
+
+        //opengl stuff
+        ui->openGLApps->setModel(openGLAppsCollectionModel);
+        connect(ui->openGLApps, SIGNAL(clicked(const QModelIndex &)), openGLAppsCollectionModel, SLOT(tableTokenClick(const QModelIndex &)));
+        connect(ui->openGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
+        openGLAppsCollectionModel->addAppTableToken("hello app", "tag1; tag2");
+        openGLAppsCollectionModel->addAppTableToken("fucking awesome app!", "holy shit this is amazing!!");
+
+        //software stuff
         ui->softwareApps->setModel(softwareAppsCollectionModel);
-
-        connect(ui->openGLApps, SIGNAL(clicked(const QModelIndex &)), OpenGLAppsCollectionModel, SLOT(debugMouseClickSlot(const QModelIndex &)));
-        connect(ui->openGLApps, SIGNAL(doubleClicked(const QModelIndex &)), OpenGLAppsCollectionModel, SLOT(debugDoubleMouseClickSlot(const QModelIndex &)));
-
-        OpenGLAppsCollectionModel->addNewAppData("hello app", "tag1; tag2");
-        OpenGLAppsCollectionModel->addNewAppData("fucking awesome app!", "holy shit this is amazing!!");
+        connect(ui->softwareApps, SIGNAL(clicked(const QModelIndex &)), softwareAppsCollectionModel, SLOT(tableTokenClick(const QModelIndex &)));
+        connect(ui->softwareApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
+        softwareAppsCollectionModel->addAppTableToken("SW test app", "tags");
 
         connect(ui->launchAppButton, SIGNAL(clicked()), SLOT(launchApp()));
-        connect(ui->openGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
 
+
+        //toolbar setup
         QToolBar * toolbar = new QToolBar{"Toolbar", this};
         addToolBar(toolbar);
         toolbar->setIconSize(QSize(32, 32));
-
+        //log on/off
         const QIcon LOG_ICON {":/icons/log_icon.png"};
         toolbar->addAction(LOG_ICON, "Log", this, SLOT(switchLogVisibility()));
+        //log settings
         const QIcon LOG_SETTINGS_ICON{":/icons/settings.png"};
         toolbar->addAction(LOG_SETTINGS_ICON, "Log settings");
 
+        //log dock widget
         addDockWidget(Qt::BottomDockWidgetArea, ui->logDockWidget);
         ui->logDockWidget->setWindowTitle("Log window");
 
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        sizePolicy2.setHorizontalStretch(1);
-        sizePolicy2.setVerticalStretch(1);
-        sizePolicy2.setHeightForWidth(ui->logDockWidget->sizePolicy().hasHeightForWidth());
-        ui->logDockWidget->setSizePolicy(sizePolicy2);
-
+        //log window setup
         Logger::instantiateCoreLogger(ui->logDockWidgetContents);
         QTextEdit & coreLogger = Logger::getCoreLogger();
+        QSizePolicy logWindowSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        logWindowSizePolicy.setHorizontalStretch(1);
+        logWindowSizePolicy.setVerticalStretch(1);
+        logWindowSizePolicy.setHeightForWidth(coreLogger.sizePolicy().hasHeightForWidth());
+        coreLogger.setSizePolicy(logWindowSizePolicy);
         coreLogger.setObjectName(QString::fromUtf8("logWindow"));
-        sizePolicy2.setHeightForWidth(coreLogger.sizePolicy().hasHeightForWidth());
-        coreLogger.setSizePolicy(sizePolicy2);
         coreLogger.setReadOnly(true);
-        QLayout * horizontalLayout_2 = ui->logDockWidgetContents->layout();
-        horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        horizontalLayout_2->setContentsMargins(1, 1, 1, 1);
-        horizontalLayout_2->addWidget(&coreLogger);
+        //log widget layout
+        QLayout * logDockWidgetLayout = ui->logDockWidgetContents->layout();
+        logDockWidgetLayout->setSpacing(0);
+        logDockWidgetLayout->setObjectName(QString::fromUtf8("logDockWidgetLayout"));
+        logDockWidgetLayout->setContentsMargins(1, 1, 1, 1);
+        logDockWidgetLayout->addWidget(&coreLogger);
     }
 
     CoreAppWindow::~CoreAppWindow()
@@ -66,29 +74,26 @@ namespace Ouquitoure
 
     bool CoreAppWindow::launchApp()
     {
-        QString currentAppName = OpenGLAppsCollectionModel->getCurrentAppData().first;
-        qDebug() << currentAppName;
-        if (currentAppName == "hello app")
+        QString appNameFromModel = openGLAppsCollectionModel->getCurrentAppTableToken().first;
+        qInfo() << appNameFromModel << "sender:(" << sender()->objectName() << ")";
+
+        auto appEntry = std::find_if(apps.cbegin(), apps.cend(), [&](const AppEntry app)
         {
-            auto findResult = std::find_if(apps.cbegin(), apps.cend(), [&](const QPair<QString, QMainWindow*> app)
-            {
-                qDebug() << currentAppName << app.first;
-                return currentAppName == app.first;
-            });
-            if (findResult == apps.cend())
-            {
-                HelloApp * newApp = new HelloApp{&invisibleParentForApps};
-                apps << QPair{currentAppName, newApp};
-                newApp->show();
-            }
-            else
-            {
-                QMainWindow * window = findResult->second;
-                window->isHidden() ? window->show() : window->activateWindow();
-            }
-            return true;
+            qInfo() << appNameFromModel << app.first;
+            return appNameFromModel == app.first;
+        });
+        if (appEntry == apps.cend())
+        {
+            HelloApp * newApp = new HelloApp{&invisibleParentForApps};
+            apps << QPair{appNameFromModel, newApp};
+            newApp->show();
         }
-        return false;
+        else
+        {
+            QMainWindow * window = appEntry->second;
+            window->isHidden() ? window->show() : window->activateWindow();
+        }
+        return true;
     }
 
     void CoreAppWindow::switchLogVisibility()
