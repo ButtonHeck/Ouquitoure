@@ -1,4 +1,4 @@
-#include "HelloApp.h"
+#include "hello_app.h"
 #include <QLabel>
 #include <QDebug>
 

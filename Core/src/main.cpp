@@ -1,4 +1,4 @@
-#include "CoreAppWindow.h"
+#include "core_app_window.h"
 #include "logger.h"
 
 #include <QApplication>

@@ -1,4 +1,4 @@
-#include "AppCollectionView.h"
+#include "app_collection_view.h"
 
 #include <QHeaderView>
 

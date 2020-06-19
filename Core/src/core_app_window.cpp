@@ -1,7 +1,7 @@
-#include "CoreAppWindow.h"
-#include "ui_CoreAppWindow.h"
-#include "AppCollectionModel.h"
-#include "HelloApp.h"
+#include "core_app_window.h"
+#include "ui_core_app_window.h"
+#include "app_collection_model.h"
+#include "hello_app.h"
 #include <QDebug>
 #include <QToolBar>
 #include "logger.h"
@@ -16,17 +16,17 @@ namespace Ouquitoure
         , invisibleParentForApps()
     {
         ui->setupUi(this);
-        ui->OpenGLApps->setModel(OpenGLAppsCollectionModel);
-        ui->SoftwareApps->setModel(softwareAppsCollectionModel);
+        ui->openGLApps->setModel(OpenGLAppsCollectionModel);
+        ui->softwareApps->setModel(softwareAppsCollectionModel);
 
-        connect(ui->OpenGLApps, SIGNAL(clicked(const QModelIndex &)), OpenGLAppsCollectionModel, SLOT(debugMouseClickSlot(const QModelIndex &)));
-        connect(ui->OpenGLApps, SIGNAL(doubleClicked(const QModelIndex &)), OpenGLAppsCollectionModel, SLOT(debugDoubleMouseClickSlot(const QModelIndex &)));
+        connect(ui->openGLApps, SIGNAL(clicked(const QModelIndex &)), OpenGLAppsCollectionModel, SLOT(debugMouseClickSlot(const QModelIndex &)));
+        connect(ui->openGLApps, SIGNAL(doubleClicked(const QModelIndex &)), OpenGLAppsCollectionModel, SLOT(debugDoubleMouseClickSlot(const QModelIndex &)));
 
         OpenGLAppsCollectionModel->addNewAppData("hello app", "tag1; tag2");
         OpenGLAppsCollectionModel->addNewAppData("fucking awesome app!", "holy shit this is amazing!!");
 
         connect(ui->launchAppButton, SIGNAL(clicked()), SLOT(launchApp()));
-        connect(ui->OpenGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
+        connect(ui->openGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
 
         QToolBar * toolbar = new QToolBar{"Toolbar", this};
         addToolBar(toolbar);

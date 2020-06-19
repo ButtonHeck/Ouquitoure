@@ -1,4 +1,4 @@
-#include "AppCollectionModel.h"
+#include "app_collection_model.h"
 #include <QDebug>
 
 namespace Ouquitoure
@@ -71,7 +71,7 @@ namespace Ouquitoure
             output << "(Tags)";
         }
         output << index.data(Qt::DisplayRole).toString();
-        qDebug() << output.join(" ");
+        qInfo() << output.join(" ");
         currentAppData = testData[index.row()];
     }
 
@@ -83,7 +83,7 @@ namespace Ouquitoure
             output << "(Tags)";
         }
         output << index.data(Qt::DisplayRole).toString();
-        qDebug() << output.join(" ");
+        qInfo() << output.join(" ");
         currentAppData = testData[index.row()];
     }
 }
