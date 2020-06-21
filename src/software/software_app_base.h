@@ -9,7 +9,7 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         explicit SoftwareAppBase(QWidget * parent = nullptr);
-        virtual ~SoftwareAppBase();
+        virtual ~SoftwareAppBase() = default;
 
     protected:
     };

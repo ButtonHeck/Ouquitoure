@@ -16,6 +16,7 @@ namespace Ouquitoure
         , ui( new Ui::CoreAppWindow )
         , openGLAppsCollectionModel( new AppCollectionModel{this} )
         , softwareAppsCollectionModel( new AppCollectionModel{this} )
+        , appLibraryManager(*openGLAppsCollectionModel, *softwareAppsCollectionModel)
     {
         ui->setupUi(this);
 

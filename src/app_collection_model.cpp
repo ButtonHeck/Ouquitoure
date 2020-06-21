@@ -1,7 +1,6 @@
 #include "AppCollectionModel"
 
 #include "Log"
-#include "OpenGLApps/ColoredTriangleApp"
 
 namespace Ouquitoure
 {
@@ -9,9 +8,13 @@ namespace Ouquitoure
     AppCollectionModel::AppCollectionModel(QObject * parent)
         : QAbstractTableModel(parent)
         , currentAppInfo()
-        , invisibleParentForApps()
+    {}
+
+    void AppCollectionModel::addApplication(AppWindowBase * app)
     {
-        apps.emplace_back(new ColoredTriangleApp(&invisibleParentForApps));
+        beginInsertRows(QModelIndex(), apps.size(), apps.size());
+        apps << app;
+        endInsertRows();
     }
 
     AppWindowBase * AppCollectionModel::getApplication(const QString & name)
