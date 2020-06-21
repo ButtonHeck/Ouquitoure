@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
 
     qInstallMessageHandler(Ouquitoure::logHandler);
     Ouquitoure::CoreAppWindow window;
-    window.setWindowTitle("Rename me");
     window.show();
 
     return a.exec();

@@ -19,6 +19,8 @@ namespace Ouquitoure
         , appLibraryManager(*openGLAppsCollectionModel, *softwareAppsCollectionModel)
     {
         ui->setupUi(this);
+        setWindowIcon( QIcon(":/icons/logo.ico") );
+        setWindowTitle("Ouquitoure sandbox");
 
         //opengl stuff
         ui->openGLAppsView->setModel(openGLAppsCollectionModel);
