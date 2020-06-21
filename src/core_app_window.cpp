@@ -20,22 +20,14 @@ namespace Ouquitoure
         ui->setupUi(this);
 
         //opengl stuff
-        ui->openGLApps->setModel(openGLAppsCollectionModel);
-        connect(ui->openGLApps, SIGNAL(clicked(const QModelIndex &)), openGLAppsCollectionModel, SLOT(tableEntryClick(const QModelIndex &)));
-        connect(ui->openGLApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
-        for (const auto & appInfo : appLibraryManager.getAppInfos(OPENGL_APP))
-        {
-            openGLAppsCollectionModel->addAppInfoEntry( appInfo );
-        }
+        ui->openGLAppsView->setModel(openGLAppsCollectionModel);
+        connect(ui->openGLAppsView, SIGNAL(clicked(const QModelIndex &)), openGLAppsCollectionModel, SLOT(tableEntryClick(const QModelIndex &)));
+        connect(ui->openGLAppsView, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
 
         //software stuff
-        ui->softwareApps->setModel(softwareAppsCollectionModel);
-        connect(ui->softwareApps, SIGNAL(clicked(const QModelIndex &)), softwareAppsCollectionModel, SLOT(tableEntryClick(const QModelIndex &)));
-        connect(ui->softwareApps, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
-        for (const auto & appInfo : appLibraryManager.getAppInfos(SOFTWARE_APP))
-        {
-            softwareAppsCollectionModel->addAppInfoEntry(appInfo);
-        }
+        ui->softwareAppsView->setModel(softwareAppsCollectionModel);
+        connect(ui->softwareAppsView, SIGNAL(clicked(const QModelIndex &)), softwareAppsCollectionModel, SLOT(tableEntryClick(const QModelIndex &)));
+        connect(ui->softwareAppsView, SIGNAL(doubleClicked(const QModelIndex &)), SLOT(launchApp()));
 
         connect(ui->launchAppButton, SIGNAL(clicked()), SLOT(launchApp()));
     }
@@ -75,12 +67,28 @@ namespace Ouquitoure
         }(appType);
         OQ_LOG_INFO << appName << "sender:(" << sender()->objectName() << ")";
 
-        QMainWindow * appWindow = appLibraryManager.getApplication(appType, appName);
-        if (appWindow)
+        switch(appType)
         {
-            appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
-            return true;
+        case OPENGL_APP:
+        {
+            AppWindowBase * appWindow = openGLAppsCollectionModel->getApplication(appName);
+            if (appWindow)
+            {
+                appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
+                return true;
+            }
         }
-        return false;
+        case SOFTWARE_APP:
+        {
+            AppWindowBase * appWindow = softwareAppsCollectionModel->getApplication(appName);
+            if (appWindow)
+            {
+                appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
+                return true;
+            }
+        }
+        default:
+            return false;
+        }
     }
 }

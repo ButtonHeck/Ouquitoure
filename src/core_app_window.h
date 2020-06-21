@@ -3,8 +3,6 @@
 #include <QMainWindow>
 #include <QVector>
 
-#include "AppLibraryManager"
-
 namespace Ui
 {
     class CoreAppWindow;
@@ -28,8 +26,6 @@ namespace Ouquitoure
         Ui::CoreAppWindow *ui;
         AppCollectionModel * openGLAppsCollectionModel;
         AppCollectionModel * softwareAppsCollectionModel;
-
-        AppLibraryManager appLibraryManager;
     };
 }
 

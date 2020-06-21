@@ -1,7 +1,11 @@
 #pragma once
 
 #include <QAbstractTableModel>
-#include "AppInfo"
+#include <QWidget>
+
+#include "AppWindowBase"
+
+class QMainWindow;
 
 namespace Ouquitoure
 {
@@ -11,7 +15,7 @@ namespace Ouquitoure
     public:
         explicit AppCollectionModel( QObject * parent = nullptr );
 
-        void addAppInfoEntry(const AppInfo & appInfo);
+        AppWindowBase * getApplication(const QString & name);
         AppInfo getCurrentAppInfo() const noexcept;
 
         int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
@@ -32,7 +36,8 @@ namespace Ouquitoure
         void tableEntryClick(const QModelIndex & index);
 
     private:
-        QVector<AppInfo> appInfos;
+        std::vector<AppWindowBase*> apps;
         AppInfo currentAppInfo;
+        QWidget invisibleParentForApps;
     };
 }

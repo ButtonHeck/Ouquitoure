@@ -1,12 +1,10 @@
 #pragma once
 
-#include <QMainWindow>
-
-#include <AppInfo>
+#include "AppWindowBase"
 
 namespace Ouquitoure
 {
-    class OpenGLAppBase : public QMainWindow
+    class OpenGLAppBase : public AppWindowBase
     {
         Q_OBJECT
     public:
@@ -14,10 +12,8 @@ namespace Ouquitoure
         virtual ~OpenGLAppBase() = default;
 
         void resizeEvent(QResizeEvent *event) override;
-        const AppInfo & getInfo() const noexcept;
 
     protected:
         QDockWidget * viewDockWidget;
-        AppInfo info;
     };
 }

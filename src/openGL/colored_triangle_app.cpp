@@ -12,4 +12,9 @@ namespace Ouquitoure
         info = AppInfo("Colored Triangle", {"basic", "triangle"}, OPENGL_APP);
     }
 
+    ColoredTriangleApp::~ColoredTriangleApp()
+    {
+        OQ_LOG_DEBUG << "ColoredTriangleApp dtor";
+    }
+
 }

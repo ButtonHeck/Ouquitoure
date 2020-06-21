@@ -205,12 +205,12 @@
                <property name="currentIndex">
                 <number>0</number>
                </property>
-               <widget class="Ouquitoure::AppCollectionView" name="openGLApps">
+               <widget class="Ouquitoure::AppCollectionView" name="openGLAppsView">
                 <attribute name="title">
                  <string>OpenGL</string>
                 </attribute>
                </widget>
-               <widget class="Ouquitoure::AppCollectionView" name="softwareApps">
+               <widget class="Ouquitoure::AppCollectionView" name="softwareAppsView">
                 <attribute name="title">
                  <string>Software</string>
                 </attribute>

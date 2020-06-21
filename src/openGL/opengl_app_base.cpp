@@ -10,7 +10,7 @@ namespace Ouquitoure
 {
 
     OpenGLAppBase::OpenGLAppBase(QWidget * parent)
-        : QMainWindow(parent)
+        : AppWindowBase(parent)
     {
         setWindowTitle("OpenGL Application");
 
@@ -44,11 +44,6 @@ namespace Ouquitoure
     void OpenGLAppBase::resizeEvent(QResizeEvent * event)
     {
         resizeDocks({viewDockWidget}, {event->size().width() / 2}, Qt::Horizontal);
-    }
-
-    const AppInfo & OpenGLAppBase::getInfo() const noexcept
-    {
-        return info;
     }
 
 }

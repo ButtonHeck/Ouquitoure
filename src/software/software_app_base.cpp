@@ -8,7 +8,7 @@ namespace Ouquitoure
 {
 
     SoftwareAppBase::SoftwareAppBase(QWidget * parent)
-        : QMainWindow(parent)
+        : AppWindowBase(parent)
     {
         OQ_LOG_DEBUG << "Software ctor";
 
@@ -20,11 +20,6 @@ namespace Ouquitoure
     SoftwareAppBase::~SoftwareAppBase()
     {
         OQ_LOG_DEBUG << "Software dtor";
-    }
-
-    const AppInfo & SoftwareAppBase::getInfo() const noexcept
-    {
-        return info;
     }
 
 }

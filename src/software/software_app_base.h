@@ -1,21 +1,16 @@
 #pragma once
 
-#include <QMainWindow>
-
-#include <AppInfo>
+#include "AppWindowBase"
 
 namespace Ouquitoure
 {
-    class SoftwareAppBase : public QMainWindow
+    class SoftwareAppBase : public AppWindowBase
     {
         Q_OBJECT
     public:
         explicit SoftwareAppBase(QWidget * parent = nullptr);
         virtual ~SoftwareAppBase();
 
-        const AppInfo & getInfo() const noexcept;
-
     protected:
-        AppInfo info;
     };
 }

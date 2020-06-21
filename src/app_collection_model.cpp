@@ -1,6 +1,7 @@
 #include "AppCollectionModel"
 
 #include "Log"
+#include "OpenGLApps/ColoredTriangleApp"
 
 namespace Ouquitoure
 {
@@ -8,13 +9,20 @@ namespace Ouquitoure
     AppCollectionModel::AppCollectionModel(QObject * parent)
         : QAbstractTableModel(parent)
         , currentAppInfo()
-    {}
-
-    void AppCollectionModel::addAppInfoEntry(const Ouquitoure::AppInfo & appInfo)
+        , invisibleParentForApps()
     {
-        beginInsertRows(QModelIndex(), appInfos.size(), appInfos.size() );
-        appInfos << appInfo;
-        endInsertRows();
+        apps.emplace_back(new ColoredTriangleApp(&invisibleParentForApps));
+    }
+
+    AppWindowBase * AppCollectionModel::getApplication(const QString & name)
+    {
+        auto appIter = std::find_if(apps.cbegin(), apps.cend(), [&](AppWindowBase * application)
+        {
+            return application->getInfo().getName() == name;
+        });
+        return (appIter != apps.cend())
+                ? *appIter
+                : nullptr;
     }
 
     AppInfo AppCollectionModel::getCurrentAppInfo() const noexcept
@@ -25,7 +33,7 @@ namespace Ouquitoure
     int AppCollectionModel::rowCount(const QModelIndex & parent) const
     {
         Q_UNUSED(parent);
-        return appInfos.size();
+        return static_cast<int>(apps.size());
     }
 
     int AppCollectionModel::columnCount(const QModelIndex & parent) const
@@ -40,11 +48,11 @@ namespace Ouquitoure
         {
             if (index.column() == APP_NAME)
             {
-                return appInfos[index.row()].getName();
+                return apps[index.row()]->getInfo().getName();
             }
             else
             {
-                return appInfos[index.row()].getTags().join(";");
+                return apps[index.row()]->getInfo().getTags().join(";");
             }
         }
         else
@@ -75,7 +83,7 @@ namespace Ouquitoure
         output << index.data(Qt::DisplayRole).toString();
         OQ_LOG_INFO << output.join("");
 #endif
-        currentAppInfo = appInfos[index.row()];
+        currentAppInfo = apps[index.row()]->getInfo();
     }
 
 }

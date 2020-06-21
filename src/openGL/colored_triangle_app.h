@@ -8,6 +8,7 @@ namespace Ouquitoure
     {
     public:
         ColoredTriangleApp(QWidget * parent);
+        ~ColoredTriangleApp();
     private:
 
     };
