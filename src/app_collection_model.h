@@ -1,19 +1,18 @@
 #pragma once
 
 #include <QAbstractTableModel>
+#include "AppInfo"
 
 namespace Ouquitoure
 {
-    using AppTableToken = QPair<QString, QString>;
-
     class AppCollectionModel : public QAbstractTableModel
     {
         Q_OBJECT
     public:
         explicit AppCollectionModel( QObject * parent = nullptr );
 
-        void addAppTableToken(const QString & appName, const QString & appTags);
-        AppTableToken getCurrentAppTableToken() const noexcept;
+        void addAppInfoEntry(const AppInfo & appInfo);
+        AppInfo getCurrentAppInfo() const noexcept;
 
         int rowCount( const QModelIndex &parent = QModelIndex() ) const override;
         int columnCount( const QModelIndex &parent = QModelIndex() ) const override;
@@ -30,10 +29,10 @@ namespace Ouquitoure
         static constexpr const char * MODEL_COLUMNS_NAMES[MODEL_COLUMNS::NUM_COLUMNS] {"App name", "Tags"};
 
     private slots:
-        void tableTokenClick(const QModelIndex & index);
+        void tableEntryClick(const QModelIndex & index);
 
     private:
-        QVector<AppTableToken> appsTableTokens;
-        AppTableToken currentAppTableToken;
+        QVector<AppInfo> appInfos;
+        AppInfo currentAppInfo;
     };
 }

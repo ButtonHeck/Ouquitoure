@@ -1,30 +1,31 @@
-#include "app_collection_model.h"
-#include "logger.h"
+#include "AppCollectionModel"
+
+#include "Log"
 
 namespace Ouquitoure
 {
 
     AppCollectionModel::AppCollectionModel(QObject * parent)
         : QAbstractTableModel(parent)
-        , currentAppTableToken("", "")
+        , currentAppInfo()
     {}
 
-    void AppCollectionModel::addAppTableToken(const QString & appName, const QString & appTags)
+    void AppCollectionModel::addAppInfoEntry(const Ouquitoure::AppInfo & appInfo)
     {
-        beginInsertRows(QModelIndex(), appsTableTokens.size(), appsTableTokens.size() );
-        appsTableTokens << AppTableToken{ appName,appTags };
+        beginInsertRows(QModelIndex(), appInfos.size(), appInfos.size() );
+        appInfos << appInfo;
         endInsertRows();
     }
 
-    AppTableToken AppCollectionModel::getCurrentAppTableToken() const noexcept
+    AppInfo AppCollectionModel::getCurrentAppInfo() const noexcept
     {
-        return currentAppTableToken;
+        return currentAppInfo;
     }
 
     int AppCollectionModel::rowCount(const QModelIndex & parent) const
     {
         Q_UNUSED(parent);
-        return appsTableTokens.size();
+        return appInfos.size();
     }
 
     int AppCollectionModel::columnCount(const QModelIndex & parent) const
@@ -39,11 +40,11 @@ namespace Ouquitoure
         {
             if (index.column() == APP_NAME)
             {
-                return appsTableTokens[index.row()].first;
+                return appInfos[index.row()].getName();
             }
             else
             {
-                return appsTableTokens[index.row()].second;
+                return appInfos[index.row()].getTags().join(";");
             }
         }
         else
@@ -62,19 +63,19 @@ namespace Ouquitoure
         return QVariant{};
     }
 
-    void AppCollectionModel::tableTokenClick(const QModelIndex & index)
+    void AppCollectionModel::tableEntryClick(const QModelIndex & index)
     {
 #ifdef QT_DEBUG
-        QStringList output{"Mouse click:"};
-        output << " sender(" << sender()->objectName() << "): ";
+        QStringList output{"Mouse click: "};
+        output << "sender(" << sender()->objectName() << "): ";
         if (index.column() == APP_TAGS)
         {
-            output << "(Tags)";
+            output << "(Tags) ";
         }
         output << index.data(Qt::DisplayRole).toString();
-        qInfo() << output.join(" ");
+        OQ_LOG_INFO << output.join("");
 #endif
-        currentAppTableToken = appsTableTokens[index.row()];
+        currentAppInfo = appInfos[index.row()];
     }
 
 }

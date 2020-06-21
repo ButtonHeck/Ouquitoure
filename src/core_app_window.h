@@ -21,15 +21,15 @@ namespace Ouquitoure
 
     private slots:
         bool launchApp();
-        void switchLogVisibility();
 
     private:
         Ui::CoreAppWindow *ui;
         AppCollectionModel * openGLAppsCollectionModel;
         AppCollectionModel * softwareAppsCollectionModel;
 
-        using AppEntry = QPair<QString, QMainWindow*>;
-        QVector<AppEntry> apps;
+        using AppTableEntry = QPair<QString, QMainWindow*>;
+        QVector<AppTableEntry> openGLAppCollection;
+        QVector<AppTableEntry> softwareAppCollection;
 
         QWidget invisibleParentForApps;
     };
