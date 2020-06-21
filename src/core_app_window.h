@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include <QVector>
 
+#include "AppLibraryManager"
+
 namespace Ui
 {
     class CoreAppWindow;
@@ -27,11 +29,7 @@ namespace Ouquitoure
         AppCollectionModel * openGLAppsCollectionModel;
         AppCollectionModel * softwareAppsCollectionModel;
 
-        using AppTableEntry = QPair<QString, QMainWindow*>;
-        QVector<AppTableEntry> openGLAppCollection;
-        QVector<AppTableEntry> softwareAppCollection;
-
-        QWidget invisibleParentForApps;
+        AppLibraryManager appLibraryManager;
     };
 }
 

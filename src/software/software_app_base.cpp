@@ -22,4 +22,9 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << "Software dtor";
     }
 
+    const AppInfo & SoftwareAppBase::getInfo() const noexcept
+    {
+        return info;
+    }
+
 }

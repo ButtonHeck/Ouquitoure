@@ -11,7 +11,7 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         explicit OpenGLAppBase(QWidget * parent = nullptr);
-        virtual ~OpenGLAppBase();
+        virtual ~OpenGLAppBase() = default;
 
         void resizeEvent(QResizeEvent *event) override;
         const AppInfo & getInfo() const noexcept;

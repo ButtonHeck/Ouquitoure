@@ -6,15 +6,12 @@
 #include <QOpenGLWidget>
 #include <QResizeEvent>
 
-#include "Log"
-
 namespace Ouquitoure
 {
 
     OpenGLAppBase::OpenGLAppBase(QWidget * parent)
         : QMainWindow(parent)
     {
-        OQ_LOG_DEBUG << "OpenGLApp ctor";
         setWindowTitle("OpenGL Application");
 
         QWidget * centralWidget = new QWidget{this};
@@ -42,11 +39,6 @@ namespace Ouquitoure
         appLayout->addWidget(controlsGroupBox);
 
         mainLayout->addLayout(appLayout);
-    }
-
-    OpenGLAppBase::~OpenGLAppBase()
-    {
-        OQ_LOG_DEBUG << "OpenGLApp dtor";
     }
 
     void OpenGLAppBase::resizeEvent(QResizeEvent * event)

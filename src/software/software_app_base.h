@@ -2,6 +2,8 @@
 
 #include <QMainWindow>
 
+#include <AppInfo>
+
 namespace Ouquitoure
 {
     class SoftwareAppBase : public QMainWindow
@@ -10,5 +12,10 @@ namespace Ouquitoure
     public:
         explicit SoftwareAppBase(QWidget * parent = nullptr);
         virtual ~SoftwareAppBase();
+
+        const AppInfo & getInfo() const noexcept;
+
+    protected:
+        AppInfo info;
     };
 }
