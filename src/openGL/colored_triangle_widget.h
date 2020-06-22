@@ -8,12 +8,18 @@ namespace Ouquitoure
     {
     public:
         explicit ColoredTriangleWidget( const QString & name, QWidget * parent = nullptr );
-        ~ColoredTriangleWidget() = default;
+        ~ColoredTriangleWidget();
 
         void initializeGL() override;
         void paintGL() override;
 
+    protected:
+        void initializeOpenGLObjects() override;
+        void initializeOpenGLShaders() override;
+
     private:
+        GLuint vao;
+        GLuint vbo;
     };
 
 } // namespace Ouquitoure

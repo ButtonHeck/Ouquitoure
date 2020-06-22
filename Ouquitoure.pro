@@ -19,10 +19,12 @@ INCLUDEPATH += "include/"
 
 SOURCES += $$files(src/*.cpp) \
            $$files(src/openGL/*.cpp) \
-           $$files(src/software/*.cpp)
+           $$files(src/software/*.cpp) \
+           $$files(src/utils/*.cpp)
 HEADERS += $$files(src/*.h) \
            $$files(src/openGL/*.h) \
-           $$files(src/software/*.h)
+           $$files(src/software/*.h) \
+           $$files(src/utils/*.h)
 FORMS += $$files(src/*.ui)
 
 RESOURCES += \
@@ -32,4 +34,5 @@ DISTFILES += \
     .clang-format \
     $$files(include/*) \
     $$files(include/OpenGLApps/*) \
-    $$files(include/SoftwareApps/*)
+    $$files(include/SoftwareApps/*) \
+    $$files(include/Utils/*)

@@ -20,15 +20,15 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << name << " widget dtor";
     }
 
-    const QString & OpenGLWidgetBase::getName() const noexcept
-    {
-        return name;
-    }
-
     bool OpenGLWidgetBase::addShaderProgram( QVector<QOpenGLShader::ShaderType> && types,
                                              QVector<QString> &&                   sources,
                                              const QString &                       programName )
     {
+        if( !glInitialized )
+        {
+            OQ_LOG_WARNING << "Could not add shader program as OpenGL context was not initialized";
+            return false;
+        }
         QVector<QOpenGLShader *> shaders{ sources.size() };
         for( int shaderSourceIndex = 0; shaderSourceIndex < sources.size(); ++shaderSourceIndex )
         {
@@ -59,6 +59,7 @@ namespace Ouquitoure
     void OpenGLWidgetBase::initializeGL()
     {
         initializeOpenGLFunctions();
+        glInitialized = true;
     }
 
     void OpenGLWidgetBase::resizeGL( int width, int height )

@@ -10,7 +10,7 @@ namespace Ouquitoure
         , openGLAppsModel( openGLAppsModel )
         , softwareAppsModel( softwareAppsModel )
     {
-        OpenGLAppBase *  app = new ColoredTriangleApp( "Colored Triangle", &invisibleParentForApps );
+        OpenGLAppBase * app = new ColoredTriangleApp( "Colored Triangle", &invisibleParentForApps );
         openGLAppsModel.addApplication( app );
     }
 

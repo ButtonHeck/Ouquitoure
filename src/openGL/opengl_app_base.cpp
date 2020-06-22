@@ -33,7 +33,7 @@ namespace Ouquitoure
 
         viewDockWidget = new QDockWidget( centralWidget );
         viewDockWidget->setAllowedAreas( Qt::RightDockWidgetArea );
-        viewDockWidget->setWindowTitle( "View" );
+        viewDockWidget->setWindowTitle( appName );
         viewDockWidget->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
         addDockWidget( Qt::RightDockWidgetArea, viewDockWidget );
 
