@@ -3,16 +3,20 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QDockWidget>
-#include <QOpenGLWidget>
 #include <QResizeEvent>
+
+#include "OpenGLApps/OpenGLWidgetBase"
+#include "Log"
 
 namespace Ouquitoure
 {
 
-    OpenGLAppBase::OpenGLAppBase( QWidget * parent )
+    OpenGLAppBase::OpenGLAppBase( const QString & name, QWidget * parent )
         : AppWindowBase( parent )
+        , appName( name )
     {
-        setWindowTitle( "OpenGL Application" );
+        OQ_LOG_DEBUG << appName << " app ctor";
+        setWindowTitle( appName );
 
         QWidget *     centralWidget = new QWidget{ this };
         QHBoxLayout * mainLayout    = new QHBoxLayout();
@@ -30,7 +34,7 @@ namespace Ouquitoure
         viewDockWidget = new QDockWidget( centralWidget );
         viewDockWidget->setAllowedAreas( Qt::RightDockWidgetArea );
         viewDockWidget->setWindowTitle( "View" );
-        QOpenGLWidget * viewOpenGLWidget = new QOpenGLWidget();
+        OpenGLWidgetBase * viewOpenGLWidget = new OpenGLWidgetBase( appName, this );
         viewDockWidget->setWidget( viewOpenGLWidget );
         viewOpenGLWidget->setMinimumSize( 640, 480 );
         viewOpenGLWidget->setSizePolicy( sizePolicy );
@@ -39,6 +43,11 @@ namespace Ouquitoure
         appLayout->addWidget( controlsGroupBox );
 
         mainLayout->addLayout( appLayout );
+    }
+
+    OpenGLAppBase::~OpenGLAppBase()
+    {
+        OQ_LOG_DEBUG << appName << " app dtor";
     }
 
     void OpenGLAppBase::resizeEvent( QResizeEvent * event )

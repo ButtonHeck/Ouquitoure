@@ -10,7 +10,7 @@ namespace Ouquitoure
     {
     }
 
-    AppInfo::AppInfo( const char * name, const std::initializer_list<QString> & tags, Ouquitoure::APP_TYPE type )
+    AppInfo::AppInfo( const QString & name, const std::initializer_list<QString> & tags, Ouquitoure::APP_TYPE type )
         : name( name )
         , tags( tags )
         , type( type )

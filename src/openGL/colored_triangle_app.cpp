@@ -1,20 +1,12 @@
 #include <OpenGLApps/ColoredTriangleApp>
 
-#include "Log"
-
 namespace Ouquitoure
 {
 
-    ColoredTriangleApp::ColoredTriangleApp( QWidget * parent )
-        : OpenGLAppBase( parent )
+    ColoredTriangleApp::ColoredTriangleApp( const QString & appName, QWidget * parent )
+        : OpenGLAppBase( appName, parent )
     {
-        OQ_LOG_DEBUG << "ColoredTriangleApp ctor";
-        info = AppInfo( "Colored Triangle", { "basic", "triangle" }, OPENGL_APP );
-    }
-
-    ColoredTriangleApp::~ColoredTriangleApp()
-    {
-        OQ_LOG_DEBUG << "ColoredTriangleApp dtor";
+        info = AppInfo( appName, { "basic", "triangle" }, OPENGL_APP );
     }
 
 } // namespace Ouquitoure

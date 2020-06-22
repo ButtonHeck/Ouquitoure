@@ -8,12 +8,14 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit OpenGLAppBase( QWidget * parent = nullptr );
-        virtual ~OpenGLAppBase() = default;
+        explicit OpenGLAppBase( const QString & name, QWidget * parent = nullptr );
+        virtual ~OpenGLAppBase();
 
         void resizeEvent( QResizeEvent * event ) override;
 
     protected:
+        QString       appName;
         QDockWidget * viewDockWidget;
     };
+
 } // namespace Ouquitoure

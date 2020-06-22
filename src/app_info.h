@@ -12,7 +12,7 @@ namespace Ouquitoure
     public:
         AppInfo() = default;
         AppInfo( QString && name, QStringList && tags, APP_TYPE type );
-        AppInfo( const char * name, const std::initializer_list<QString> & tags, APP_TYPE type );
+        AppInfo( const QString & name, const std::initializer_list<QString> & tags, APP_TYPE type );
         const QString &     getName() const noexcept;
         const QStringList & getTags() const noexcept;
         APP_TYPE            getType() const noexcept;

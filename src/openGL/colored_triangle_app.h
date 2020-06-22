@@ -7,9 +7,10 @@ namespace Ouquitoure
     class ColoredTriangleApp : public OpenGLAppBase
     {
     public:
-        ColoredTriangleApp( QWidget * parent );
-        ~ColoredTriangleApp();
+        ColoredTriangleApp( const QString & appName, QWidget * parent );
+        ~ColoredTriangleApp() = default;
 
     private:
     };
+
 } // namespace Ouquitoure

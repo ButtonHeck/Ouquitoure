@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-#define OQ_LOG_ALWAYS_FULL true
+#define OQ_LOG_ALWAYS_FULL false
 #define OG_LOG_FORCE_NOOP  false
 
 #define OQ_LOG_PRECISION_FULL "@Ouqre-log-full"
