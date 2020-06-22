@@ -24,9 +24,9 @@ namespace Ouquitoure
                                              QVector<QString> &&                   sources,
                                              const QString &                       programName )
     {
-        if( !glInitialized )
+        if( !glFunctionsInitialized )
         {
-            OQ_LOG_WARNING << "Could not add shader program as OpenGL context was not initialized";
+            OQ_LOG_WARNING << "Could not add shader program as OpenGL functions were not initialized";
             return false;
         }
         QVector<QOpenGLShader *> shaders{ sources.size() };
@@ -60,7 +60,8 @@ namespace Ouquitoure
     {
         OQ_LOG_INFO << name << " GL context initialization";
         initializeOpenGLFunctions();
-        glInitialized = true;
+        glFunctionsInitialized = true;
+        makeCurrent();
     }
 
     void OpenGLWidgetBase::resizeGL( int width, int height )

@@ -8,6 +8,8 @@ namespace Ouquitoure
 
     ColoredTriangleWidget::ColoredTriangleWidget( const QString & name, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
+        , vao( 0 )
+        , vbo( 0 )
         , points()
     {
         points << Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 } << Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 }
@@ -16,16 +18,18 @@ namespace Ouquitoure
 
     ColoredTriangleWidget::~ColoredTriangleWidget()
     {
-        if( glInitialized )
-        {
-            glDeleteBuffers( 1, &vbo );
-            glDeleteVertexArrays( 1, &vao );
-        }
+        cleanup();
     }
 
     void ColoredTriangleWidget::initializeGL()
     {
         OpenGLWidgetBase::initializeGL();
+        /* QDockWidget (un)docking invokes reinitialization of a GL context,
+         * thus every OpenGL related objects (shader programs, buffers etc.) should be deleted explicitly
+         * (if any of them were created during previous context initialization)
+         */
+        cleanup();
+
         glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
         initializeOpenGLObjects();
         initializeOpenGLShaders();
@@ -71,6 +75,23 @@ namespace Ouquitoure
 
         addShaderProgram( { QOpenGLShader::Vertex, QOpenGLShader::Fragment },
                           std::forward<decltype( shaderSources )>( shaderSources ) );
+    }
+
+    void ColoredTriangleWidget::cleanup()
+    {
+        if( vao )
+        {
+            glDeleteVertexArrays( 1, &vao );
+        }
+        if( vbo )
+        {
+            glDeleteBuffers( 1, &vbo );
+        }
+        for( auto & shaderProgram: shaderPrograms.values() )
+        {
+            glDeleteProgram( shaderProgram->programId() );
+        }
+        shaderPrograms.clear();
     }
 
 } // namespace Ouquitoure

@@ -17,6 +17,7 @@ namespace Ouquitoure
     protected:
         void initializeOpenGLObjects() override;
         void initializeOpenGLShaders() override;
+        void cleanup() override;
 
     private:
         GLuint vao;

@@ -17,16 +17,20 @@ namespace Ouquitoure
         void resizeGL( int width, int height ) override;
 
     protected:
-        bool         addShaderProgram( QVector<QOpenGLShader::ShaderType> && types,
-                                       QVector<QString> &&                   sources,
-                                       const QString &                       programName = "main" );
+        bool addShaderProgram( QVector<QOpenGLShader::ShaderType> && types,
+                               QVector<QString> &&                   sources,
+                               const QString &                       programName = "main" );
+
         virtual void initializeOpenGLObjects() = 0;
         virtual void initializeOpenGLShaders() = 0;
+        virtual void cleanup()                 = 0;
 
     protected:
         QMap<QString, QOpenGLShaderProgram *> shaderPrograms;
         QString                               name;
-        bool                                  glInitialized = false;
+
+    private:
+        bool glFunctionsInitialized = false;
     };
 
 } // namespace Ouquitoure
