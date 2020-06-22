@@ -1,7 +1,6 @@
 #include "OpenGLApps/ColoredTriangleWidget"
 
 #include <QFile>
-
 #include <utility>
 
 namespace Ouquitoure
@@ -9,7 +8,10 @@ namespace Ouquitoure
 
     ColoredTriangleWidget::ColoredTriangleWidget( const QString & name, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
+        , points()
     {
+        points << Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 } << Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 }
+               << Point2p3c{ -0.5, -0.5, 0.0, 0.0, 1.0 };
     }
 
     ColoredTriangleWidget::~ColoredTriangleWidget()
@@ -35,10 +37,6 @@ namespace Ouquitoure
     void ColoredTriangleWidget::paintGL()
     {
         glClear( GL_COLOR_BUFFER_BIT );
-        GLfloat data[ 2 * 3 + 3 * 3 ]{ 0.5, 0.5, 1.0, 0.0, 0.0, -0.5, 0.5, 0.0, 1.0, 0.0, -0.5, -0.5, 0.0, 0.0, 1.0 };
-        glBindBuffer( GL_ARRAY_BUFFER, vbo );
-        glBufferData( GL_ARRAY_BUFFER, sizeof( data ), data, GL_STATIC_DRAW );
-
         glDrawArrays( GL_TRIANGLES, 0, 3 );
     }
 
@@ -48,10 +46,11 @@ namespace Ouquitoure
         glCreateVertexArrays( 1, &vao );
         glBindVertexArray( vao );
         glBindBuffer( GL_ARRAY_BUFFER, vbo );
+        glBufferData( GL_ARRAY_BUFFER, points.size() * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
-        glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof( GLfloat ), 0 );
+        glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, sizeof( Point2p3c ), 0 );
         glEnableVertexAttribArray( 1 );
-        glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof( GLfloat ), (void *)( 2 * sizeof( GLfloat ) ) );
+        glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point2p3c ), (void *)( 2 * sizeof( GLfloat ) ) );
     }
 
     void ColoredTriangleWidget::initializeOpenGLShaders()

@@ -58,6 +58,7 @@ namespace Ouquitoure
 
     void OpenGLWidgetBase::initializeGL()
     {
+        OQ_LOG_INFO << name << " GL context initialization";
         initializeOpenGLFunctions();
         glInitialized = true;
     }

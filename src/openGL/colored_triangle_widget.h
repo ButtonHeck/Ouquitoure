@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OpenGLApps/OpenGLWidgetBase"
+#include "Utils/Point2Pos3Color"
 
 namespace Ouquitoure
 {
@@ -20,6 +21,7 @@ namespace Ouquitoure
     private:
         GLuint vao;
         GLuint vbo;
+        QVector<Utils::Point2Pos3Color> points;
     };
 
 } // namespace Ouquitoure

@@ -18,6 +18,8 @@ namespace Ouquitoure
                 float r;
                 float g;
                 float b;
+
+                PosColor() = default;
                 PosColor( float x, float y, float r, float g, float b )
                     : x( x )
                     , y( y )
@@ -29,6 +31,7 @@ namespace Ouquitoure
             };
             union Point
             {
+                Point() = default;
                 Point( float x, float y, float r, float g, float b )
                     : posColor( x, y, r, g, b )
                 {
@@ -37,6 +40,7 @@ namespace Ouquitoure
                 float    _data[ 5 ];
             } point;
 
+            Point2Pos3Color() = default;
             Point2Pos3Color( float x, float y, float r, float g, float b )
                 : point( x, y, r, g, b )
             {
@@ -53,5 +57,7 @@ namespace Ouquitoure
         };
 
     } // namespace Utils
+
+    using Point2p3c = Utils::Point2Pos3Color;
 
 } // namespace Ouquitoure
