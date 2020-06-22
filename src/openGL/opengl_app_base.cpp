@@ -34,6 +34,7 @@ namespace Ouquitoure
         viewDockWidget = new QDockWidget( centralWidget );
         viewDockWidget->setAllowedAreas( Qt::RightDockWidgetArea );
         viewDockWidget->setWindowTitle( "View" );
+        viewDockWidget->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
         OpenGLWidgetBase * viewOpenGLWidget = new OpenGLWidgetBase( appName, this );
         viewDockWidget->setWidget( viewOpenGLWidget );
         viewOpenGLWidget->setMinimumSize( 640, 480 );
