@@ -5,11 +5,11 @@
 namespace Ouquitoure
 {
 
-    ColoredTriangleApp::ColoredTriangleApp(QWidget * parent)
-        : OpenGLAppBase(parent)
+    ColoredTriangleApp::ColoredTriangleApp( QWidget * parent )
+        : OpenGLAppBase( parent )
     {
         OQ_LOG_DEBUG << "ColoredTriangleApp ctor";
-        info = AppInfo("Colored Triangle", {"basic", "triangle"}, OPENGL_APP);
+        info = AppInfo( "Colored Triangle", { "basic", "triangle" }, OPENGL_APP );
     }
 
     ColoredTriangleApp::~ColoredTriangleApp()
@@ -17,4 +17,4 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << "ColoredTriangleApp dtor";
     }
 
-}
+} // namespace Ouquitoure

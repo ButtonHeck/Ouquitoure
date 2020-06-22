@@ -10,7 +10,7 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit AppWindowBase(QWidget * parent = nullptr);
+        explicit AppWindowBase( QWidget * parent = nullptr );
         virtual ~AppWindowBase() = default;
 
         const AppInfo & getInfo() const noexcept;
@@ -19,4 +19,4 @@ namespace Ouquitoure
         AppInfo info;
     };
 
-}
+} // namespace Ouquitoure

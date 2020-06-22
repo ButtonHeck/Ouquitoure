@@ -9,11 +9,11 @@ namespace Ouquitoure
     class AppLibraryManager
     {
     public:
-        AppLibraryManager(AppCollectionModel & openGLAppsModel, AppCollectionModel & softwareAppsModel);
+        AppLibraryManager( AppCollectionModel & openGLAppsModel, AppCollectionModel & softwareAppsModel );
 
     private:
-        QWidget invisibleParentForApps;
+        QWidget              invisibleParentForApps;
         AppCollectionModel & openGLAppsModel;
         AppCollectionModel & softwareAppsModel;
     };
-}
+} // namespace Ouquitoure

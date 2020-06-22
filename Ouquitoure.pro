@@ -29,6 +29,7 @@ RESOURCES += \
     res/icons.qrc
 
 DISTFILES += \
+    .clang-format \
     $$files(include/*) \
     $$files(include/OpenGLApps/*) \
     $$files(include/SoftwareApps/*)

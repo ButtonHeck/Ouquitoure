@@ -18,17 +18,16 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit CoreAppWindow( QWidget *parent = nullptr );
+        explicit CoreAppWindow( QWidget * parent = nullptr );
         ~CoreAppWindow();
 
     private slots:
         bool launchApp();
 
     private:
-        Ui::CoreAppWindow *ui;
+        Ui::CoreAppWindow *  ui;
         AppCollectionModel * openGLAppsCollectionModel;
         AppCollectionModel * softwareAppsCollectionModel;
-        AppLibraryManager appLibraryManager;
+        AppLibraryManager    appLibraryManager;
     };
-}
-
+} // namespace Ouquitoure

@@ -3,17 +3,19 @@
 namespace Ouquitoure
 {
 
-    AppInfo::AppInfo(QString && name, QStringList && tags, APP_TYPE type)
-        : name(name)
-        , tags(tags)
-        , type(type)
-    {}
+    AppInfo::AppInfo( QString && name, QStringList && tags, APP_TYPE type )
+        : name( name )
+        , tags( tags )
+        , type( type )
+    {
+    }
 
-    AppInfo::AppInfo(const char * name, const std::initializer_list<QString> & tags, Ouquitoure::APP_TYPE type)
-        : name(name)
-        , tags(tags)
-        , type(type)
-    {}
+    AppInfo::AppInfo( const char * name, const std::initializer_list<QString> & tags, Ouquitoure::APP_TYPE type )
+        : name( name )
+        , tags( tags )
+        , type( type )
+    {
+    }
 
     const QString & AppInfo::getName() const noexcept
     {
@@ -30,4 +32,4 @@ namespace Ouquitoure
         return type;
     }
 
-}
+} // namespace Ouquitoure

@@ -8,9 +8,9 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit SoftwareAppBase(QWidget * parent = nullptr);
+        explicit SoftwareAppBase( QWidget * parent = nullptr );
         virtual ~SoftwareAppBase() = default;
 
     protected:
     };
-}
+} // namespace Ouquitoure

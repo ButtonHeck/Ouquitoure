@@ -5,12 +5,12 @@
 namespace Ouquitoure
 {
 
-    AppLibraryManager::AppLibraryManager(AppCollectionModel & openGLAppsModel, AppCollectionModel & softwareAppsModel)
+    AppLibraryManager::AppLibraryManager( AppCollectionModel & openGLAppsModel, AppCollectionModel & softwareAppsModel )
         : invisibleParentForApps()
-        , openGLAppsModel(openGLAppsModel)
-        , softwareAppsModel(softwareAppsModel)
+        , openGLAppsModel( openGLAppsModel )
+        , softwareAppsModel( softwareAppsModel )
     {
-        openGLAppsModel.addApplication( new ColoredTriangleApp(&invisibleParentForApps) );
+        openGLAppsModel.addApplication( new ColoredTriangleApp( &invisibleParentForApps ) );
     }
 
-}
+} // namespace Ouquitoure

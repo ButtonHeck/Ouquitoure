@@ -8,6 +8,6 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit AppCollectionView( QWidget *parent = nullptr );
+        explicit AppCollectionView( QWidget * parent = nullptr );
     };
-}
+} // namespace Ouquitoure
