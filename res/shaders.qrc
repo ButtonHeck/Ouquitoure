@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shaders/ColoredTriangle/main.fs</file>
+        <file>shaders/ColoredTriangle/main.vs</file>
+    </qresource>
+</RCC>

@@ -9,7 +9,7 @@ win32-msvc*{
     before_build.commands = chcp 1251
 }
 
-QT += core gui widgets
+QT += core gui widgets opengl
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
@@ -26,7 +26,7 @@ HEADERS += $$files(src/*.h) \
 FORMS += $$files(src/*.ui)
 
 RESOURCES += \
-    res/icons.qrc
+    $$files(res/*.qrc)
 
 DISTFILES += \
     .clang-format \

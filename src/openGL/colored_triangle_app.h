@@ -1,6 +1,7 @@
 #pragma once
 
 #include <OpenGLApps/OpenGLAppBase>
+#include <OpenGLApps/ColoredTriangleWidget>
 
 namespace Ouquitoure
 {
@@ -11,6 +12,7 @@ namespace Ouquitoure
         ~ColoredTriangleApp() = default;
 
     private:
+        ColoredTriangleWidget viewWidget;
     };
 
 } // namespace Ouquitoure

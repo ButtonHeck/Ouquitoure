@@ -35,10 +35,6 @@ namespace Ouquitoure
         viewDockWidget->setAllowedAreas( Qt::RightDockWidgetArea );
         viewDockWidget->setWindowTitle( "View" );
         viewDockWidget->setFeatures( QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable );
-        OpenGLWidgetBase * viewOpenGLWidget = new OpenGLWidgetBase( appName, this );
-        viewDockWidget->setWidget( viewOpenGLWidget );
-        viewOpenGLWidget->setMinimumSize( 640, 480 );
-        viewOpenGLWidget->setSizePolicy( sizePolicy );
         addDockWidget( Qt::RightDockWidgetArea, viewDockWidget );
 
         appLayout->addWidget( controlsGroupBox );
@@ -49,6 +45,13 @@ namespace Ouquitoure
     OpenGLAppBase::~OpenGLAppBase()
     {
         OQ_LOG_DEBUG << appName << " app dtor";
+    }
+
+    void OpenGLAppBase::installOpenGLViewWidget( OpenGLWidgetBase & widget )
+    {
+        viewDockWidget->setWidget( &widget );
+        widget.setMinimumSize( 640, 480 );
+        widget.setSizePolicy( centralWidget()->sizePolicy() );
     }
 
     void OpenGLAppBase::resizeEvent( QResizeEvent * event )

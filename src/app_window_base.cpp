@@ -1,5 +1,7 @@
 #include "AppWindowBase"
 
+#include "Log"
+
 namespace Ouquitoure
 {
 

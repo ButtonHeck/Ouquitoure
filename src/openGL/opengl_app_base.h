@@ -4,6 +4,8 @@
 
 namespace Ouquitoure
 {
+    class OpenGLWidgetBase;
+
     class OpenGLAppBase : public AppWindowBase
     {
         Q_OBJECT
@@ -12,6 +14,9 @@ namespace Ouquitoure
         virtual ~OpenGLAppBase();
 
         void resizeEvent( QResizeEvent * event ) override;
+
+    protected:
+        void installOpenGLViewWidget( OpenGLWidgetBase & widget );
 
     protected:
         QString       appName;
