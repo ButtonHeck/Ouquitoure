@@ -1,7 +1,5 @@
 #include "OpenGLApps/OpenGLAppBase"
 
-#include <QHBoxLayout>
-#include <QGroupBox>
 #include <QDockWidget>
 #include <QResizeEvent>
 
@@ -14,6 +12,8 @@ namespace Ouquitoure
     OpenGLAppBase::OpenGLAppBase( const QString & name, QWidget * parent )
         : AppWindowBase( parent )
         , appName( name )
+        , appLayout( new QHBoxLayout )
+        , controlsGroupBox( new QGroupBox( "Controls" ) )
     {
         OQ_LOG_DEBUG << appName << " app ctor";
         setWindowTitle( appName );
@@ -26,8 +26,6 @@ namespace Ouquitoure
         QSizePolicy sizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
         centralWidget->setSizePolicy( sizePolicy );
 
-        QHBoxLayout * appLayout        = new QHBoxLayout();
-        QGroupBox *   controlsGroupBox = new QGroupBox( "Controls" );
         controlsGroupBox->setSizePolicy( sizePolicy );
         controlsGroupBox->setMinimumSize( 480, 480 );
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QHBoxLayout>
+#include <QGroupBox>
+
 #include "AppWindowBase"
 
 namespace Ouquitoure
@@ -21,6 +24,8 @@ namespace Ouquitoure
     protected:
         QString       appName;
         QDockWidget * viewDockWidget;
+        QHBoxLayout * appLayout;
+        QGroupBox *   controlsGroupBox;
     };
 
 } // namespace Ouquitoure

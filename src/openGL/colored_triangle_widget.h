@@ -20,9 +20,9 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
-        GLuint vao;
-        GLuint vbo;
-        QVector<Utils::Point2Pos3Color> points;
+        GLuint             vao;
+        GLuint             vbo;
+        QVector<Point2p3c> points;
     };
 
 } // namespace Ouquitoure
