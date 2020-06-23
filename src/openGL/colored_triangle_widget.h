@@ -1,5 +1,7 @@
 #pragma once
 
+#include <array>
+
 #include "OpenGLApps/OpenGLWidgetBase"
 #include "Utils/Point2Pos3Color"
 
@@ -7,12 +9,21 @@ namespace Ouquitoure
 {
     class ColoredTriangleWidget : public OpenGLWidgetBase
     {
+        Q_OBJECT
+    public:
+        constexpr static int NUM_POINTS = 3;
+
     public:
         explicit ColoredTriangleWidget( const QString & name, QWidget * parent = nullptr );
         ~ColoredTriangleWidget();
 
-        void initializeGL() override;
-        void paintGL() override;
+        void                                      initializeGL() override;
+        void                                      paintGL() override;
+        const std::array<Point2p3c, NUM_POINTS> & getPoints() const noexcept;
+
+    public slots:
+        void vertexPositionChanged( int value );
+        void vertexColorChanged( int value );
 
     protected:
         void initializeOpenGLObjects() override;
@@ -20,9 +31,12 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
-        GLuint             vao;
-        GLuint             vbo;
-        QVector<Point2p3c> points;
+        void updateData();
+
+    private:
+        GLuint                            vao;
+        GLuint                            vbo;
+        std::array<Point2p3c, NUM_POINTS> points;
     };
 
 } // namespace Ouquitoure

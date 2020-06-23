@@ -10,10 +10,10 @@ namespace Ouquitoure
         : OpenGLWidgetBase( name, parent )
         , vao( 0 )
         , vbo( 0 )
-        , points()
     {
-        points << Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 } << Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 }
-               << Point2p3c{ -0.5, -0.5, 0.0, 0.0, 1.0 };
+        points[ 0 ] = Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 };
+        points[ 1 ] = Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 };
+        points[ 2 ] = Point2p3c{ -0.5, -0.5, 0.0, 0.0, 1.0 };
     }
 
     ColoredTriangleWidget::~ColoredTriangleWidget()
@@ -41,7 +41,47 @@ namespace Ouquitoure
     void ColoredTriangleWidget::paintGL()
     {
         glClear( GL_COLOR_BUFFER_BIT );
-        glDrawArrays( GL_TRIANGLES, 0, 3 );
+        glDrawArrays( GL_TRIANGLES, 0, NUM_POINTS );
+    }
+
+    const std::array<Ouquitoure::Point2p3c, ColoredTriangleWidget::NUM_POINTS> &
+    ColoredTriangleWidget::getPoints() const noexcept
+    {
+        return points;
+    }
+
+    void ColoredTriangleWidget::vertexPositionChanged( int value )
+    {
+        bool isX   = sender()->objectName().left( 1 ) == 'x';
+        int  index = sender()->objectName().right( 1 ).toInt();
+        if( isX )
+        {
+            points[ index ].point.posColor.x = value / 100.0;
+        }
+        else
+        {
+            points[ index ].point.posColor.y = value / 100.0;
+        }
+        updateData();
+    }
+
+    void ColoredTriangleWidget::vertexColorChanged( int value )
+    {
+        QChar color = sender()->objectName().left( 1 )[ 0 ];
+        int   index = sender()->objectName().right( 1 ).toInt();
+        if( color == 'R' )
+        {
+            points[ index ].point.posColor.r = value / 255.0;
+        }
+        else if( color == 'G' )
+        {
+            points[ index ].point.posColor.g = value / 255.0;
+        }
+        else
+        {
+            points[ index ].point.posColor.b = value / 255.0;
+        }
+        updateData();
     }
 
     void ColoredTriangleWidget::initializeOpenGLObjects()
@@ -92,6 +132,13 @@ namespace Ouquitoure
             glDeleteProgram( shaderProgram->programId() );
         }
         shaderPrograms.clear();
+    }
+
+    void ColoredTriangleWidget::updateData()
+    {
+        makeCurrent();
+        glBufferData( GL_ARRAY_BUFFER, points.size() * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
+        update();
     }
 
 } // namespace Ouquitoure

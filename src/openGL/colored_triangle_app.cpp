@@ -16,7 +16,7 @@ namespace Ouquitoure
 
         // GUI view and layouts setup
         QVBoxLayout * controlsLayout = new QVBoxLayout( controlsGroupBox );
-        for( int pointIndex = 0; pointIndex < 3; ++pointIndex )
+        for( int pointIndex = 0; pointIndex < ColoredTriangleWidget::NUM_POINTS; ++pointIndex )
         {
             QGroupBox *   pointGroupBox  = new QGroupBox( "Point " + QString::number( pointIndex + 1 ) );
             QGridLayout * settingsLayout = new QGridLayout( pointGroupBox );
@@ -36,17 +36,22 @@ namespace Ouquitoure
             xSlider->setObjectName( "xSlider " + QString::number( pointIndex ) );
             xSlider->setRange( -100, 100 );
             xSlider->setTickInterval( 1 );
+            xSlider->setValue( viewWidget.getPoints()[ pointIndex ].point.posColor.x * 100 );
             settingsLayout->addWidget( xSlider, 0, 2, 1, 10 );
             // Point Y position slider
             QSlider * ySlider = new QSlider( Qt::Vertical );
             ySlider->setObjectName( "ySlider " + QString::number( pointIndex ) );
             ySlider->setRange( -100, 100 );
             ySlider->setTickInterval( 1 );
+            ySlider->setValue( viewWidget.getPoints()[ pointIndex ].point.posColor.y * 100 );
             settingsLayout->addWidget( ySlider, 2, 0, 5, 1 );
 
-            // connections
+            // GUI connections
             connect( xSlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
             connect( ySlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
+            // OpenGL connections
+            connect( xSlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
+            connect( ySlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
 
             // Palettes and label names
             QPalette redPalette;
@@ -58,7 +63,7 @@ namespace Ouquitoure
             QVector<QPalette> palettes{ redPalette, greenPalette, bluePalette };
             QStringList       labels{ "R", "G", "B" };
 
-            for( int colorIndex = 0; colorIndex < 3; ++colorIndex )
+            for( int colorIndex = 0; colorIndex < labels.size(); ++colorIndex )
             {
                 // Label
                 QLabel * label = new QLabel( labels[ colorIndex ] );
@@ -74,14 +79,20 @@ namespace Ouquitoure
                 settingsLayout->addWidget( spinBox, 2 + colorIndex, 2, 1, 1 );
                 // Slider
                 QSlider * slider = new QSlider( Qt::Horizontal );
+                slider->setObjectName( labels[ colorIndex ] + QString::number( pointIndex ) );
                 slider->setTickInterval( 1 );
                 slider->setRange( 0, 255 );
                 slider->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
                 settingsLayout->addWidget( slider, 2 + colorIndex, 3, 1, 9 );
 
-                // connections
+                // GUI connections
                 connect( spinBox, SIGNAL( valueChanged( int ) ), slider, SLOT( setValue( int ) ) );
                 connect( slider, SIGNAL( valueChanged( int ) ), spinBox, SLOT( setValue( int ) ) );
+
+                slider->setValue( viewWidget.getPoints()[ pointIndex ].point._data[ 2 + colorIndex ] * 255 );
+
+                // OpenGL connections
+                connect( slider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexColorChanged( int ) ) );
             }
             controlsLayout->addWidget( pointGroupBox );
         }
