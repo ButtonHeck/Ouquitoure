@@ -57,8 +57,8 @@ namespace Ouquitoure
             connect( xSlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
             connect( ySlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
             // update position labels
-            xSlider->setValue( CURRENT_POINT.point.posColor.x * 100 );
-            ySlider->setValue( CURRENT_POINT.point.posColor.y * 100 );
+            xSlider->setValue( CURRENT_POINT.x() * 100 );
+            ySlider->setValue( CURRENT_POINT.y() * 100 );
             // OpenGL connections
             connect( xSlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
             connect( ySlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
@@ -100,7 +100,7 @@ namespace Ouquitoure
                 connect( spinBox, SIGNAL( valueChanged( int ) ), slider, SLOT( setValue( int ) ) );
                 connect( slider, SIGNAL( valueChanged( int ) ), spinBox, SLOT( setValue( int ) ) );
 
-                slider->setValue( CURRENT_POINT.point._data[ 2 + colorIndex ] * 255 );
+                slider->setValue( CURRENT_POINT._data[ Point2p3c::COLOR_OFFSET + colorIndex ] * 255 );
 
                 // OpenGL connections
                 connect( slider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexColorChanged( int ) ) );

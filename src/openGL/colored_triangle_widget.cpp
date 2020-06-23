@@ -57,11 +57,11 @@ namespace Ouquitoure
         const float NORMALIZED_VALUE = value / 100.0;
         if( isX )
         {
-            points[ index ].point.posColor.x = NORMALIZED_VALUE;
+            points[ index ].x() = NORMALIZED_VALUE;
         }
         else
         {
-            points[ index ].point.posColor.y = NORMALIZED_VALUE;
+            points[ index ].y() = NORMALIZED_VALUE;
         }
         updateData();
     }
@@ -73,15 +73,15 @@ namespace Ouquitoure
         const float NORMALIZED_VALUE = value / 255.0;
         if( color == 'R' )
         {
-            points[ index ].point.posColor.r = NORMALIZED_VALUE;
+            points[ index ].r() = NORMALIZED_VALUE;
         }
         else if( color == 'G' )
         {
-            points[ index ].point.posColor.g = NORMALIZED_VALUE;
+            points[ index ].g() = NORMALIZED_VALUE;
         }
         else
         {
-            points[ index ].point.posColor.b = NORMALIZED_VALUE;
+            points[ index ].b() = NORMALIZED_VALUE;
         }
         updateData();
     }
@@ -92,7 +92,7 @@ namespace Ouquitoure
         glCreateVertexArrays( 1, &vao );
         glBindVertexArray( vao );
         glBindBuffer( GL_ARRAY_BUFFER, vbo );
-        glBufferData( GL_ARRAY_BUFFER, points.size() * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
+        glBufferData( GL_ARRAY_BUFFER, NUM_POINTS * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, sizeof( Point2p3c ), 0 );
         glEnableVertexAttribArray( 1 );

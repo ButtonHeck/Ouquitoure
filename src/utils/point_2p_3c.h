@@ -7,8 +7,11 @@ namespace Ouquitoure
 {
     namespace Utils
     {
-        struct Point2Pos3Color
+        union Point2Pos3Color
         {
+            constexpr static int POSITION_OFFSET = 0;
+            constexpr static int COLOR_OFFSET    = 2;
+
             struct PosColor
             {
                 // position
@@ -29,31 +32,69 @@ namespace Ouquitoure
                 {
                 }
             };
-            union Point
-            {
-                Point() = default;
-                Point( float x, float y, float r, float g, float b )
-                    : posColor( x, y, r, g, b )
-                {
-                }
-                PosColor posColor;
-                float    _data[ 5 ];
-            } point;
 
             Point2Pos3Color() = default;
             Point2Pos3Color( float x, float y, float r, float g, float b )
-                : point( x, y, r, g, b )
+                : posColor( x, y, r, g, b )
             {
             }
             Point2Pos3Color( QVector2D && position, QVector3D && color )
-                : point( position.x(), position.y(), color.x(), color.y(), color.z() )
+                : posColor( position.x(), position.y(), color.x(), color.y(), color.z() )
             {
             }
 
             inline float * data()
             {
-                return point._data;
+                return _data;
             }
+
+            inline float & x() noexcept
+            {
+                return posColor.x;
+            }
+            inline const float & x() const noexcept
+            {
+                return posColor.x;
+            }
+
+            inline float & y() noexcept
+            {
+                return posColor.y;
+            }
+            inline const float & y() const noexcept
+            {
+                return posColor.y;
+            }
+
+            inline float & r() noexcept
+            {
+                return posColor.r;
+            }
+            inline const float & r() const noexcept
+            {
+                return posColor.r;
+            }
+
+            inline float & g() noexcept
+            {
+                return posColor.g;
+            }
+            inline const float & g() const noexcept
+            {
+                return posColor.g;
+            }
+
+            inline float & b() noexcept
+            {
+                return posColor.b;
+            }
+            inline const float & b() const noexcept
+            {
+                return posColor.b;
+            }
+
+            PosColor posColor;
+            float    _data[ 5 ];
         };
 
     } // namespace Utils
