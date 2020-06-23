@@ -57,4 +57,14 @@ namespace Ouquitoure
         resizeDocks( { viewDockWidget }, { event->size().width() / 2 }, Qt::Horizontal );
     }
 
+    void OpenGLAppBase::closeEvent( QCloseEvent * event )
+    {
+        Q_UNUSED( event );
+        OQ_LOG_DEBUG << appName << " closes";
+        if( viewDockWidget->isFloating() )
+        {
+            viewDockWidget->setFloating(false);
+        }
+    }
+
 } // namespace Ouquitoure

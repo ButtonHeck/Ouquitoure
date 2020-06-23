@@ -17,6 +17,7 @@ namespace Ouquitoure
         virtual ~OpenGLAppBase();
 
         void resizeEvent( QResizeEvent * event ) override;
+        void closeEvent( QCloseEvent * event ) override;
 
     protected:
         void installOpenGLViewWidget( OpenGLWidgetBase & widget );
