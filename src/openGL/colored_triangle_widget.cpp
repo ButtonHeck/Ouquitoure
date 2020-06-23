@@ -52,34 +52,36 @@ namespace Ouquitoure
 
     void ColoredTriangleWidget::vertexPositionChanged( int value )
     {
-        bool isX   = sender()->objectName().left( 1 ) == 'x';
-        int  index = sender()->objectName().right( 1 ).toInt();
+        bool        isX              = sender()->objectName().left( 1 ) == 'x';
+        int         index            = sender()->objectName().right( 1 ).toInt();
+        const float NORMALIZED_VALUE = value / 100.0;
         if( isX )
         {
-            points[ index ].point.posColor.x = value / 100.0;
+            points[ index ].point.posColor.x = NORMALIZED_VALUE;
         }
         else
         {
-            points[ index ].point.posColor.y = value / 100.0;
+            points[ index ].point.posColor.y = NORMALIZED_VALUE;
         }
         updateData();
     }
 
     void ColoredTriangleWidget::vertexColorChanged( int value )
     {
-        QChar color = sender()->objectName().left( 1 )[ 0 ];
-        int   index = sender()->objectName().right( 1 ).toInt();
+        QChar       color            = sender()->objectName().left( 1 )[ 0 ];
+        int         index            = sender()->objectName().right( 1 ).toInt();
+        const float NORMALIZED_VALUE = value / 255.0;
         if( color == 'R' )
         {
-            points[ index ].point.posColor.r = value / 255.0;
+            points[ index ].point.posColor.r = NORMALIZED_VALUE;
         }
         else if( color == 'G' )
         {
-            points[ index ].point.posColor.g = value / 255.0;
+            points[ index ].point.posColor.g = NORMALIZED_VALUE;
         }
         else
         {
-            points[ index ].point.posColor.b = value / 255.0;
+            points[ index ].point.posColor.b = NORMALIZED_VALUE;
         }
         updateData();
     }
@@ -137,7 +139,7 @@ namespace Ouquitoure
     void ColoredTriangleWidget::updateData()
     {
         makeCurrent();
-        glBufferData( GL_ARRAY_BUFFER, points.size() * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
+        glBufferData( GL_ARRAY_BUFFER, NUM_POINTS * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
         update();
     }
 

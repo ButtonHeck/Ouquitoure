@@ -22,33 +22,43 @@ namespace Ouquitoure
             QGridLayout * settingsLayout = new QGridLayout( pointGroupBox );
             settingsLayout->setColumnMinimumWidth( 0, 30 );
 
+            // some utility variables
+            const QString     POINT_INDEX_STRING = QString::number( pointIndex );
+            const Point2p3c & CURRENT_POINT      = viewWidget.getPoints()[ pointIndex ];
+            QFont             colorLabelsFont    = pointGroupBox->font();
+            colorLabelsFont.setBold( true );
+
             // Position controls and indicator labels
             QLabel * xyLabel = new QLabel( "Y \\ X" );
+            xyLabel->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
             settingsLayout->addWidget( xyLabel, 0, 0, 1, 1 );
             xPosLabel[ pointIndex ] = new QLabel( "0" );
             settingsLayout->addWidget( xPosLabel[ pointIndex ], 0, 1, 1, 1 );
             yPosLabel[ pointIndex ] = new QLabel( "0" );
-            yPosLabel[ pointIndex ]->setAlignment( Qt::AlignLeft );
+            yPosLabel[ pointIndex ]->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
             settingsLayout->addWidget( yPosLabel[ pointIndex ], 1, 0, 1, 1 );
 
             // Point X position slider
             QSlider * xSlider = new QSlider( Qt::Horizontal );
-            xSlider->setObjectName( "xSlider " + QString::number( pointIndex ) );
+            xSlider->setObjectName( "xSlider " + POINT_INDEX_STRING );
             xSlider->setRange( -100, 100 );
             xSlider->setTickInterval( 1 );
-            xSlider->setValue( viewWidget.getPoints()[ pointIndex ].point.posColor.x * 100 );
+            xSlider->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
             settingsLayout->addWidget( xSlider, 0, 2, 1, 10 );
             // Point Y position slider
             QSlider * ySlider = new QSlider( Qt::Vertical );
-            ySlider->setObjectName( "ySlider " + QString::number( pointIndex ) );
+            ySlider->setObjectName( "ySlider " + POINT_INDEX_STRING );
             ySlider->setRange( -100, 100 );
             ySlider->setTickInterval( 1 );
-            ySlider->setValue( viewWidget.getPoints()[ pointIndex ].point.posColor.y * 100 );
+            ySlider->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Expanding );
             settingsLayout->addWidget( ySlider, 2, 0, 5, 1 );
 
             // GUI connections
             connect( xSlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
             connect( ySlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
+            // update position labels
+            xSlider->setValue( CURRENT_POINT.point.posColor.x * 100 );
+            ySlider->setValue( CURRENT_POINT.point.posColor.y * 100 );
             // OpenGL connections
             connect( xSlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
             connect( ySlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
@@ -57,17 +67,18 @@ namespace Ouquitoure
             QPalette redPalette;
             redPalette.setColor( QPalette::WindowText, Qt::red );
             QPalette greenPalette;
-            greenPalette.setColor( QPalette::WindowText, Qt::green );
+            greenPalette.setColor( QPalette::WindowText, Qt::darkGreen );
             QPalette bluePalette;
             bluePalette.setColor( QPalette::WindowText, Qt::blue );
             QVector<QPalette> palettes{ redPalette, greenPalette, bluePalette };
             QStringList       labels{ "R", "G", "B" };
 
-            for( int colorIndex = 0; colorIndex < labels.size(); ++colorIndex )
+            for( int colorIndex = 0; colorIndex < palettes.size(); ++colorIndex )
             {
                 // Label
                 QLabel * label = new QLabel( labels[ colorIndex ] );
                 label->setPalette( palettes[ colorIndex ] );
+                label->setFont( colorLabelsFont );
                 label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
                 settingsLayout->addWidget( label, 2 + colorIndex, 1, 1, 1 );
                 // SpinBox
@@ -75,21 +86,21 @@ namespace Ouquitoure
                 spinBox->setRange( 0, 255 );
                 spinBox->setSingleStep( 1 );
                 spinBox->setMaximumWidth( 50 );
-                spinBox->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Expanding );
+                spinBox->setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Fixed );
                 settingsLayout->addWidget( spinBox, 2 + colorIndex, 2, 1, 1 );
                 // Slider
                 QSlider * slider = new QSlider( Qt::Horizontal );
                 slider->setObjectName( labels[ colorIndex ] + QString::number( pointIndex ) );
                 slider->setTickInterval( 1 );
                 slider->setRange( 0, 255 );
-                slider->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+                slider->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
                 settingsLayout->addWidget( slider, 2 + colorIndex, 3, 1, 9 );
 
                 // GUI connections
                 connect( spinBox, SIGNAL( valueChanged( int ) ), slider, SLOT( setValue( int ) ) );
                 connect( slider, SIGNAL( valueChanged( int ) ), spinBox, SLOT( setValue( int ) ) );
 
-                slider->setValue( viewWidget.getPoints()[ pointIndex ].point._data[ 2 + colorIndex ] * 255 );
+                slider->setValue( CURRENT_POINT.point._data[ 2 + colorIndex ] * 255 );
 
                 // OpenGL connections
                 connect( slider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexColorChanged( int ) ) );
