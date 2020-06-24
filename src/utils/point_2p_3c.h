@@ -3,38 +3,36 @@
 #include <QVector2D>
 #include <QVector3D>
 
+#include "Utils/Point2D"
+#include "Utils/Point3D"
+
 namespace Ouquitoure
 {
     namespace Math
     {
+
+        template<typename T>
         union Point2Pos3Color
         {
+            constexpr static int NUM_ELEMENTS    = Point2D<T>::NUM_ELEMENTS + Point3D<T>::NUM_ELEMENTS;
             constexpr static int POSITION_OFFSET = 0;
             constexpr static int COLOR_OFFSET    = 2;
 
             struct PosColor
             {
-                // position
-                float x;
-                float y;
-                // color
-                float r;
-                float g;
-                float b;
+                Point2D<T> pos;
+                Point3D<T> color;
 
                 PosColor() = default;
-                PosColor( float x, float y, float r, float g, float b )
-                    : x( x )
-                    , y( y )
-                    , r( r )
-                    , g( g )
-                    , b( b )
+                PosColor( T x, T y, T r, T g, T b )
+                    : pos( x, y )
+                    , color( r, g, b )
                 {
                 }
             };
 
             Point2Pos3Color() = default;
-            Point2Pos3Color( float x, float y, float r, float g, float b )
+            Point2Pos3Color( T x, T y, T r, T g, T b )
                 : posColor( x, y, r, g, b )
             {
             }
@@ -43,62 +41,78 @@ namespace Ouquitoure
             {
             }
 
-            inline float * data()
+            // data buffer
+
+            inline T * data()
+            {
+                return _data;
+            }
+            inline const T * data() const
             {
                 return _data;
             }
 
-            inline float & x() noexcept
+            // X
+
+            inline T & x() noexcept
             {
-                return posColor.x;
+                return posColor.pos.x();
             }
-            inline const float & x() const noexcept
+            inline const T & x() const noexcept
             {
-                return posColor.x;
+                return posColor.pos.x();
             }
 
-            inline float & y() noexcept
+            // Y
+
+            inline T & y() noexcept
             {
-                return posColor.y;
+                return posColor.pos.y();
             }
-            inline const float & y() const noexcept
+            inline const T & y() const noexcept
             {
-                return posColor.y;
+                return posColor.pos.y();
             }
 
-            inline float & r() noexcept
+            // Red
+
+            inline T & r() noexcept
             {
-                return posColor.r;
+                return posColor.color.r();
             }
-            inline const float & r() const noexcept
+            inline const T & r() const noexcept
             {
-                return posColor.r;
+                return posColor.color.r();
             }
 
-            inline float & g() noexcept
+            // Green
+
+            inline T & g() noexcept
             {
-                return posColor.g;
+                return posColor.color.g();
             }
-            inline const float & g() const noexcept
+            inline const T & g() const noexcept
             {
-                return posColor.g;
+                return posColor.color.g();
             }
 
-            inline float & b() noexcept
+            // Blue
+
+            inline T & b() noexcept
             {
-                return posColor.b;
+                return posColor.color.b();
             }
-            inline const float & b() const noexcept
+            inline const T & b() const noexcept
             {
-                return posColor.b;
+                return posColor.color.b();
             }
 
             PosColor posColor;
-            float    _data[ 5 ];
+            T        _data[ NUM_ELEMENTS ];
         };
 
-    } // namespace Utils
+    } // namespace Math
 
-    using Point2p3c = Math::Point2Pos3Color;
+    using Point2p3c = Math::Point2Pos3Color<float>;
 
 } // namespace Ouquitoure
