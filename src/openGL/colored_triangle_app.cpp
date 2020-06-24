@@ -11,7 +11,7 @@ namespace Ouquitoure
         : OpenGLAppBase( appName, parent )
         , viewWidget( appName, parent )
     {
-        info = AppInfo( appName, { "basic", "triangle" }, OPENGL_APP );
+        initializeDescription();
         installOpenGLViewWidget( viewWidget );
 
         // GUI view and layouts setup
@@ -107,6 +107,12 @@ namespace Ouquitoure
             }
             controlsLayout->addWidget( pointGroupBox );
         }
+    }
+
+    void ColoredTriangleApp::initializeDescription()
+    {
+        info = AppInfo( appName, { "basic", "triangle" }, OPENGL_APP );
+        info.getDescription().setName( appName );
     }
 
     void ColoredTriangleApp::positionSliderValueChanged( int value )

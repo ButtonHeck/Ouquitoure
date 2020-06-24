@@ -16,6 +16,9 @@ namespace Ouquitoure
         const AppInfo & getInfo() const noexcept;
 
     protected:
+        virtual void initializeDescription() = 0;
+
+    protected:
         AppInfo info;
     };
 

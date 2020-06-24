@@ -26,12 +26,16 @@ namespace Ouquitoure
         ui->openGLAppsView->setModel( openGLAppsCollectionModel );
         connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), openGLAppsCollectionModel,
                  SLOT( tableEntryClick( const QModelIndex & ) ) );
+        connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), this,
+                 SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->openGLAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );
 
         // software stuff
         ui->softwareAppsView->setModel( softwareAppsCollectionModel );
         connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), softwareAppsCollectionModel,
                  SLOT( tableEntryClick( const QModelIndex & ) ) );
+        connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), this,
+                 SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->softwareAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );
 
         connect( ui->launchAppButton, SIGNAL( clicked() ), SLOT( launchApp() ) );
@@ -44,30 +48,8 @@ namespace Ouquitoure
 
     bool CoreAppWindow::launchApp()
     {
-        const APP_TYPE appType = [ & ]() {
-            const auto APP_TABLE_VIEW_CURRENT_TAB_INDEX = ui->appLibraryTabWidget->currentIndex();
-            switch( APP_TABLE_VIEW_CURRENT_TAB_INDEX )
-            {
-            case 0:
-                return OPENGL_APP;
-            case 1:
-                return SOFTWARE_APP;
-            default:
-                throw std::runtime_error( "Not suitable app type for table view tab index" );
-            }
-        }();
-
-        const QString appName = [ & ]( const APP_TYPE TYPE ) {
-            switch( TYPE )
-            {
-            case OPENGL_APP:
-                return openGLAppsCollectionModel->getCurrentAppInfo().getName();
-            case SOFTWARE_APP:
-                return softwareAppsCollectionModel->getCurrentAppInfo().getName();
-            default:
-                throw std::invalid_argument( "Not suitable application type" );
-            }
-        }( appType );
+        const APP_TYPE appType = getAppType();
+        const QString  appName = getAppName( appType );
         OQ_LOG_INFO << appName << "sender:(" << sender()->objectName() << ")";
 
         switch( appType )
@@ -92,6 +74,53 @@ namespace Ouquitoure
         }
         default:
             return false;
+        }
+    }
+
+    void CoreAppWindow::updateDescriptionWindowInfo()
+    {
+        const APP_TYPE appType = getAppType();
+        const QString  appName = getAppName( appType );
+
+        AppWindowBase * appWindow = nullptr;
+        if( appType == OPENGL_APP )
+        {
+            appWindow = openGLAppsCollectionModel->getApplication( appName );
+        }
+        else if( appType == SOFTWARE_APP )
+        {
+            appWindow = softwareAppsCollectionModel->getApplication( appName );
+        }
+        if( appWindow )
+        {
+            ui->descriptionView->setHtml( appWindow->getInfo().getDescription().getFullDescription() );
+        }
+    }
+
+    APP_TYPE CoreAppWindow::getAppType()
+    {
+        const auto APP_TABLE_VIEW_CURRENT_TAB_INDEX = ui->appLibraryTabWidget->currentIndex();
+        switch( APP_TABLE_VIEW_CURRENT_TAB_INDEX )
+        {
+        case 0:
+            return OPENGL_APP;
+        case 1:
+            return SOFTWARE_APP;
+        default:
+            throw std::runtime_error( "Not suitable app type for table view tab index" );
+        }
+    }
+
+    QString CoreAppWindow::getAppName( APP_TYPE type )
+    {
+        switch( type )
+        {
+        case OPENGL_APP:
+            return openGLAppsCollectionModel->getCurrentAppInfo().getName();
+        case SOFTWARE_APP:
+            return softwareAppsCollectionModel->getCurrentAppInfo().getName();
+        default:
+            throw std::invalid_argument( "Not suitable application type" );
         }
     }
 } // namespace Ouquitoure

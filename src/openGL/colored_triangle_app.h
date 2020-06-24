@@ -14,6 +14,9 @@ namespace Ouquitoure
         ColoredTriangleApp( const QString & appName, QWidget * parent );
         ~ColoredTriangleApp() = default;
 
+    protected:
+        void initializeDescription() override;
+
     private slots:
         void positionSliderValueChanged( int value );
 

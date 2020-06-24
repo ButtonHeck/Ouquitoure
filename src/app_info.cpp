@@ -32,4 +32,14 @@ namespace Ouquitoure
         return type;
     }
 
+    AppDescription & AppInfo::getDescription() noexcept
+    {
+        return description;
+    }
+
+    const Ouquitoure::AppDescription & AppInfo::getDescription() const noexcept
+    {
+        return description;
+    }
+
 } // namespace Ouquitoure

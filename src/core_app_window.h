@@ -23,6 +23,11 @@ namespace Ouquitoure
 
     private slots:
         bool launchApp();
+        void updateDescriptionWindowInfo();
+
+    private:
+        APP_TYPE getAppType();
+        QString  getAppName( APP_TYPE type );
 
     private:
         Ui::CoreAppWindow *  ui;
