@@ -27,7 +27,7 @@ namespace Ouquitoure
         void    setEmail( const QString & email );
         void    setBrief( const QString & brief );
         void    setAppImage( const QString & appImageFilename );
-        void    appReference( const ReferenceInfo & reference );
+        void    addReference( const ReferenceInfo & reference );
         void    setNotes( const QString & notes );
         QString getFullDescription() const;
 

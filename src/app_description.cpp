@@ -45,7 +45,7 @@ namespace Ouquitoure
         this->appImageFilename = appImageFilename;
     }
 
-    void AppDescription::appReference( const AppDescription::ReferenceInfo & reference )
+    void AppDescription::addReference( const AppDescription::ReferenceInfo & reference )
     {
         references << reference;
     }
@@ -61,8 +61,8 @@ namespace Ouquitoure
         text << "<meta charset=\"utf-8\">";
         text << "<title>" << name << "</title>";
         text << "<style>";
-        text << "h1 { font-family: 'Times New Roman', Times, serif; }";
-        text << "p { font-family: 'Times New Roman', Times, serif; font-size: 14pt; }";
+        text << "h1 { font-family: 'Monospace'; }";
+        text << "p { font-family: 'Monospace'; font-size: 14pt; }";
         text << "</style>";
 
         text << "</head>";
@@ -85,7 +85,7 @@ namespace Ouquitoure
         for( auto & reference: references )
         {
             text << "<u>" << reference.first.url() << "</u><br>";
-            text << reference.second << "<br>";
+            text << "<i>" << reference.second << "</i><br>";
         }
         text << "</p>";
         text << "<p><u>Notes"
