@@ -3,7 +3,6 @@
 #include <QString>
 #include <QPair>
 #include <QVector>
-#include <QPixmap>
 #include <QUrl>
 
 namespace Ouquitoure
@@ -14,20 +13,22 @@ namespace Ouquitoure
     public:
         using ReferenceInfo = QPair<QUrl, QString>;
 
-        AppDescription();
+        AppDescription() = default;
         AppDescription( const QString &                name,
                         const QString &                author,
                         const QString &                email,
                         const QString &                brief,
                         const QString &                appImageFilename,
-                        const QVector<ReferenceInfo> & references );
+                        const QVector<ReferenceInfo> & references,
+                        const QString &                notes );
 
         void    setName( const QString & name );
         void    setAuthor( const QString & author );
         void    setEmail( const QString & email );
         void    setBrief( const QString & brief );
-        void    setAppImage( const QString & appViewFilename );
+        void    setAppImage( const QString & appImageFilename );
         void    appReference( const ReferenceInfo & reference );
+        void    setNotes( const QString & notes );
         QString getFullDescription() const;
 
     private:
@@ -35,8 +36,9 @@ namespace Ouquitoure
         QString                author;
         QString                email;
         QString                brief;
-        QPixmap                appImage;
+        QString                appImageFilename;
         QVector<ReferenceInfo> references;
+        QString                notes;
     };
 
 } // namespace Ouquitoure

@@ -113,6 +113,15 @@ namespace Ouquitoure
     {
         info = AppInfo( appName, { "basic", "triangle" }, OPENGL_APP );
         info.getDescription().setName( appName );
+        info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
+        info.getDescription().setEmail( "buttonheck@gmail.com" );
+        info.getDescription().setBrief( "Hello world application. Just draws colored triangle. Vertices positions and "
+                                        "colors could be tweaked using Qt GUI." );
+        info.getDescription().setAppImage( ":/appImages/ColoredTriangle.png" );
+        info.getDescription().appReference(
+            { QUrl( "https://learnopengl.com/Getting-started/Hello-Triangle" ), "OpenGL hello world" } );
+        info.getDescription().setNotes( "I've created this test app during Ouquitoure development, just to make sure "
+                                        "that everything works as it expected" );
     }
 
     void ColoredTriangleApp::positionSliderValueChanged( int value )
