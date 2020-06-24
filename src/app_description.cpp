@@ -80,7 +80,7 @@ namespace Ouquitoure
              << "</u>"
              << ": " << brief << "</p>";
         text << "<p><u>Image</u>:<br>"
-             << "<img src='" << appImageFilename << "' height='300' width='600'/></p>";
+             << "<img src='" << appImageFilename << "' height='400' width='600'/></p>";
         text << "<p><u>References</u>:<br>";
         for( auto & reference: references )
         {
