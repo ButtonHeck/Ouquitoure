@@ -24,6 +24,7 @@ namespace Ouquitoure
     private slots:
         bool launchApp();
         void updateDescriptionWindowInfo();
+        void switchDescriptionWindowVisible();
 
     private:
         APP_TYPE getAppType();

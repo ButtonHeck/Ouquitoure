@@ -21,6 +21,10 @@ namespace Ouquitoure
         ui->setupUi( this );
         setWindowIcon( QIcon( ":/icons/logo.ico" ) );
         setWindowTitle( "Ouquitoure sandbox" );
+        QToolBar * toolbar = new QToolBar( "Toolbar", this );
+        addToolBar( toolbar );
+        toolbar->addAction( QIcon( ":/icons/show_description_icon.png" ), "Show description", this,
+                            SLOT( switchDescriptionWindowVisible() ) );
 
         // opengl stuff
         ui->openGLAppsView->setModel( openGLAppsCollectionModel );
@@ -94,6 +98,18 @@ namespace Ouquitoure
         if( appWindow )
         {
             ui->descriptionView->setHtml( appWindow->getInfo().getDescription().getFullDescription() );
+        }
+    }
+
+    void CoreAppWindow::switchDescriptionWindowVisible()
+    {
+        if( ui->descriptionDockWidget->isHidden() )
+        {
+            ui->descriptionDockWidget->show();
+        }
+        else
+        {
+            ui->descriptionDockWidget->hide();
         }
     }
 
