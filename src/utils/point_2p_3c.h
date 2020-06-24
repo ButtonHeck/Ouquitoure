@@ -5,7 +5,7 @@
 
 namespace Ouquitoure
 {
-    namespace Utils
+    namespace Math
     {
         union Point2Pos3Color
         {
@@ -99,6 +99,6 @@ namespace Ouquitoure
 
     } // namespace Utils
 
-    using Point2p3c = Utils::Point2Pos3Color;
+    using Point2p3c = Math::Point2Pos3Color;
 
 } // namespace Ouquitoure
