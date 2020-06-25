@@ -241,13 +241,6 @@
                  </property>
                 </widget>
                </item>
-               <item alignment="Qt::AlignLeft">
-                <widget class="QPushButton" name="launchAppSettingsButton">
-                 <property name="text">
-                  <string>App settings...</string>
-                 </property>
-                </widget>
-               </item>
                <item>
                 <spacer name="launchAppSpacer">
                  <property name="orientation">

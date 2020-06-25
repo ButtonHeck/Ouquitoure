@@ -26,7 +26,7 @@ namespace Ouquitoure
         toolbar->addAction( QIcon( ":/icons/show_description_icon.png" ), "Show description", this,
                             SLOT( switchDescriptionWindowVisible() ) );
 
-        //load applications
+        // load applications
         connect( &appLibraryManager, SIGNAL( applicationAdded( AppWindowBase *, APP_TYPE ) ), this,
                  SLOT( addApplication( AppWindowBase *, APP_TYPE ) ) );
         appLibraryManager.loadApplications();
@@ -59,7 +59,7 @@ namespace Ouquitoure
     {
         const APP_TYPE appType = getAppType();
         const QString  appName = getAppName( appType );
-        OQ_LOG_INFO << appName << "sender:(" << sender()->objectName() << ")";
+        OQ_LOG_INFO << appName << " sender: " << sender()->objectName();
 
         switch( appType )
         {

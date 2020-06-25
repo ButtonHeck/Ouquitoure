@@ -23,8 +23,8 @@ namespace Ouquitoure
     private:
         ColoredTriangleWidget viewWidget;
 
-        QLabel * xPosLabel[ 3 ];
-        QLabel * yPosLabel[ 3 ];
+        QLabel * xPosLabel[ ColoredTriangleWidget::NUM_POINTS ];
+        QLabel * yPosLabel[ ColoredTriangleWidget::NUM_POINTS ];
     };
 
 } // namespace Ouquitoure
