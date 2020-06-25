@@ -25,6 +25,7 @@ namespace Ouquitoure
         bool launchApp();
         void updateDescriptionWindowInfo();
         void switchDescriptionWindowVisible();
+        void addApplication( AppWindowBase * app, APP_TYPE type );
 
     private:
         APP_TYPE getAppType();

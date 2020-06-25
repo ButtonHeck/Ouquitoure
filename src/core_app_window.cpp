@@ -16,7 +16,7 @@ namespace Ouquitoure
         , ui( new Ui::CoreAppWindow )
         , openGLAppsCollectionModel( new AppCollectionModel{ this } )
         , softwareAppsCollectionModel( new AppCollectionModel{ this } )
-        , appLibraryManager( *openGLAppsCollectionModel, *softwareAppsCollectionModel )
+        , appLibraryManager()
     {
         ui->setupUi( this );
         setWindowIcon( QIcon( ":/icons/logo.ico" ) );
@@ -25,6 +25,11 @@ namespace Ouquitoure
         addToolBar( toolbar );
         toolbar->addAction( QIcon( ":/icons/show_description_icon.png" ), "Show description", this,
                             SLOT( switchDescriptionWindowVisible() ) );
+
+        //load applications
+        connect( &appLibraryManager, SIGNAL( applicationAdded( AppWindowBase *, APP_TYPE ) ), this,
+                 SLOT( addApplication( AppWindowBase *, APP_TYPE ) ) );
+        appLibraryManager.loadApplications();
 
         // opengl stuff
         ui->openGLAppsView->setModel( openGLAppsCollectionModel );
@@ -110,6 +115,25 @@ namespace Ouquitoure
         else
         {
             ui->descriptionDockWidget->hide();
+        }
+    }
+
+    void CoreAppWindow::addApplication( AppWindowBase * app, APP_TYPE type )
+    {
+        switch( type )
+        {
+        case OPENGL_APP:
+        {
+            openGLAppsCollectionModel->addApplication( app );
+            break;
+        }
+        case SOFTWARE_APP:
+        {
+            softwareAppsCollectionModel->addApplication( app );
+            break;
+        }
+        default:
+            throw std::invalid_argument( "Not suitable application type" );
         }
     }
 

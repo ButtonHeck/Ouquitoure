@@ -2,18 +2,21 @@
 
 #include <QWidget>
 
-#include "AppCollectionModel"
+#include "AppWindowBase"
 
 namespace Ouquitoure
 {
-    class AppLibraryManager
+    class AppLibraryManager : public QObject
     {
+        Q_OBJECT
     public:
-        AppLibraryManager( AppCollectionModel & openGLAppsModel, AppCollectionModel & softwareAppsModel );
+        AppLibraryManager();
+        void loadApplications();
+
+    signals:
+        void applicationAdded( AppWindowBase *, APP_TYPE );
 
     private:
-        QWidget              invisibleParentForApps;
-        AppCollectionModel & openGLAppsModel;
-        AppCollectionModel & softwareAppsModel;
+        QWidget invisibleParentForApps;
     };
 } // namespace Ouquitoure
