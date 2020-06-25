@@ -16,16 +16,19 @@ namespace Ouquitoure
                 {
                     T x;
                     T r;
+                    T s;
                 };
                 union
                 {
                     T y;
                     T g;
+                    T t;
                 };
                 union
                 {
                     T z;
                     T b;
+                    T p;
                 };
 
                 Elements() = default;
@@ -56,68 +59,101 @@ namespace Ouquitoure
 
             // X
 
-            inline T & x()
+            inline T & x() noexcept
             {
                 return elements.x;
             }
-            inline const T & x() const
+            inline const T & x() const noexcept
             {
                 return elements.x;
             }
 
             // Y
 
-            inline T & y()
+            inline T & y() noexcept
             {
                 return elements.y;
             }
-            inline const T & y() const
+            inline const T & y() const noexcept
             {
                 return elements.y;
             }
 
             // Z
 
-            inline T & z()
+            inline T & z() noexcept
             {
                 return elements.z;
             }
-            inline const T & z() const
+            inline const T & z() const noexcept
             {
                 return elements.z;
             }
 
             // Red
 
-            inline T & r()
+            inline T & r() noexcept
             {
                 return elements.r;
             }
-            inline const T & r() const
+            inline const T & r() const noexcept
             {
                 return elements.r;
             }
 
             // Green
 
-            inline T & g()
+            inline T & g() noexcept
             {
                 return elements.g;
             }
-            inline const T & g() const
+            inline const T & g() const noexcept
             {
                 return elements.g;
             }
 
             // Blue
 
-            inline T & b()
+            inline T & b() noexcept
             {
                 return elements.b;
             }
-            inline const T & b() const
+            inline const T & b() const noexcept
             {
                 return elements.b;
+            }
+
+            // S
+
+            inline T & s() noexcept
+            {
+                return elements.s;
+            }
+            inline const T & s() const noexcept
+            {
+                return elements.s;
+            }
+
+            // T
+
+            inline T & t() noexcept
+            {
+                return elements.t;
+            }
+            inline const T & t() const noexcept
+            {
+                return elements.t;
+            }
+
+            // P
+
+            inline T & p() noexcept
+            {
+                return elements.p;
+            }
+            inline T & p() const noexcept
+            {
+                return elements.p;
             }
 
             Elements elements;

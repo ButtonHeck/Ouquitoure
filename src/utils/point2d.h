@@ -12,8 +12,18 @@ namespace Ouquitoure
 
             struct Elements
             {
-                T x;
-                T y;
+                union
+                {
+                    T x;
+                    T r;
+                    T s;
+                };
+                union
+                {
+                    T y;
+                    T g;
+                    T t;
+                };
 
                 Elements() = default;
                 Elements( T x, T y )
@@ -60,6 +70,50 @@ namespace Ouquitoure
             inline const T & y() const noexcept
             {
                 return elements.y;
+            }
+
+            // Red
+
+            inline T & r() noexcept
+            {
+                return elements.r;
+            }
+            inline const T & r() const noexcept
+            {
+                return elements.r;
+            }
+
+            // Green
+
+            inline T & g() noexcept
+            {
+                return elements.g;
+            }
+            inline const T & g() const noexcept
+            {
+                return elements.g;
+            }
+
+            // S
+
+            inline T & s() noexcept
+            {
+                return elements.s;
+            }
+            inline const T & s() const noexcept
+            {
+                return elements.s;
+            }
+
+            // T
+
+            inline T & t() noexcept
+            {
+                return elements.t;
+            }
+            inline const T & t() const noexcept
+            {
+                return elements.t;
             }
 
             Elements elements;

@@ -66,132 +66,132 @@ namespace Ouquitoure
 
             // X
 
-            inline T & x()
+            inline T & x() noexcept
             {
                 return elements.x;
             }
-            inline const T & x() const
+            inline const T & x() const noexcept
             {
                 return elements.x;
             }
 
             // Y
 
-            inline T & y()
+            inline T & y() noexcept
             {
                 return elements.y;
             }
-            inline const T & y() const
+            inline const T & y() const noexcept
             {
                 return elements.y;
             }
 
             // Z
 
-            inline T & z()
+            inline T & z() noexcept
             {
                 return elements.z;
             }
-            inline const T & z() const
+            inline const T & z() const noexcept
             {
                 return elements.z;
             }
 
             // W
 
-            inline T & w()
+            inline T & w() noexcept
             {
                 return elements.w;
             }
-            inline const T & w() const
+            inline const T & w() const noexcept
             {
                 return elements.w;
             }
 
             // Red
 
-            inline T & r()
+            inline T & r() noexcept
             {
                 return elements.r;
             }
-            inline const T & r() const
+            inline const T & r() const noexcept
             {
                 return elements.r;
             }
 
             // Green
 
-            inline T & g()
+            inline T & g() noexcept
             {
                 return elements.g;
             }
-            inline const T & g() const
+            inline const T & g() const noexcept
             {
                 return elements.g;
             }
 
             // Blue
 
-            inline T & b()
+            inline T & b() noexcept
             {
                 return elements.b;
             }
-            inline const T & b() const
+            inline const T & b() const noexcept
             {
                 return elements.b;
             }
 
             // Alpha
 
-            inline T & a()
+            inline T & a() noexcept
             {
                 return elements.a;
             }
-            inline const T & a() const
+            inline const T & a() const noexcept
             {
                 return elements.a;
             }
 
             // S
 
-            inline T & s()
+            inline T & s() noexcept
             {
                 return elements.s;
             }
-            inline const T & s() const
+            inline const T & s() const noexcept
             {
                 return elements.s;
             }
 
             // T
 
-            inline T & t()
+            inline T & t() noexcept
             {
                 return elements.t;
             }
-            inline const T & t() const
+            inline const T & t() const noexcept
             {
                 return elements.t;
             }
 
             // P
 
-            inline T & p()
+            inline T & p() noexcept
             {
                 return elements.p;
             }
-            inline const T & p() const
+            inline const T & p() const noexcept
             {
                 return elements.p;
             }
 
             // Q
 
-            inline T & q()
+            inline T & q() noexcept
             {
                 return elements.q;
             }
-            inline const T & q() const
+            inline const T & q() const noexcept
             {
                 return elements.q;
             }
