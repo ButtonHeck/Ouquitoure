@@ -47,6 +47,7 @@ namespace Ouquitoure
                  SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->softwareAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );
 
+        // callback to the "Launch" button
         connect( ui->launchAppButton, SIGNAL( clicked() ), SLOT( launchApp() ) );
     }
 
@@ -55,6 +56,10 @@ namespace Ouquitoure
         delete ui;
     }
 
+    /**
+     * @brief slot to launch an application. An application is chosen based on the app name and
+     * its type that is currently in the selected state of the view
+     */
     bool CoreAppWindow::launchApp()
     {
         const APP_TYPE appType = getAppType();
@@ -86,6 +91,11 @@ namespace Ouquitoure
         }
     }
 
+    /**
+     * @brief slot to update an application HTML info in the description view window.
+     * An application is chosen based on the app name and
+     * its type that is currently in the selected state of the view
+     */
     void CoreAppWindow::updateDescriptionWindowInfo()
     {
         const APP_TYPE appType = getAppType();
@@ -106,6 +116,9 @@ namespace Ouquitoure
         }
     }
 
+    /**
+     * @brief slot to switch description view window visibility
+     */
     void CoreAppWindow::switchDescriptionWindowVisible()
     {
         if( ui->descriptionDockWidget->isHidden() )
@@ -118,6 +131,9 @@ namespace Ouquitoure
         }
     }
 
+    /**
+     * @brief slot to add application to one of the models defined by the given type
+     */
     void CoreAppWindow::addApplication( AppWindowBase * app, APP_TYPE type )
     {
         switch( type )
@@ -137,6 +153,9 @@ namespace Ouquitoure
         }
     }
 
+    /**
+     * @brief utility function to get application type based on the view tab widget current index
+     */
     APP_TYPE CoreAppWindow::getAppType()
     {
         const auto APP_TABLE_VIEW_CURRENT_TAB_INDEX = ui->appLibraryTabWidget->currentIndex();
@@ -151,6 +170,10 @@ namespace Ouquitoure
         }
     }
 
+    /**
+     * @brief utility function to get currently chosen application's name from one of the models
+     * defined by the given type
+     */
     QString CoreAppWindow::getAppName( APP_TYPE type )
     {
         switch( type )
@@ -163,4 +186,5 @@ namespace Ouquitoure
             throw std::invalid_argument( "Not suitable application type" );
         }
     }
+
 } // namespace Ouquitoure

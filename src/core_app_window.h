@@ -14,6 +14,9 @@ namespace Ouquitoure
 {
     class AppCollectionModel;
 
+    /**
+     * @brief Ouquitoure main window class
+     */
     class CoreAppWindow : public QMainWindow
     {
         Q_OBJECT

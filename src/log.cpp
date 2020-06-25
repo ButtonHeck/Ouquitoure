@@ -4,27 +4,31 @@
 
 namespace Ouquitoure
 {
+    /**
+     * @brief custom message handler callback. Prints message time, message type, its context (if full logging is used)
+     * and then the message itself
+     */
     void logHandler( QtMsgType messageType, const QMessageLogContext & logContext, const QString & message )
     {
         QTime time = QTime::currentTime();
 
-        QString outputString = time.toString( Qt::TextDate ).append( ": " );
+        QString fullMessage = time.toString( Qt::TextDate ).append( ": " );
         switch( messageType )
         {
         case QtDebugMsg:
-            outputString.append( "[DEBUG]: " );
+            fullMessage.append( "[DEBUG]: " );
             break;
         case QtWarningMsg:
-            outputString.append( "[WARNING]: " );
+            fullMessage.append( "[WARNING]: " );
             break;
         case QtCriticalMsg:
-            outputString.append( "[CRITICAL]: " );
+            fullMessage.append( "[CRITICAL]: " );
             break;
         case QtFatalMsg:
-            outputString.append( "[FATAL]: " );
+            fullMessage.append( "[FATAL]: " );
             break;
         case QtInfoMsg:
-            outputString.append( "[INFO]: " );
+            fullMessage.append( "[INFO]: " );
             break;
         }
 
@@ -34,21 +38,21 @@ namespace Ouquitoure
             file = file.right( file.size() - file.lastIndexOf( '\\' ) - 1 );
             QString func{ logContext.function };
             func = func.right( func.size() - func.lastIndexOf( ':' ) - 1 );
-            outputString.append( file )
+            fullMessage.append( file )
                 .append( " (line " )
                 .append( QString::number( logContext.line ) )
                 .append( ") in " )
                 .append( func )
                 .append( ": " );
-            outputString.append( message );
-            outputString.remove( OQ_LOG_PRECISION_FULL );
+            fullMessage.append( message );
+            fullMessage.remove( OQ_LOG_PRECISION_FULL );
         }
         else
         {
-            outputString.append( message );
-            outputString.remove( OQ_LOG_PRECISION_SHORT );
+            fullMessage.append( message );
+            fullMessage.remove( OQ_LOG_PRECISION_SHORT );
         }
 
-        qInfo().noquote() << outputString;
+        qInfo().noquote() << fullMessage;
     }
 } // namespace Ouquitoure
