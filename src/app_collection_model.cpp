@@ -71,7 +71,10 @@ namespace Ouquitoure
         return QVariant{};
     }
 
-    void AppCollectionModel::tableEntryClick( const QModelIndex & index )
+    /**
+     * @brief slot to update current application info
+     */
+    void AppCollectionModel::updateCurrentAppInfo( const QModelIndex & index )
     {
 #ifdef QT_DEBUG
         QStringList output{ "Mouse click: " };

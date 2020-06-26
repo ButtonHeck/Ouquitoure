@@ -3,13 +3,13 @@
 namespace Ouquitoure
 {
 
-    AppDescription::AppDescription( const QString &                                name,
-                                    const QString &                                author,
-                                    const QString &                                email,
-                                    const QString &                                brief,
-                                    const QString &                                appImageFilename,
-                                    const QVector<AppDescription::ReferenceInfo> & references,
-                                    const QString &                                notes )
+    AppDescription::AppDescription( const QString &                name,
+                                    const QString &                author,
+                                    const QString &                email,
+                                    const QString &                brief,
+                                    const QString &                appImageFilename,
+                                    const QVector<ReferenceInfo> & references,
+                                    const QString &                notes )
         : name( name )
         , author( author )
         , email( email )
@@ -55,6 +55,9 @@ namespace Ouquitoure
         this->notes = notes;
     }
 
+    /**
+     * @brief assembles html string from all descritpion details provided
+     */
     QString AppDescription::getFullDescription() const
     {
         QStringList text{ "<!DOCTYPE html><html><head>" };

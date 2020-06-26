@@ -6,6 +6,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Applications loader class
+     */
     class AppLibraryManager : public QObject
     {
         Q_OBJECT
@@ -14,9 +18,10 @@ namespace Ouquitoure
         void loadApplications();
 
     signals:
-        void applicationAdded( AppWindowBase *, APP_TYPE );
+        void applicationCreated( AppWindowBase *, APP_TYPE );
 
     private:
         QWidget invisibleParentForApps;
     };
+
 } // namespace Ouquitoure

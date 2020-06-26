@@ -27,14 +27,14 @@ namespace Ouquitoure
                             SLOT( switchDescriptionWindowVisible() ) );
 
         // load applications
-        connect( &appLibraryManager, SIGNAL( applicationAdded( AppWindowBase *, APP_TYPE ) ), this,
+        connect( &appLibraryManager, SIGNAL( applicationCreated( AppWindowBase *, APP_TYPE ) ), this,
                  SLOT( addApplication( AppWindowBase *, APP_TYPE ) ) );
         appLibraryManager.loadApplications();
 
         // opengl stuff
         ui->openGLAppsView->setModel( openGLAppsCollectionModel );
         connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), openGLAppsCollectionModel,
-                 SLOT( tableEntryClick( const QModelIndex & ) ) );
+                 SLOT( updateCurrentAppInfo( const QModelIndex & ) ) );
         connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), this,
                  SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->openGLAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );
@@ -42,7 +42,7 @@ namespace Ouquitoure
         // software stuff
         ui->softwareAppsView->setModel( softwareAppsCollectionModel );
         connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), softwareAppsCollectionModel,
-                 SLOT( tableEntryClick( const QModelIndex & ) ) );
+                 SLOT( updateCurrentAppInfo( const QModelIndex & ) ) );
         connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), this,
                  SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->softwareAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );

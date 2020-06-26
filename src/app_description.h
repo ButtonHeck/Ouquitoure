@@ -8,6 +8,9 @@
 namespace Ouquitoure
 {
 
+    /**
+     * @brief Application description class
+     */
     class AppDescription
     {
     public:

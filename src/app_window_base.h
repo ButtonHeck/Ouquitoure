@@ -6,6 +6,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Base class of all application windows
+     */
     class AppWindowBase : public QMainWindow
     {
         Q_OBJECT

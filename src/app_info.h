@@ -8,6 +8,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Application information class
+     */
     class AppInfo
     {
     public:
@@ -26,4 +30,5 @@ namespace Ouquitoure
         APP_TYPE       type;
         AppDescription description;
     };
+
 } // namespace Ouquitoure

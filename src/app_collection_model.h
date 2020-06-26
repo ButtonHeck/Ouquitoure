@@ -8,6 +8,10 @@ class QMainWindow;
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Applications collection model class
+     */
     class AppCollectionModel : public QAbstractTableModel
     {
         Q_OBJECT
@@ -33,10 +37,11 @@ namespace Ouquitoure
         static constexpr const char * MODEL_COLUMNS_NAMES[ MODEL_COLUMNS::NUM_COLUMNS ]{ "App name", "Tags" };
 
     private slots:
-        void tableEntryClick( const QModelIndex & index );
+        void updateCurrentAppInfo( const QModelIndex & index );
 
     private:
         QVector<AppWindowBase *> apps;
         AppInfo                  currentAppInfo;
     };
+
 } // namespace Ouquitoure
