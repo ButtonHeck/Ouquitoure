@@ -9,6 +9,9 @@ namespace Ouquitoure
 {
     class OpenGLWidgetBase;
 
+    /**
+     * @brief OpenGL application base class
+     */
     class OpenGLAppBase : public AppWindowBase
     {
         Q_OBJECT

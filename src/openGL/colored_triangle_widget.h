@@ -7,6 +7,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Colored triangle application view widget class
+     */
     class ColoredTriangleWidget : public OpenGLWidgetBase
     {
         Q_OBJECT

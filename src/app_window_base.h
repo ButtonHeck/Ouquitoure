@@ -20,6 +20,9 @@ namespace Ouquitoure
         const AppInfo & getInfo() const noexcept;
 
     protected:
+        /**
+         * @brief initializes description object (name, author, brief etc.)
+         */
         virtual void initializeDescription() = 0;
 
     protected:

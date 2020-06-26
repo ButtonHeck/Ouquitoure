@@ -7,6 +7,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Colored triangle application class
+     */
     class ColoredTriangleApp : public OpenGLAppBase
     {
         Q_OBJECT
@@ -18,7 +22,7 @@ namespace Ouquitoure
         void initializeDescription() override;
 
     private slots:
-        void positionSliderValueChanged( int value );
+        void updatePositionLabelText( int value );
 
     private:
         ColoredTriangleWidget viewWidget;

@@ -45,6 +45,9 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << appName << " app dtor";
     }
 
+    /**
+     * @brief sets given view widget as the dock widget contents
+     */
     void OpenGLAppBase::installOpenGLViewWidget( OpenGLWidgetBase & widget )
     {
         viewDockWidget->setWidget( &widget );
@@ -63,7 +66,7 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << appName << " closes";
         if( viewDockWidget->isFloating() )
         {
-            viewDockWidget->setFloating(false);
+            viewDockWidget->setFloating( false );
         }
     }
 

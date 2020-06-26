@@ -7,6 +7,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief OpenGL widget base class
+     */
     class OpenGLWidgetBase : public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
     {
     public:
@@ -21,9 +25,18 @@ namespace Ouquitoure
                                QVector<QString> &&                   sources,
                                const QString &                       programName = "main" );
 
+        /**
+         * @brief initializes all OpenGL buffers, vertex arrays etc.
+         */
         virtual void initializeOpenGLObjects() = 0;
+        /**
+         * @brief initializes all shader programs
+         */
         virtual void initializeOpenGLShaders() = 0;
-        virtual void cleanup()                 = 0;
+        /**
+         * @brief performs all cleanup routines for OpenGL objects and other stuff
+         */
+        virtual void cleanup() = 0;
 
     protected:
         QMap<QString, QOpenGLShaderProgram *> shaderPrograms;

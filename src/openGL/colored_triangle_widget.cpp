@@ -50,6 +50,10 @@ namespace Ouquitoure
         return points;
     }
 
+    /**
+     * @brief slot to update vertex position. Vertex is defined by the signal sender object name, which contains
+     * information of a vertex ordinal and its coordinate to update
+     */
     void ColoredTriangleWidget::vertexPositionChanged( int value )
     {
         bool        isX              = sender()->objectName().left( 1 ) == 'x';
@@ -66,6 +70,10 @@ namespace Ouquitoure
         updateData();
     }
 
+    /**
+     * @brief slot to update vertex color. Vertex is defined by the signal sender object name, which contains
+     * information of a vertex ordinal and its color component to update
+     */
     void ColoredTriangleWidget::vertexColorChanged( int value )
     {
         QChar       color            = sender()->objectName().left( 1 )[ 0 ];
@@ -136,6 +144,9 @@ namespace Ouquitoure
         shaderPrograms.clear();
     }
 
+    /**
+     * @brief helper function to update vertex buffer object
+     */
     void ColoredTriangleWidget::updateData()
     {
         makeCurrent();

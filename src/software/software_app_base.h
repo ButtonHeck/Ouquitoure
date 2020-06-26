@@ -4,6 +4,10 @@
 
 namespace Ouquitoure
 {
+
+    /**
+     * @brief Software application base class
+     */
     class SoftwareAppBase : public AppWindowBase
     {
         Q_OBJECT

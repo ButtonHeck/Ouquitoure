@@ -54,8 +54,8 @@ namespace Ouquitoure
             settingsLayout->addWidget( ySlider, 2, 0, 5, 1 );
 
             // GUI connections
-            connect( xSlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
-            connect( ySlider, SIGNAL( valueChanged( int ) ), SLOT( positionSliderValueChanged( int ) ) );
+            connect( xSlider, SIGNAL( valueChanged( int ) ), SLOT( updatePositionLabelText( int ) ) );
+            connect( ySlider, SIGNAL( valueChanged( int ) ), SLOT( updatePositionLabelText( int ) ) );
             // update position labels
             xSlider->setValue( CURRENT_POINT.x() * 100 );
             ySlider->setValue( CURRENT_POINT.y() * 100 );
@@ -126,7 +126,11 @@ namespace Ouquitoure
                                         "that everything works as it expected" );
     }
 
-    void ColoredTriangleApp::positionSliderValueChanged( int value )
+    /**
+     * @brief slot to update position label's text. Label is defined by the sender object's name, which contains
+     * information about label ordinal
+     */
+    void ColoredTriangleApp::updatePositionLabelText( int value )
     {
         bool     isX   = sender()->objectName().left( 1 ) == 'x';
         int      index = sender()->objectName().right( 1 ).toInt();
