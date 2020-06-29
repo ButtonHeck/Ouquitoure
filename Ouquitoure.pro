@@ -15,7 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++17
 
-INCLUDEPATH += "include/"
+INCLUDEPATH += "include/" \
+               "deps/include/"
 
 SOURCES += $$files(src/*.cpp) \
            $$files(src/openGL/*.cpp) \
