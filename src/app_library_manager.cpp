@@ -1,6 +1,7 @@
 #include "AppLibraryManager"
 
 #include "OpenGLApps/ColoredTriangleApp"
+#include "OpenGLApps/OpenGLDrawFunctionsApp"
 
 namespace Ouquitoure
 {
@@ -17,6 +18,9 @@ namespace Ouquitoure
     {
         OpenGLAppBase * app = new ColoredTriangleApp( "Colored Triangle", &invisibleParentForApps );
         emit            applicationCreated( app, OPENGL_APP );
+
+        app = new OpenGLDrawFunctionsApp( "OpenGL Draw Functions", &invisibleParentForApps );
+        emit applicationCreated( app, OPENGL_APP );
     }
 
 } // namespace Ouquitoure
