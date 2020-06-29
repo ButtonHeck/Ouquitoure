@@ -7,7 +7,7 @@ namespace Ouquitoure
 {
 
     /**
-     * @brief OpenGL draw functions class
+     * @brief OpenGL draw functions application class
      */
     class OpenGLDrawFunctionsApp : public OpenGLAppBase
     {
