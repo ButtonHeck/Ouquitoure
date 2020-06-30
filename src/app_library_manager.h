@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "AppWindowBase"
+#include "Apps/AppWindowBase"
 
 namespace Ouquitoure
 {

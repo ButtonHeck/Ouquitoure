@@ -2,7 +2,7 @@
 
 #include <QAbstractTableModel>
 
-#include "AppWindowBase"
+#include "Apps/AppWindowBase"
 
 class QMainWindow;
 

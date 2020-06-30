@@ -1,7 +1,7 @@
 #include "AppLibraryManager"
 
-#include "OpenGLApps/ColoredTriangleApp"
-#include "OpenGLApps/OpenGLDrawFunctionsApp"
+#include "Apps/OpenGL/ColoredTriangleApp"
+#include "Apps/OpenGL/OpenGLDrawFunctionsApp"
 
 namespace Ouquitoure
 {

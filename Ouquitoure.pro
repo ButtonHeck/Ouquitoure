@@ -18,14 +18,28 @@ CONFIG += c++17
 INCLUDEPATH += "include/" \
                "deps/include/"
 
-SOURCES += $$files(src/*.cpp) \
-           $$files(src/openGL/*.cpp) \
-           $$files(src/software/*.cpp) \
-           $$files(src/utils/*.cpp)
-HEADERS += $$files(src/*.h) \
-           $$files(src/openGL/*.h) \
-           $$files(src/software/*.h) \
-           $$files(src/utils/*.h)
+SOURCES += \
+    # root
+    $$files(src/*.cpp) \
+    # generic app
+    $$files(src/apps/*.cpp) \
+    # opengl apps class
+    $$files(src/apps/openGL/*.cpp) \
+    # software base class
+    $$files(src/apps/software/*.cpp)
+
+HEADERS += \
+    # root
+    $$files(src/*.h) \
+    # additional
+    $$files(src/math/*.h) \
+    # generic app
+    $$files(src/apps/*.h) \
+    # opengl apps
+    $$files(src/apps/openGL/*.h) \
+    # software apps
+    $$files(src/apps/software/*.h)
+
 FORMS += $$files(src/*.ui)
 
 RESOURCES += \
@@ -33,7 +47,13 @@ RESOURCES += \
 
 DISTFILES += \
     .clang-format \
+    # root include files
     $$files(include/*) \
-    $$files(include/OpenGLApps/*) \
-    $$files(include/SoftwareApps/*) \
-    $$files(include/Utils/*)
+    # additional includes
+    $$files(include/Math/*) \
+    # generic app includes
+    $$files(include/Apps/*) \
+    # opengl apps
+    $$files(include/Apps/OpenGL/*) \
+    # software apps
+    $$files(include/Apps/Software/*)

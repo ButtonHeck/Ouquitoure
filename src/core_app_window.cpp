@@ -3,10 +3,10 @@
 #include <QToolBar>
 
 #include "AppCollectionModel"
-#include "AppType"
+#include "Apps/AppType"
 #include "Log"
-#include "OpenGLApps/OpenGLAppBase"
-#include "SoftwareApps/SoftwareAppBase"
+#include "Apps/OpenGL/OpenGLAppBase"
+#include "Apps/Software/SoftwareAppBase"
 #include "ui_core_app_window.h"
 
 namespace Ouquitoure
