@@ -33,7 +33,7 @@ namespace Ouquitoure
         float     pitch;
 
         // View options
-        float fov;
+        float fov = 60.0f;
     };
 
 } // namespace Ouquitoure

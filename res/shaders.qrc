@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>shaders/ColoredTriangle/main.fs</file>
         <file>shaders/ColoredTriangle/main.vs</file>
+        <file>shaders/OpenGLDrawFunctions/main.fs</file>
+        <file>shaders/OpenGLDrawFunctions/main.vs</file>
     </qresource>
 </RCC>

@@ -16,7 +16,7 @@ namespace Ouquitoure
 
     glm::mat4 Camera::getViewMatrix() const
     {
-        return glm::lookAt( position, position + front, up );
+        return glm::lookAt( position, position + front, worldUp );
     }
 
     void Camera::setFov( float fov ) noexcept
