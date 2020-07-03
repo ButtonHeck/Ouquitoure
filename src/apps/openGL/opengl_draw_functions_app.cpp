@@ -1,5 +1,9 @@
 #include "Apps/OpenGL/OpenGLDrawFunctionsApp"
 
+#include <QKeyEvent>
+
+#include "Log"
+
 namespace Ouquitoure
 {
 
@@ -9,6 +13,11 @@ namespace Ouquitoure
     {
         initializeDescription();
         installOpenGLViewWidget( viewWidget );
+    }
+
+    void OpenGLDrawFunctionsApp::keyPressEvent( QKeyEvent * event )
+    {
+        viewWidget.getCamera().move( event->key(), 0.05f );
     }
 
     void OpenGLDrawFunctionsApp::initializeDescription()

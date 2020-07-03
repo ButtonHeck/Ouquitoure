@@ -4,8 +4,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <array>
+#include <QMouseEvent>
 
-#include <Math/Point3Pos3Color>
+#include "Math/Point3Pos3Color"
+#include "Log"
 
 namespace Ouquitoure
 {
@@ -23,11 +25,17 @@ namespace Ouquitoure
         , drawElementsVbo( 0 )
         , drawElementsEbo( 0 )
     {
+        connect( &camera, SIGNAL( viewChanged() ), SLOT( updateViewMatrix() ) );
     }
 
     OpenGLDrawFunctionsWidget::~OpenGLDrawFunctionsWidget()
     {
         cleanup();
+    }
+
+    Camera & OpenGLDrawFunctionsWidget::getCamera()
+    {
+        return camera;
     }
 
     void OpenGLDrawFunctionsWidget::initializeGL()
@@ -70,6 +78,27 @@ namespace Ouquitoure
         glBindVertexArray( drawElementsVao );
         glDrawElements( GL_TRIANGLES, DRAW_ELEMENTS_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
         glDrawElements( GL_POINTS, DRAW_ELEMENTS_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+    }
+
+    void OpenGLDrawFunctionsWidget::mousePressEvent( QMouseEvent * event )
+    {
+        if( event->button() == Qt::RightButton )
+        {
+            mouseTrackingEnabled = !mouseTrackingEnabled;
+        }
+        setMouseTracking( mouseTrackingEnabled );
+        setCursor( mouseTrackingEnabled ? Qt::BlankCursor : Qt::ArrowCursor );
+    }
+
+    void OpenGLDrawFunctionsWidget::mouseMoveEvent( QMouseEvent * event )
+    {
+        if( mouseTrackingEnabled )
+        {
+            QRect  widgetGeometry   = geometry();
+            QPoint topLeftPoint     = mapToGlobal( QPoint( widgetGeometry.left(), widgetGeometry.top() ) );
+            QPoint bottomRightPoint = mapToGlobal( QPoint( widgetGeometry.right(), widgetGeometry.bottom() ) );
+            cursor().setPos( ( topLeftPoint + bottomRightPoint ) / 2 );
+        }
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -159,6 +188,17 @@ namespace Ouquitoure
             glDeleteProgram( shaderProgram->programId() );
         }
         shaderPrograms.clear();
+    }
+
+    void OpenGLDrawFunctionsWidget::updateViewMatrix()
+    {
+        makeCurrent();
+        QOpenGLShaderProgram * mainProgram = shaderPrograms[ "main" ];
+        mainProgram->bind();
+        glm::mat4 viewMatrix = camera.getViewMatrix();
+        glUniformMatrix4fv( mainProgram->uniformLocation( "u_view" ), 1, GL_FALSE, glm::value_ptr( viewMatrix ) );
+
+        update();
     }
 
 } // namespace Ouquitoure
