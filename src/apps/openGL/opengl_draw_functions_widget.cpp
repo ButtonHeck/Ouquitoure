@@ -4,7 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <array>
-#include <QMouseEvent>
 
 #include "Math/Point3Pos3Color"
 #include "Log"
@@ -13,8 +12,7 @@ namespace Ouquitoure
 {
 
     OpenGLDrawFunctionsWidget::OpenGLDrawFunctionsWidget( const QString & name, QWidget * parent )
-        : OpenGLWidgetBase( name, parent )
-        , camera( 0.0f, 0.0f, 5.0f )
+        : OpenGLWidgetWithCamera( name, parent )
 
         // glDrawArrays
         , drawArraysVao( 0 )
@@ -31,11 +29,6 @@ namespace Ouquitoure
     OpenGLDrawFunctionsWidget::~OpenGLDrawFunctionsWidget()
     {
         cleanup();
-    }
-
-    Camera & OpenGLDrawFunctionsWidget::getCamera()
-    {
-        return camera;
     }
 
     void OpenGLDrawFunctionsWidget::initializeGL()
@@ -88,57 +81,6 @@ namespace Ouquitoure
         const glm::mat4 PROJECTION_MATRIX =
             glm::perspective( glm::radians( camera.getFov() ), static_cast<float>( width ) / static_cast<float>( height ), 0.1f, 20.0f );
         glUniformMatrix4fv( mainProgram->uniformLocation( "u_projection" ), 1, GL_FALSE, glm::value_ptr( PROJECTION_MATRIX ) );
-    }
-
-    void OpenGLDrawFunctionsWidget::mousePressEvent( QMouseEvent * event )
-    {
-        setCursor( Qt::BlankCursor );
-        camera.updateLastPos( event->x(), event->y() );
-    }
-
-    void OpenGLDrawFunctionsWidget::mouseReleaseEvent( QMouseEvent * event )
-    {
-        Q_UNUSED( event );
-        setCursor( Qt::ArrowCursor );
-    }
-
-    void OpenGLDrawFunctionsWidget::mouseMoveEvent( QMouseEvent * event )
-    {
-        camera.processMouseMove( event->x(), event->y() );
-    }
-
-    bool OpenGLDrawFunctionsWidget::eventFilter( QObject * watched, QEvent * event )
-    {
-        Q_UNUSED( watched );
-        if( event->type() == QEvent::KeyPress )
-        {
-            QKeyEvent * keyEvent = static_cast<QKeyEvent *>( event );
-            if( keyEvent )
-            {
-                keyPressEvent( keyEvent );
-                return true;
-            }
-        }
-        else if( event->type() == QEvent::KeyRelease )
-        {
-            QKeyEvent * keyEvent = static_cast<QKeyEvent *>( event );
-            if( keyEvent )
-            {
-                keyReleaseEvent( keyEvent );
-                return true;
-            }
-        }
-        return false;
-    }
-
-    void OpenGLDrawFunctionsWidget::keyPressEvent( QKeyEvent * event )
-    {
-        camera.processKeyboardInput( event->key(), true );
-    }
-
-    void OpenGLDrawFunctionsWidget::keyReleaseEvent( QKeyEvent * event )
-    {
-        camera.processKeyboardInput( event->key(), false );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()

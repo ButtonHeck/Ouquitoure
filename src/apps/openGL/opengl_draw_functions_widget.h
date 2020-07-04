@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Apps/OpenGL/OpenGLWidgetBase"
-#include "Camera"
+#include "Apps/OpenGL/OpenGLWidgetWithCamera"
 
 namespace Ouquitoure
 {
@@ -9,24 +8,16 @@ namespace Ouquitoure
     /**
      * @brief OpenGL draw functions view widget class
      */
-    class OpenGLDrawFunctionsWidget : public OpenGLWidgetBase
+    class OpenGLDrawFunctionsWidget : public OpenGLWidgetWithCamera
     {
         Q_OBJECT
     public:
         explicit OpenGLDrawFunctionsWidget( const QString & name, QWidget * parent = nullptr );
         ~OpenGLDrawFunctionsWidget();
 
-        Camera & getCamera();
-
         void initializeGL() override;
         void paintGL() override;
         void resizeGL( int width, int height ) override;
-        void mousePressEvent( QMouseEvent * event ) override;
-        void mouseReleaseEvent( QMouseEvent * event ) override;
-        void mouseMoveEvent( QMouseEvent * event ) override;
-        bool eventFilter( QObject * watched, QEvent * event ) override;
-        void keyPressEvent( QKeyEvent * event ) override;
-        void keyReleaseEvent( QKeyEvent * event ) override;
 
     protected:
         void initializeOpenGLObjects() override;
@@ -37,8 +28,6 @@ namespace Ouquitoure
         void updateViewMatrix();
 
     private:
-        Camera camera;
-
         // glDrawArrays
         GLuint               drawArraysVao;
         GLuint               drawArraysVbo;
