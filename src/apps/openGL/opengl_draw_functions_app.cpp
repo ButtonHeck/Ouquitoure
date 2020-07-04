@@ -13,11 +13,7 @@ namespace Ouquitoure
     {
         initializeDescription();
         installOpenGLViewWidget( viewWidget );
-    }
-
-    void OpenGLDrawFunctionsApp::keyPressEvent( QKeyEvent * event )
-    {
-        viewWidget.keyPressEvent(event);
+        installEventFilter( &viewWidget );
     }
 
     void OpenGLDrawFunctionsApp::initializeDescription()

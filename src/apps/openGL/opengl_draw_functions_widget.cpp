@@ -119,12 +119,26 @@ namespace Ouquitoure
                 return true;
             }
         }
+        else if( event->type() == QEvent::KeyRelease )
+        {
+            QKeyEvent * keyEvent = static_cast<QKeyEvent *>( event );
+            if( keyEvent )
+            {
+                keyReleaseEvent( keyEvent );
+                return true;
+            }
+        }
         return false;
     }
 
     void OpenGLDrawFunctionsWidget::keyPressEvent( QKeyEvent * event )
     {
-        camera.processKeyboardInput( event->key(), 0.05f );
+        camera.processKeyboardInput( event->key(), true );
+    }
+
+    void OpenGLDrawFunctionsWidget::keyReleaseEvent( QKeyEvent * event )
+    {
+        camera.processKeyboardInput( event->key(), false );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()

@@ -13,7 +13,16 @@ namespace Ouquitoure
         , yaw( yaw )
         , pitch( pitch )
     {
-        updateVectors();
+        updateViewDirectionVectors();
+        startTimer( 1000.0f / 60.0f );
+
+        // explicitly define keys for movement
+        keys[ Qt::Key_W ]     = false;
+        keys[ Qt::Key_A ]     = false;
+        keys[ Qt::Key_S ]     = false;
+        keys[ Qt::Key_D ]     = false;
+        keys[ Qt::Key_Space ] = false;
+        keys[ Qt::Key_Shift ] = false;
     }
 
     glm::mat4 Camera::getViewMatrix() const
@@ -29,6 +38,70 @@ namespace Ouquitoure
     float Camera::getFov() const noexcept
     {
         return fov;
+    }
+
+    void Camera::processKeyboardInput( int keyCode, bool isPressed )
+    {
+        keys[ keyCode ] = isPressed;
+    }
+
+    void Camera::processMouseMove( int x, int y )
+    {
+        int deltaX = x - lastX;
+        int deltaY = lastY - y;
+        lastX      = x;
+        lastY      = y;
+        yaw += deltaX * 0.25f;
+        pitch += deltaY * 0.25;
+        if( pitch >= 89.0f )
+        {
+            pitch = 89.0f;
+        }
+        if( pitch <= -89.0f )
+        {
+            pitch = -89.0f;
+        }
+        updateViewDirectionVectors();
+        emit viewChanged();
+    }
+
+    void Camera::updateLastPos( int x, int y )
+    {
+        lastX = x;
+        lastY = y;
+    }
+
+    void Camera::timerEvent( QTimerEvent * event )
+    {
+        // Forward / Backward
+        if( keys[ Qt::Key_W ] )
+        {
+            move( FORWARD, 0.05f );
+        }
+        if( keys[ Qt::Key_S ] )
+        {
+            move( BACKWARD, 0.05f );
+        }
+
+        // Left / Right
+        if( keys[ Qt::Key_A ] )
+        {
+            move( LEFT, 0.05f );
+        }
+        if( keys[ Qt::Key_D ] )
+        {
+            move( RIGHT, 0.05f );
+        }
+
+        // Up / Down
+        if( keys[ Qt::Key_Space ] )
+        {
+            move( UP, 0.05f );
+        }
+        if( keys[ Qt::Key_Shift ] )
+        {
+            move( DOWN, 0.05f );
+        }
     }
 
     void Camera::move( CAMERA_MOVE_DIRECTION direction, float value )
@@ -66,69 +139,10 @@ namespace Ouquitoure
         emit viewChanged();
     }
 
-    void Camera::processKeyboardInput( int keyCode, float value )
-    {
-        // Forward / Backward
-        if( keyCode == Qt::Key_W )
-        {
-            move( FORWARD, value );
-        }
-        else if( keyCode == Qt::Key_S )
-        {
-            move( BACKWARD, value );
-        }
-
-        // Left / Right
-        if( keyCode == Qt::Key_A )
-        {
-            move( LEFT, value );
-        }
-        else if( keyCode == Qt::Key_D )
-        {
-            move( RIGHT, value );
-        }
-
-        // Up / Down
-        if( keyCode == Qt::Key_Space )
-        {
-            move( UP, value );
-        }
-        else if( keyCode == Qt::Key_Shift )
-        {
-            move( DOWN, value );
-        }
-    }
-
-    void Camera::processMouseMove( int x, int y )
-    {
-        int deltaX = x - lastX;
-        int deltaY = lastY - y;
-        lastX      = x;
-        lastY      = y;
-        yaw += deltaX * 0.25f;
-        pitch += deltaY * 0.25;
-        if( pitch >= 89.0f )
-        {
-            pitch = 89.0f;
-        }
-        if( pitch <= -89.0f )
-        {
-            pitch = -89.0f;
-        }
-        updateVectors();
-        emit viewChanged();
-    }
-
-    void Camera::updateLastPos( int x, int y )
-    {
-        lastX = x;
-        lastY = y;
-    }
-
     /**
      * @brief updates front, right and up vectors based on current yaw and pitch angles
      */
-    void Camera::updateVectors()
+    void Camera::updateViewDirectionVectors()
     {
         float     x = std::cos( glm::radians( yaw ) ) * std::cos( glm::radians( pitch ) );
         float     y = std::sin( glm::radians( pitch ) );

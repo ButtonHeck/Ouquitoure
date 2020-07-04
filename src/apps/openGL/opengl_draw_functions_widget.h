@@ -26,6 +26,7 @@ namespace Ouquitoure
         void mouseMoveEvent( QMouseEvent * event ) override;
         bool eventFilter( QObject * watched, QEvent * event ) override;
         void keyPressEvent( QKeyEvent * event ) override;
+        void keyReleaseEvent( QKeyEvent * event ) override;
 
     protected:
         void initializeOpenGLObjects() override;

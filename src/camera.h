@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QMap>
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
@@ -21,8 +22,7 @@ namespace Ouquitoure
         glm::mat4 getViewMatrix() const;
         void      setFov( float fov ) noexcept;
         float     getFov() const noexcept;
-        void      move( CAMERA_MOVE_DIRECTION direction, float value = 1.0f );
-        void      processKeyboardInput( int keyCode, float value = 1.0f );
+        void      processKeyboardInput( int keyCode, bool isPressed );
         void      processMouseMove( int x, int y );
         void      updateLastPos( int x, int y );
 
@@ -30,7 +30,9 @@ namespace Ouquitoure
         void viewChanged();
 
     private:
-        void updateVectors();
+        void timerEvent( QTimerEvent * event ) override;
+        void move( CAMERA_MOVE_DIRECTION direction, float value = 1.0f );
+        void updateViewDirectionVectors();
 
     private:
         glm::vec3 position;
@@ -45,6 +47,9 @@ namespace Ouquitoure
         float fov   = 60.0f;
         int   lastX = 0;
         int   lastY = 0;
+
+        // Key map
+        QMap<int, bool> keys;
     };
 
 } // namespace Ouquitoure

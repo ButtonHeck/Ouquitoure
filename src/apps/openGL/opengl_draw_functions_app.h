@@ -15,8 +15,6 @@ namespace Ouquitoure
     public:
         explicit OpenGLDrawFunctionsApp( const QString & appName, QWidget * parent );
 
-        void keyPressEvent( QKeyEvent * event ) override;
-
     protected:
         void initializeDescription() override;
 
