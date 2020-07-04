@@ -51,16 +51,9 @@ namespace Ouquitoure
         int deltaY = lastY - y;
         lastX      = x;
         lastY      = y;
-        yaw += deltaX * 0.25f;
-        pitch += deltaY * 0.25;
-        if( pitch >= 89.0f )
-        {
-            pitch = 89.0f;
-        }
-        if( pitch <= -89.0f )
-        {
-            pitch = -89.0f;
-        }
+        yaw += deltaX * mouseSensitivity;
+        pitch += deltaY * mouseSensitivity;
+        clampPitch();
         updateViewDirectionVectors();
         emit viewChanged();
     }
@@ -73,34 +66,36 @@ namespace Ouquitoure
 
     void Camera::timerEvent( QTimerEvent * event )
     {
+        Q_UNUSED( event );
+
         // Forward / Backward
         if( keys[ Qt::Key_W ] )
         {
-            move( FORWARD, 0.05f );
+            move( FORWARD, moveSensitivity );
         }
         if( keys[ Qt::Key_S ] )
         {
-            move( BACKWARD, 0.05f );
+            move( BACKWARD, moveSensitivity );
         }
 
         // Left / Right
         if( keys[ Qt::Key_A ] )
         {
-            move( LEFT, 0.05f );
+            move( LEFT, moveSensitivity );
         }
         if( keys[ Qt::Key_D ] )
         {
-            move( RIGHT, 0.05f );
+            move( RIGHT, moveSensitivity );
         }
 
         // Up / Down
         if( keys[ Qt::Key_Space ] )
         {
-            move( UP, 0.05f );
+            move( UP, moveSensitivity );
         }
         if( keys[ Qt::Key_Shift ] )
         {
-            move( DOWN, 0.05f );
+            move( DOWN, moveSensitivity );
         }
     }
 
@@ -151,6 +146,18 @@ namespace Ouquitoure
         front = glm::normalize( newFront );
         right = glm::normalize( glm::cross( front, worldUp ) );
         up    = glm::normalize( glm::cross( right, front ) );
+    }
+
+    void Camera::clampPitch()
+    {
+        if( pitch >= MAX_PITCH )
+        {
+            pitch = MAX_PITCH;
+        }
+        if( pitch <= MIN_PITCH )
+        {
+            pitch = MIN_PITCH;
+        }
     }
 
 } // namespace Ouquitoure

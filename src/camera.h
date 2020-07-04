@@ -17,6 +17,13 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
+        constexpr static float DEFAULT_FOV               = 60.0f;
+        constexpr static float DEFAULT_MOVE_SENSITIVITY  = 0.05f;
+        constexpr static float DEFAULT_MOUSE_SENSITIVITY = 0.25f;
+        constexpr static float MAX_PITCH                 = 89.0f;
+        constexpr static float MIN_PITCH                 = -89.0f;
+
+    public:
         Camera( float x, float y, float z, float yaw = -90.0f, float pitch = 0.0f );
 
         glm::mat4 getViewMatrix() const;
@@ -33,9 +40,15 @@ namespace Ouquitoure
         void timerEvent( QTimerEvent * event ) override;
         void move( CAMERA_MOVE_DIRECTION direction, float value = 1.0f );
         void updateViewDirectionVectors();
+        void clampPitch();
 
     private:
+        // Position
         glm::vec3 position;
+        int       lastX = 0;
+        int       lastY = 0;
+
+        // View
         glm::vec3 front;
         glm::vec3 up;
         glm::vec3 right;
@@ -43,10 +56,10 @@ namespace Ouquitoure
         float     yaw;
         float     pitch;
 
-        // View options
-        float fov   = 60.0f;
-        int   lastX = 0;
-        int   lastY = 0;
+        // Common
+        float fov              = DEFAULT_FOV;
+        float moveSensitivity  = DEFAULT_MOVE_SENSITIVITY;
+        float mouseSensitivity = DEFAULT_MOUSE_SENSITIVITY;
 
         // Key map
         QMap<int, bool> keys;
