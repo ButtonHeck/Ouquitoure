@@ -22,6 +22,8 @@ namespace Ouquitoure
         void paintGL() override;
         void mousePressEvent( QMouseEvent * event ) override;
         void mouseMoveEvent( QMouseEvent * event ) override;
+        bool eventFilter( QObject * watched, QEvent * event ) override;
+        void keyPressEvent( QKeyEvent * event ) override;
 
     protected:
         void initializeOpenGLObjects() override;

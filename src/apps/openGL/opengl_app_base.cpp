@@ -53,6 +53,7 @@ namespace Ouquitoure
         viewDockWidget->setWidget( &widget );
         widget.setMinimumSize( 640, 480 );
         widget.setSizePolicy( centralWidget()->sizePolicy() );
+        viewDockWidget->installEventFilter( &widget );
     }
 
     void OpenGLAppBase::resizeEvent( QResizeEvent * event )

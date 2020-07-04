@@ -101,6 +101,25 @@ namespace Ouquitoure
         }
     }
 
+    bool OpenGLDrawFunctionsWidget::eventFilter( QObject * watched, QEvent * event )
+    {
+        if( event->type() == QEvent::KeyPress )
+        {
+            QKeyEvent * keyEvent = static_cast<QKeyEvent *>( event );
+            if( keyEvent )
+            {
+                keyPressEvent( keyEvent );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void OpenGLDrawFunctionsWidget::keyPressEvent( QKeyEvent * event )
+    {
+        camera.move( event->key(), 0.05f );
+    }
+
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
     {
         // glDrawArrays

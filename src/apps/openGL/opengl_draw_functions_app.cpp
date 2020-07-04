@@ -17,7 +17,7 @@ namespace Ouquitoure
 
     void OpenGLDrawFunctionsApp::keyPressEvent( QKeyEvent * event )
     {
-        viewWidget.getCamera().move( event->key(), 0.05f );
+        viewWidget.keyPressEvent(event);
     }
 
     void OpenGLDrawFunctionsApp::initializeDescription()
