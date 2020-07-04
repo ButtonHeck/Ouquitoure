@@ -8,9 +8,9 @@ namespace Ouquitoure
 
     class OpenGLWidgetWithCamera : public OpenGLWidgetBase
     {
+        Q_OBJECT
     public:
         explicit OpenGLWidgetWithCamera( const QString & name, QWidget * parent = nullptr );
-        virtual ~OpenGLWidgetWithCamera() = default;
 
         Camera & getCamera();
 
@@ -20,6 +20,11 @@ namespace Ouquitoure
         void keyPressEvent( QKeyEvent * event ) override;
         void keyReleaseEvent( QKeyEvent * event ) override;
         bool eventFilter( QObject * watched, QEvent * event ) override;
+        void resizeGL( int width, int height ) override;
+
+    protected slots:
+        void updateViewMatrixForMainProgram();
+        void updateProjectionMatrixForMainProgram();
 
     protected:
         Camera camera;
