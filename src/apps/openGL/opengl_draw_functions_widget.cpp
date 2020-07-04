@@ -80,6 +80,16 @@ namespace Ouquitoure
         glDrawElements( GL_POINTS, DRAW_ELEMENTS_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
     }
 
+    void OpenGLDrawFunctionsWidget::resizeGL( int width, int height )
+    {
+        glViewport( 0, 0, width, height );
+        QOpenGLShaderProgram * mainProgram = shaderPrograms[ "main" ];
+        mainProgram->bind();
+        const glm::mat4 PROJECTION_MATRIX =
+            glm::perspective( glm::radians( camera.getFov() ), static_cast<float>( width ) / static_cast<float>( height ), 0.1f, 20.0f );
+        glUniformMatrix4fv( mainProgram->uniformLocation( "u_projection" ), 1, GL_FALSE, glm::value_ptr( PROJECTION_MATRIX ) );
+    }
+
     void OpenGLDrawFunctionsWidget::mousePressEvent( QMouseEvent * event )
     {
         setCursor( Qt::BlankCursor );
