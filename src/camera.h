@@ -22,7 +22,9 @@ namespace Ouquitoure
         void      setFov( float fov ) noexcept;
         float     getFov() const noexcept;
         void      move( CAMERA_MOVE_DIRECTION direction, float value = 1.0f );
-        void      move( int keyCode, float value = 1.0f );
+        void      processKeyboardInput( int keyCode, float value = 1.0f );
+        void      processMouseMove( int x, int y );
+        void      updateLastPos( int x, int y );
 
     signals:
         void viewChanged();
@@ -40,7 +42,9 @@ namespace Ouquitoure
         float     pitch;
 
         // View options
-        float fov = 60.0f;
+        float fov   = 60.0f;
+        int   lastX = 0;
+        int   lastY = 0;
     };
 
 } // namespace Ouquitoure

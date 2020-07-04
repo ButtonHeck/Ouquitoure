@@ -82,27 +82,24 @@ namespace Ouquitoure
 
     void OpenGLDrawFunctionsWidget::mousePressEvent( QMouseEvent * event )
     {
-        if( event->button() == Qt::RightButton )
-        {
-            mouseTrackingEnabled = !mouseTrackingEnabled;
-        }
-        setMouseTracking( mouseTrackingEnabled );
-        setCursor( mouseTrackingEnabled ? Qt::BlankCursor : Qt::ArrowCursor );
+        setCursor( Qt::BlankCursor );
+        camera.updateLastPos( event->x(), event->y() );
+    }
+
+    void OpenGLDrawFunctionsWidget::mouseReleaseEvent( QMouseEvent * event )
+    {
+        Q_UNUSED( event );
+        setCursor( Qt::ArrowCursor );
     }
 
     void OpenGLDrawFunctionsWidget::mouseMoveEvent( QMouseEvent * event )
     {
-        if( mouseTrackingEnabled )
-        {
-            QRect  widgetGeometry   = geometry();
-            QPoint topLeftPoint     = mapToGlobal( QPoint( widgetGeometry.left(), widgetGeometry.top() ) );
-            QPoint bottomRightPoint = mapToGlobal( QPoint( widgetGeometry.right(), widgetGeometry.bottom() ) );
-            cursor().setPos( ( topLeftPoint + bottomRightPoint ) / 2 );
-        }
+        camera.processMouseMove( event->x(), event->y() );
     }
 
     bool OpenGLDrawFunctionsWidget::eventFilter( QObject * watched, QEvent * event )
     {
+        Q_UNUSED( watched );
         if( event->type() == QEvent::KeyPress )
         {
             QKeyEvent * keyEvent = static_cast<QKeyEvent *>( event );
@@ -117,7 +114,7 @@ namespace Ouquitoure
 
     void OpenGLDrawFunctionsWidget::keyPressEvent( QKeyEvent * event )
     {
-        camera.move( event->key(), 0.05f );
+        camera.processKeyboardInput( event->key(), 0.05f );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()

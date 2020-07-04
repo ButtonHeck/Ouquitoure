@@ -21,6 +21,7 @@ namespace Ouquitoure
         void initializeGL() override;
         void paintGL() override;
         void mousePressEvent( QMouseEvent * event ) override;
+        void mouseReleaseEvent( QMouseEvent * event ) override;
         void mouseMoveEvent( QMouseEvent * event ) override;
         bool eventFilter( QObject * watched, QEvent * event ) override;
         void keyPressEvent( QKeyEvent * event ) override;
@@ -47,8 +48,6 @@ namespace Ouquitoure
         GLuint               drawElementsEbo;
         constexpr static int DRAW_ELEMENTS_NUM_POINTS   = 4;
         constexpr static int DRAW_ELEMENTS_NUM_ELEMENTS = 6;
-
-        bool mouseTrackingEnabled = false;
     };
 
 } // namespace Ouquitoure

@@ -2,6 +2,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Log"
+
 namespace Ouquitoure
 {
 
@@ -64,7 +66,7 @@ namespace Ouquitoure
         emit viewChanged();
     }
 
-    void Camera::move( int keyCode, float value )
+    void Camera::processKeyboardInput( int keyCode, float value )
     {
         // Forward / Backward
         if( keyCode == Qt::Key_W )
@@ -95,6 +97,32 @@ namespace Ouquitoure
         {
             move( DOWN, value );
         }
+    }
+
+    void Camera::processMouseMove( int x, int y )
+    {
+        int deltaX = x - lastX;
+        int deltaY = lastY - y;
+        lastX      = x;
+        lastY      = y;
+        yaw += deltaX * 0.25f;
+        pitch += deltaY * 0.25;
+        if( pitch >= 89.0f )
+        {
+            pitch = 89.0f;
+        }
+        if( pitch <= -89.0f )
+        {
+            pitch = -89.0f;
+        }
+        updateVectors();
+        emit viewChanged();
+    }
+
+    void Camera::updateLastPos( int x, int y )
+    {
+        lastX = x;
+        lastY = y;
     }
 
     /**
