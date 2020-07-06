@@ -35,6 +35,13 @@ namespace Ouquitoure
         GLuint               drawElementsEbo;
         constexpr static int DRAW_ELEMENTS_NUM_POINTS   = 4;
         constexpr static int DRAW_ELEMENTS_NUM_ELEMENTS = 6;
+
+        // glDrawArraysInstanced
+        GLuint               drawArraysInstancedVao;
+        GLuint               drawArraysInstancedVbo;
+        GLuint               drawArraysInstancedVboInstanced;
+        constexpr static int DRAW_ARRAYS_INSTANCED_NUM_POINTS    = 3;
+        constexpr static int DRAW_ARRAYS_INSTANCED_NUM_INSTANCES = 4;
     };
 
 } // namespace Ouquitoure

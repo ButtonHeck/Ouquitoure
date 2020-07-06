@@ -21,6 +21,11 @@ namespace Ouquitoure
         , drawElementsVao( 0 )
         , drawElementsVbo( 0 )
         , drawElementsEbo( 0 )
+
+        // glDrawArraysInstanced
+        , drawArraysInstancedVao( 0 )
+        , drawArraysInstancedVbo( 0 )
+        , drawArraysInstancedVboInstanced( 0 )
     {
     }
 
@@ -59,6 +64,11 @@ namespace Ouquitoure
         glDrawArrays( GL_TRIANGLES, 0, DRAW_ARRAYS_NUM_POINTS );
         glDrawArrays( GL_POINTS, 0, DRAW_ARRAYS_NUM_POINTS );
 
+        // glDrawArraysInstanced
+        glBindVertexArray( drawArraysInstancedVao );
+        glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES );
+        glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES );
+
         // glDrawElements
         glBindVertexArray( drawElementsVao );
         glDrawElements( GL_TRIANGLES, DRAW_ELEMENTS_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
@@ -80,6 +90,28 @@ namespace Ouquitoure
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
+
+        // glDrawArraysInstanced
+        glCreateBuffers( 1, &drawArraysInstancedVbo );
+        glCreateBuffers( 1, &drawArraysInstancedVboInstanced );
+        glCreateVertexArrays( 1, &drawArraysInstancedVao );
+        glBindVertexArray( drawArraysInstancedVao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawArraysInstancedVbo );
+        const std::array<Point3p3c, DRAW_ARRAYS_INSTANCED_NUM_POINTS> DRAW_ARRAYS_INSTANCED_POINTS{
+            Point3p3c{ 0.0f, -2.0f, 0.0f, 0.8f, 0.8f, 0.8f }, Point3p3c{ 1.0f, -2.0f, 0.0f, 0.8f, 0.8f, 0.8f },
+            Point3p3c{ 1.0f, -1.0f, 0.0f, 0.8f, 0.8f, 0.8f }
+        };
+        glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ARRAYS_INSTANCED_POINTS ), DRAW_ARRAYS_INSTANCED_POINTS.data(), GL_STATIC_DRAW );
+        glEnableVertexAttribArray( 0 );
+        glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
+        glEnableVertexAttribArray( 1 );
+        glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
+        glBindBuffer( GL_ARRAY_BUFFER, drawArraysInstancedVboInstanced );
+        const float DRAW_ARRAYS_INSTANCED_Z_OFFSETS[ DRAW_ARRAYS_INSTANCED_NUM_INSTANCES ]{ 0.0f, -1.0f, -2.0f, -3.0f };
+        glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ARRAYS_INSTANCED_Z_OFFSETS ), DRAW_ARRAYS_INSTANCED_Z_OFFSETS, GL_STATIC_DRAW );
+        glEnableVertexAttribArray( 2 );
+        glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
+        glVertexAttribDivisor( 2, 1 );
 
         // glDrawElements
         glCreateBuffers( 1, &drawElementsVbo );
@@ -130,6 +162,20 @@ namespace Ouquitoure
         if( drawArraysVbo )
         {
             glDeleteBuffers( 1, &drawArraysVbo );
+        }
+
+        // glDrawArraysInstanced
+        if( drawArraysInstancedVao )
+        {
+            glDeleteVertexArrays( 1, &drawArraysInstancedVao );
+        }
+        if( drawArraysInstancedVbo )
+        {
+            glDeleteBuffers( 1, &drawArraysInstancedVbo );
+        }
+        if( drawArraysInstancedVboInstanced )
+        {
+            glDeleteBuffers( 1, &drawArraysInstancedVboInstanced );
         }
 
         // glDrawElements
