@@ -40,7 +40,7 @@ namespace Ouquitoure
         cleanup();
 
         glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
-        glPointSize( 3.0f );
+        glPointSize( 5.0f );
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
         initializeOpenGLObjects();
@@ -64,10 +64,13 @@ namespace Ouquitoure
         glDrawArrays( GL_TRIANGLES, 0, DRAW_ARRAYS_NUM_POINTS );
         glDrawArrays( GL_POINTS, 0, DRAW_ARRAYS_NUM_POINTS );
 
-        // glDrawArraysInstanced
+        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
         glBindVertexArray( drawArraysInstancedVao );
         glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES );
         glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES );
+        glLineWidth( 3.0f );
+        glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES, 1 );
+        glLineWidth( 1.0f );
 
         // glDrawElements
         glBindVertexArray( drawElementsVao );

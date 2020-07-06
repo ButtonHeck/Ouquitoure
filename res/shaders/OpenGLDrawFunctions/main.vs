@@ -14,6 +14,12 @@ void main()
 {
     v_color = i_color;
     vec3 position = i_pos;
+
+    // for "instanced" functions
     position.z += i_zOffset;
+
+    // for "baseInstance" functions
+    position.y -= gl_InstanceID * 0.5;
+
     gl_Position = u_projection * u_view * u_model * vec4(position, 1.0);
 }
