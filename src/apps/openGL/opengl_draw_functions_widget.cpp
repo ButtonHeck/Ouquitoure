@@ -159,10 +159,10 @@ namespace Ouquitoure
         glBindVertexArray( drawElementsVao );
         glBindBuffer( GL_ARRAY_BUFFER, drawElementsVbo );
         glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsEbo );
-        const std::array<Point3p3c, DRAW_ELEMENTS_NUM_POINTS> DRAW_ELEMENTS_POINTS{ Point3p3c{ 2.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f },
-                                                                                    Point3p3c{ 3.0f, 0.0f, 0.0f, 0.5f, 0.5f, 0.5f },
-                                                                                    Point3p3c{ 3.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f },
-                                                                                    Point3p3c{ 2.0f, 1.0f, 0.0f, 0.5f, 0.5f, 0.5f } };
+        const std::array<Point3p3c, DRAW_ELEMENTS_NUM_POINTS> DRAW_ELEMENTS_POINTS{ Point3p3c{ 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                                                    Point3p3c{ 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                                                    Point3p3c{ 3.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                                                    Point3p3c{ 2.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f } };
         const GLuint                                          DRAW_ELEMENTS_ELEMENTS[ DRAW_ELEMENTS_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
         glBufferData( GL_ARRAY_BUFFER, DRAW_ELEMENTS_NUM_POINTS * sizeof( Point3p3c ), DRAW_ELEMENTS_POINTS.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
