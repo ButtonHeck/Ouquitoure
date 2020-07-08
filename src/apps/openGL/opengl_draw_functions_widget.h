@@ -57,6 +57,13 @@ namespace Ouquitoure
         GLuint               drawElementsEbo;
         constexpr static int DRAW_ELEMENTS_NUM_POINTS   = 4;
         constexpr static int DRAW_ELEMENTS_NUM_ELEMENTS = 6;
+
+        // glDrawElementsBaseVertex
+        GLuint               drawElementsBVVao;
+        GLuint               drawElementsBVVbo;
+        GLuint               drawElementsBVEbo;
+        constexpr static int DRAW_ELEMENTS_BV_NUM_POINTS   = 8;
+        constexpr static int DRAW_ELEMENTS_BV_NUM_ELEMENTS = 6;
     };
 
 } // namespace Ouquitoure
