@@ -37,6 +37,12 @@ namespace Ouquitoure
         , drawElementsBVVao( 0 )
         , drawElementsBVVbo( 0 )
         , drawElementsBVEbo( 0 )
+
+        // glDrawElementsIndirect
+        , drawElementsIndirectVao( 0 )
+        , drawElementsIndirectVbo( 0 )
+        , drawElementsIndirectEbo( 0 )
+        , drawElementsIndirectDibo( 0 )
     {
     }
 
@@ -85,6 +91,7 @@ namespace Ouquitoure
 
         // glDrawArraysIndirect
         glBindVertexArray( drawArraysIndirectVao );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArraysIndirectDibo );
         glDrawArraysIndirect( GL_TRIANGLES, nullptr );
         glDrawArraysIndirect( GL_POINTS, nullptr );
 
@@ -97,6 +104,12 @@ namespace Ouquitoure
         glBindVertexArray( drawElementsBVVao );
         glDrawElementsBaseVertex( GL_TRIANGLES, DRAW_ELEMENTS_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
         glDrawElementsBaseVertex( GL_POINTS, DRAW_ELEMENTS_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
+
+        // glDrawElementsIndirect
+        glBindVertexArray( drawElementsIndirectVao );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElementsIndirectDibo );
+        glDrawElementsIndirect( GL_TRIANGLES, GL_UNSIGNED_INT, nullptr );
+        glDrawElementsIndirect( GL_POINTS, GL_UNSIGNED_INT, nullptr );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -156,7 +169,7 @@ namespace Ouquitoure
         const DrawArraysIndirectCommand DRAW_INDIRECT_DATA{ 3, DRAW_ARRAYS_INDIRECT_NUM_INSTANCES, 0, 0 };
         glBufferData( GL_DRAW_INDIRECT_BUFFER, sizeof( DRAW_INDIRECT_DATA ), &DRAW_INDIRECT_DATA, GL_STATIC_DRAW );
         glBindBuffer( GL_ARRAY_BUFFER, drawArraysIndirectVboInstanced );
-        const float DRAW_ARRAYS_INDIRECT_Z_OFFSETS[ DRAW_ARRAYS_INDIRECT_NUM_INSTANCES ]{ 0.0f, 0.5f };
+        const float DRAW_ARRAYS_INDIRECT_Z_OFFSETS[ DRAW_ARRAYS_INDIRECT_NUM_INSTANCES ]{ 0.0f, -0.5f };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ARRAYS_INDIRECT_Z_OFFSETS ), DRAW_ARRAYS_INDIRECT_Z_OFFSETS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
@@ -201,6 +214,29 @@ namespace Ouquitoure
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_BV_ELEMENTS ), DRAW_ELEMENTS_BV_ELEMENTS, GL_STATIC_DRAW );
+
+        // glDrawElementsIndirect
+        glCreateVertexArrays( 1, &drawElementsIndirectVao );
+        glCreateBuffers( 1, &drawElementsIndirectVbo );
+        glCreateBuffers( 1, &drawElementsIndirectEbo );
+        glCreateBuffers( 1, &drawElementsIndirectDibo );
+        glBindVertexArray( drawElementsIndirectVao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElementsIndirectVbo );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsIndirectEbo );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElementsIndirectDibo );
+        const Point3p3c DRAW_ELEMENTS_INDIRECT_POINTS[]{ Point3p3c{ 2.0f, -4.0f, 0.0f, 0.5f, 0.0f, 0.0f },
+                                                         Point3p3c{ 3.0f, -4.0f, 0.0f, 0.5f, 0.0f, 0.0f },
+                                                         Point3p3c{ 3.0f, -3.0f, 0.0f, 0.5f, 0.0f, 0.0f },
+                                                         Point3p3c{ 2.0f, -3.0f, 0.0f, 0.5f, 0.0f, 0.0f } };
+        const GLuint    DRAW_ELEMENTS_INDIRECT_ELEMENTS[]{ 0, 1, 2, 2, 3, 0 };
+        glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_POINTS ), DRAW_ELEMENTS_INDIRECT_POINTS, GL_STATIC_DRAW );
+        glEnableVertexAttribArray( 0 );
+        glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
+        glEnableVertexAttribArray( 1 );
+        glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
+        glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_ELEMENTS ), DRAW_ELEMENTS_INDIRECT_ELEMENTS, GL_STATIC_DRAW );
+        const DrawElementsIndirectCommand DRAW_ELEMENTS_INDIRECT_DATA[]{ DrawElementsIndirectCommand{ 6, 1, 0, 0, 0 } };
+        glBufferData( GL_DRAW_INDIRECT_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_DATA ), DRAW_ELEMENTS_INDIRECT_DATA, GL_STATIC_DRAW );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLShaders()
@@ -292,6 +328,24 @@ namespace Ouquitoure
         if( drawElementsBVEbo )
         {
             glDeleteBuffers( 1, &drawElementsBVEbo );
+        }
+
+        // glDrawElementsIndirect
+        if( drawElementsIndirectVao )
+        {
+            glDeleteVertexArrays( 1, &drawElementsIndirectVao );
+        }
+        if( drawElementsIndirectVbo )
+        {
+            glDeleteBuffers( 1, &drawElementsIndirectVbo );
+        }
+        if( drawElementsIndirectEbo )
+        {
+            glDeleteBuffers( 1, &drawElementsIndirectEbo );
+        }
+        if( drawElementsIndirectDibo )
+        {
+            glDeleteBuffers( 1, &drawElementsIndirectDibo );
         }
 
         // shader programs
