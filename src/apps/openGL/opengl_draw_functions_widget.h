@@ -85,7 +85,7 @@ namespace Ouquitoure
         GLuint               drawElementsInstancedVboInstanced;
         GLuint               drawElementsInstancedEbo;
         constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS = 6;
-        constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES = 3;
+        constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES = 4;
     };
 
 } // namespace Ouquitoure

@@ -44,7 +44,7 @@ namespace Ouquitoure
         , drawElementsIndirectEbo( 0 )
         , drawElementsIndirectDibo( 0 )
 
-        // glDrawElementsInstanced
+        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
         , drawElementsInstancedVao( 0 )
         , drawElementsInstancedVbo( 0 )
         , drawElementsInstancedVboInstanced( 0 )
@@ -117,12 +117,16 @@ namespace Ouquitoure
         glDrawElementsIndirect( GL_TRIANGLES, GL_UNSIGNED_INT, nullptr );
         glDrawElementsIndirect( GL_POINTS, GL_UNSIGNED_INT, nullptr );
 
-        // glDrawElementsInstanced
+        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
         glBindVertexArray( drawElementsInstancedVao );
         glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
                                  DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES );
         glDrawElementsInstanced( GL_POINTS, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
                                  DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES );
+        glLineWidth( 3.0f );
+        glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                             DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES, 1 );
+        glLineWidth( 1.0f );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -251,7 +255,7 @@ namespace Ouquitoure
         const DrawElementsIndirectCommand DRAW_ELEMENTS_INDIRECT_DATA[]{ DrawElementsIndirectCommand{ 6, 1, 0, 0, 0 } };
         glBufferData( GL_DRAW_INDIRECT_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_DATA ), DRAW_ELEMENTS_INDIRECT_DATA, GL_STATIC_DRAW );
 
-        // glDrawElementsInstanced
+        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
         glCreateVertexArrays( 1, &drawElementsInstancedVao );
         glCreateBuffers( 1, &drawElementsInstancedVbo );
         glCreateBuffers( 1, &drawElementsInstancedVboInstanced );
@@ -263,7 +267,7 @@ namespace Ouquitoure
                                                           Point3p3c{ 3.0f, -5.0f, 0.0f, 1.0f, 0.0f, 0.0f },
                                                           Point3p3c{ 2.0f, -5.0f, 0.0f, 1.0f, 0.0f, 0.0f } };
         const GLuint    DRAW_ELEMENTS_INSTANCED_ELEMENTS[ DRAW_ELEMENTS_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
-        const float     DRAW_ELEMENTS_INSTANCED_Z_OFFSETS[ DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f };
+        const float     DRAW_ELEMENTS_INSTANCED_Z_OFFSETS[ DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f, -1.5f };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_POINTS ), DRAW_ELEMENTS_INSTANCED_POINTS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
@@ -388,7 +392,7 @@ namespace Ouquitoure
             glDeleteBuffers( 1, &drawElementsIndirectDibo );
         }
 
-        // glDrawElementsInstanced
+        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
         if( drawElementsInstancedVao )
         {
             glDeleteVertexArrays( 1, &drawElementsInstancedVao );
