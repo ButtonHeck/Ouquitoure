@@ -43,6 +43,12 @@ namespace Ouquitoure
         , drawElementsIndirectVbo( 0 )
         , drawElementsIndirectEbo( 0 )
         , drawElementsIndirectDibo( 0 )
+
+        // glDrawElementsInstanced
+        , drawElementsInstancedVao( 0 )
+        , drawElementsInstancedVbo( 0 )
+        , drawElementsInstancedVboInstanced( 0 )
+        , drawElementsInstancedEbo( 0 )
     {
     }
 
@@ -110,6 +116,13 @@ namespace Ouquitoure
         glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElementsIndirectDibo );
         glDrawElementsIndirect( GL_TRIANGLES, GL_UNSIGNED_INT, nullptr );
         glDrawElementsIndirect( GL_POINTS, GL_UNSIGNED_INT, nullptr );
+
+        // glDrawElementsInstanced
+        glBindVertexArray( drawElementsInstancedVao );
+        glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                 DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES );
+        glDrawElementsInstanced( GL_POINTS, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                 DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -237,6 +250,33 @@ namespace Ouquitoure
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_ELEMENTS ), DRAW_ELEMENTS_INDIRECT_ELEMENTS, GL_STATIC_DRAW );
         const DrawElementsIndirectCommand DRAW_ELEMENTS_INDIRECT_DATA[]{ DrawElementsIndirectCommand{ 6, 1, 0, 0, 0 } };
         glBufferData( GL_DRAW_INDIRECT_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_DATA ), DRAW_ELEMENTS_INDIRECT_DATA, GL_STATIC_DRAW );
+
+        // glDrawElementsInstanced
+        glCreateVertexArrays( 1, &drawElementsInstancedVao );
+        glCreateBuffers( 1, &drawElementsInstancedVbo );
+        glCreateBuffers( 1, &drawElementsInstancedVboInstanced );
+        glCreateBuffers( 1, &drawElementsInstancedEbo );
+        glBindVertexArray( drawElementsInstancedVao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElementsInstancedVbo );
+        const Point3p3c DRAW_ELEMENTS_INSTANCED_POINTS[]{ Point3p3c{ 2.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                          Point3p3c{ 3.0f, -6.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                          Point3p3c{ 3.0f, -5.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                          Point3p3c{ 2.0f, -5.0f, 0.0f, 1.0f, 0.0f, 0.0f } };
+        const GLuint    DRAW_ELEMENTS_INSTANCED_ELEMENTS[ DRAW_ELEMENTS_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
+        const float     DRAW_ELEMENTS_INSTANCED_Z_OFFSETS[ DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f };
+        glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_POINTS ), DRAW_ELEMENTS_INSTANCED_POINTS, GL_STATIC_DRAW );
+        glEnableVertexAttribArray( 0 );
+        glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
+        glEnableVertexAttribArray( 1 );
+        glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsInstancedEbo );
+        glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_ELEMENTS ), DRAW_ELEMENTS_INSTANCED_ELEMENTS,
+                      GL_STATIC_DRAW );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElementsInstancedVboInstanced );
+        glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_Z_OFFSETS ), DRAW_ELEMENTS_INSTANCED_Z_OFFSETS, GL_STATIC_DRAW );
+        glEnableVertexAttribArray( 2 );
+        glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
+        glVertexAttribDivisor( 2, 1 );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLShaders()
@@ -346,6 +386,24 @@ namespace Ouquitoure
         if( drawElementsIndirectDibo )
         {
             glDeleteBuffers( 1, &drawElementsIndirectDibo );
+        }
+
+        // glDrawElementsInstanced
+        if( drawElementsInstancedVao )
+        {
+            glDeleteVertexArrays( 1, &drawElementsInstancedVao );
+        }
+        if( drawElementsInstancedVbo )
+        {
+            glDeleteBuffers( 1, &drawElementsInstancedVbo );
+        }
+        if( drawElementsInstancedVboInstanced )
+        {
+            glDeleteBuffers( 1, &drawElementsInstancedVboInstanced );
+        }
+        if( drawElementsInstancedEbo )
+        {
+            glDeleteBuffers( 1, &drawElementsInstancedEbo );
         }
 
         // shader programs
