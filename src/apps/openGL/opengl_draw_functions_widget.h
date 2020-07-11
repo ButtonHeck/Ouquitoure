@@ -24,6 +24,7 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
+        // for paintGL
         void drawArrays();
         void drawArraysInstanced();
         void drawArraysIndirect();
@@ -32,6 +33,16 @@ namespace Ouquitoure
         void drawElementsIndirect();
         void drawElementsInstanced();
         void drawElementsInstancedBaseVertex();
+
+        // initialization
+        void drawArrays_init();
+        void drawArraysInstanced_init();
+        void drawArraysIndirect_init();
+        void drawElements_init();
+        void drawElementsBaseVertex_init();
+        void drawElementsIndirect_init();
+        void drawElementsInstanced_init();
+        void drawElementsInstancedBaseVertex_init();
 
     private:
         // glDrawArrays
