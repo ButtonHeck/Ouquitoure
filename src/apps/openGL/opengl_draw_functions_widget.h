@@ -54,6 +54,12 @@ namespace Ouquitoure
         void drawElementsInstanced_cleanup();
         void drawElementsInstancedBaseVertex_cleanup();
 
+        // utility functions
+        void setupVertexArrayAttribs();
+        void setupVertexArrayInstancedAttribs();
+        void openGLBufferCleanup( GLuint & bufferObject );
+        void openGLVertexArrayCleanup( GLuint & vertexArray );
+
     private:
         // glDrawArrays
         GLuint               drawArr_Vao;
