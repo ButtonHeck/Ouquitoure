@@ -79,13 +79,21 @@ namespace Ouquitoure
             GLuint baseInstance;
         } DrawElementsIndirectCommand;
 
-        // glDrawElementsInstanced
+        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
         GLuint               drawElementsInstancedVao;
         GLuint               drawElementsInstancedVbo;
         GLuint               drawElementsInstancedVboInstanced;
         GLuint               drawElementsInstancedEbo;
-        constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS = 6;
+        constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS  = 6;
         constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES = 4;
+
+        // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
+        GLuint               drawElementsInstancedBVVao;
+        GLuint               drawElementsInstancedBVVbo;
+        GLuint               drawElementsInstancedBVVboInstanced;
+        GLuint               drawElementsInstancedBVEbo;
+        constexpr static int DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS  = 6;
+        constexpr static int DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES = 3;
     };
 
 } // namespace Ouquitoure
