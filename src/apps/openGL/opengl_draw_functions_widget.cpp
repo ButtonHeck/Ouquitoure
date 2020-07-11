@@ -162,128 +162,28 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::cleanup()
     {
         // glDrawArrays
-        if( drawArr_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawArr_Vao );
-        }
-        if( drawArr_Vbo )
-        {
-            glDeleteBuffers( 1, &drawArr_Vbo );
-        }
+        drawArrays_cleanup();
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        if( drawArrInst_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawArrInst_Vao );
-        }
-        if( drawArrInst_Vbo )
-        {
-            glDeleteBuffers( 1, &drawArrInst_Vbo );
-        }
-        if( drawArrInst_VboInst )
-        {
-            glDeleteBuffers( 1, &drawArrInst_VboInst );
-        }
+        drawArraysInstanced_cleanup();
 
         // glDrawArraysIndirect
-        if( drawArrInd_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawArrInd_Vao );
-        }
-        if( drawArrInd_Vbo )
-        {
-            glDeleteBuffers( 1, &drawArrInd_Vbo );
-        }
-        if( drawArrInd_VboInst )
-        {
-            glDeleteBuffers( 1, &drawArrInd_VboInst );
-        }
-        if( drawArrInd_Dibo )
-        {
-            glDeleteBuffers( 1, &drawArrInd_Dibo );
-        }
+        drawArraysIndirect_cleanup();
 
         // glDrawElements
-        if( drawElem_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawElem_Vao );
-        }
-        if( drawElem_Ebo )
-        {
-            glDeleteBuffers( 1, &drawElem_Ebo );
-        }
-        if( drawElem_Vbo )
-        {
-            glDeleteBuffers( 1, &drawElem_Vbo );
-        }
+        drawElements_cleanup();
 
         // glDrawElementsBaseVertex
-        if( drawElemBV_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawElemBV_Vao );
-        }
-        if( drawElemBV_Vbo )
-        {
-            glDeleteBuffers( 1, &drawElemBV_Vbo );
-        }
-        if( drawElemBV_Ebo )
-        {
-            glDeleteBuffers( 1, &drawElemBV_Ebo );
-        }
+        drawElementsBaseVertex_cleanup();
 
         // glDrawElementsIndirect
-        if( drawElemInd_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawElemInd_Vao );
-        }
-        if( drawElemInd_Vbo )
-        {
-            glDeleteBuffers( 1, &drawElemInd_Vbo );
-        }
-        if( drawElemInd_Ebo )
-        {
-            glDeleteBuffers( 1, &drawElemInd_Ebo );
-        }
-        if( drawElemInd_Dibo )
-        {
-            glDeleteBuffers( 1, &drawElemInd_Dibo );
-        }
+        drawElementsIndirect_cleanup();
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        if( drawElemInst_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawElemInst_Vao );
-        }
-        if( drawElemInst_Vbo )
-        {
-            glDeleteBuffers( 1, &drawElemInst_Vbo );
-        }
-        if( drawElemInst_VboInst )
-        {
-            glDeleteBuffers( 1, &drawElemInst_VboInst );
-        }
-        if( drawElemInst_Ebo )
-        {
-            glDeleteBuffers( 1, &drawElemInst_Ebo );
-        }
+        drawElementsInstanced_cleanup();
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        if( drawElemInstBV_Vao )
-        {
-            glDeleteVertexArrays( 1, &drawElemInstBV_Vao );
-        }
-        if( drawElemInstBV_Vbo )
-        {
-            glDeleteBuffers( 1, &drawElemInstBV_Vbo );
-        }
-        if( drawElemInstBV_VboInst )
-        {
-            glDeleteBuffers( 1, &drawElemInstBV_VboInst );
-        }
-        if( drawElemInstBV_Ebo )
-        {
-            glDeleteBuffers( 1, &drawElemInstBV_Ebo );
-        }
+        drawElementsInstancedBaseVertex_cleanup();
 
         // shader programs
         for( auto & shaderProgram: shaderPrograms.values() )
@@ -562,6 +462,148 @@ namespace Ouquitoure
         glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElemInstBV_Ebo );
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_BV_ELEMENTS ), DRAW_ELEMENTS_INSTANCED_BV_ELEMENTS,
                       GL_STATIC_DRAW );
+    }
+
+    //--------- cleanup ----------
+
+    void OpenGLDrawFunctionsWidget::drawArrays_cleanup()
+    {
+        if( drawArr_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawArr_Vao );
+        }
+        if( drawArr_Vbo )
+        {
+            glDeleteBuffers( 1, &drawArr_Vbo );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawArraysInstanced_cleanup()
+    {
+        if( drawArrInst_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawArrInst_Vao );
+        }
+        if( drawArrInst_Vbo )
+        {
+            glDeleteBuffers( 1, &drawArrInst_Vbo );
+        }
+        if( drawArrInst_VboInst )
+        {
+            glDeleteBuffers( 1, &drawArrInst_VboInst );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawArraysIndirect_cleanup()
+    {
+        if( drawArrInd_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawArrInd_Vao );
+        }
+        if( drawArrInd_Vbo )
+        {
+            glDeleteBuffers( 1, &drawArrInd_Vbo );
+        }
+        if( drawArrInd_VboInst )
+        {
+            glDeleteBuffers( 1, &drawArrInd_VboInst );
+        }
+        if( drawArrInd_Dibo )
+        {
+            glDeleteBuffers( 1, &drawArrInd_Dibo );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElements_cleanup()
+    {
+        if( drawElem_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawElem_Vao );
+        }
+        if( drawElem_Ebo )
+        {
+            glDeleteBuffers( 1, &drawElem_Ebo );
+        }
+        if( drawElem_Vbo )
+        {
+            glDeleteBuffers( 1, &drawElem_Vbo );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsBaseVertex_cleanup()
+    {
+        if( drawElemBV_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawElemBV_Vao );
+        }
+        if( drawElemBV_Vbo )
+        {
+            glDeleteBuffers( 1, &drawElemBV_Vbo );
+        }
+        if( drawElemBV_Ebo )
+        {
+            glDeleteBuffers( 1, &drawElemBV_Ebo );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsIndirect_cleanup()
+    {
+        if( drawElemInd_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawElemInd_Vao );
+        }
+        if( drawElemInd_Vbo )
+        {
+            glDeleteBuffers( 1, &drawElemInd_Vbo );
+        }
+        if( drawElemInd_Ebo )
+        {
+            glDeleteBuffers( 1, &drawElemInd_Ebo );
+        }
+        if( drawElemInd_Dibo )
+        {
+            glDeleteBuffers( 1, &drawElemInd_Dibo );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsInstanced_cleanup()
+    {
+        if( drawElemInst_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawElemInst_Vao );
+        }
+        if( drawElemInst_Vbo )
+        {
+            glDeleteBuffers( 1, &drawElemInst_Vbo );
+        }
+        if( drawElemInst_VboInst )
+        {
+            glDeleteBuffers( 1, &drawElemInst_VboInst );
+        }
+        if( drawElemInst_Ebo )
+        {
+            glDeleteBuffers( 1, &drawElemInst_Ebo );
+        }
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex_cleanup()
+    {
+        if( drawElemInstBV_Vao )
+        {
+            glDeleteVertexArrays( 1, &drawElemInstBV_Vao );
+        }
+        if( drawElemInstBV_Vbo )
+        {
+            glDeleteBuffers( 1, &drawElemInstBV_Vbo );
+        }
+        if( drawElemInstBV_VboInst )
+        {
+            glDeleteBuffers( 1, &drawElemInstBV_VboInst );
+        }
+        if( drawElemInstBV_Ebo )
+        {
+            glDeleteBuffers( 1, &drawElemInstBV_Ebo );
+        }
     }
 
 } // namespace Ouquitoure
