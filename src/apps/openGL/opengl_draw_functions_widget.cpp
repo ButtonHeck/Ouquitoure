@@ -89,61 +89,28 @@ namespace Ouquitoure
         glUniformMatrix4fv( mainProgram->uniformLocation( "u_model" ), 1, GL_FALSE, glm::value_ptr( model ) );
 
         // glDrawArrays
-        glBindVertexArray( drawArr_Vao );
-        glDrawArrays( GL_TRIANGLES, 0, DRAW_ARR_NUM_POINTS );
-        glDrawArrays( GL_POINTS, 0, DRAW_ARR_NUM_POINTS );
+        drawArrays();
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        glBindVertexArray( drawArrInst_Vao );
-        glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
-        glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
-        glLineWidth( 3.0f );
-        glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES, 1 );
-        glLineWidth( 1.0f );
+        drawArraysInstanced();
 
         // glDrawArraysIndirect
-        glBindVertexArray( drawArrInd_Vao );
-        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArrInd_Dibo );
-        glDrawArraysIndirect( GL_TRIANGLES, nullptr );
-        glDrawArraysIndirect( GL_POINTS, nullptr );
+        drawArraysIndirect();
 
         // glDrawElements
-        glBindVertexArray( drawElem_Vao );
-        glDrawElements( GL_TRIANGLES, DRAW_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
-        glDrawElements( GL_POINTS, DRAW_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+        drawElements();
 
         // glDrawElementsBaseVertex
-        glBindVertexArray( drawElemBV_Vao );
-        glDrawElementsBaseVertex( GL_TRIANGLES, DRAW_ELEM_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
-        glDrawElementsBaseVertex( GL_POINTS, DRAW_ELEM_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
+        drawElementsBaseVertex();
 
         // glDrawElementsIndirect
-        glBindVertexArray( drawElemInd_Vao );
-        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElemInd_Dibo );
-        glDrawElementsIndirect( GL_TRIANGLES, GL_UNSIGNED_INT, nullptr );
-        glDrawElementsIndirect( GL_POINTS, GL_UNSIGNED_INT, nullptr );
+        drawElementsIndirect();
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        glBindVertexArray( drawElemInst_Vao );
-        glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
-        glDrawElementsInstanced( GL_POINTS, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
-        glLineWidth( 3.0f );
-        glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES,
-                                             1 );
-        glLineWidth( 1.0f );
+        drawElementsInstanced();
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        glBindVertexArray( drawElemInstBV_Vao );
-        glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                           DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
-        glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_BV_NUM_INSTANCES,
-                                           1 );
-        glLineWidth( 3.0f );
-        glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                                       DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
-        glDrawElementsInstancedBaseVertexBaseInstance( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                                       DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
-        glLineWidth( 1.0f );
+        drawElementsInstancedBaseVertex();
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -162,7 +129,7 @@ namespace Ouquitoure
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
 
-        // glDrawArraysInstanced
+        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
         glCreateBuffers( 1, &drawArrInst_Vbo );
         glCreateBuffers( 1, &drawArrInst_VboInst );
         glCreateVertexArrays( 1, &drawArrInst_Vao );
@@ -360,7 +327,7 @@ namespace Ouquitoure
             glDeleteBuffers( 1, &drawArr_Vbo );
         }
 
-        // glDrawArraysInstanced
+        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
         if( drawArrInst_Vao )
         {
             glDeleteVertexArrays( 1, &drawArrInst_Vao );
@@ -480,6 +447,77 @@ namespace Ouquitoure
             glDeleteProgram( shaderProgram->programId() );
         }
         shaderPrograms.clear();
+    }
+
+    void OpenGLDrawFunctionsWidget::drawArrays()
+    {
+        glBindVertexArray( drawArr_Vao );
+        glDrawArrays( GL_TRIANGLES, 0, DRAW_ARR_NUM_POINTS );
+        glDrawArrays( GL_POINTS, 0, DRAW_ARR_NUM_POINTS );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawArraysInstanced()
+    {
+        glBindVertexArray( drawArrInst_Vao );
+        glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
+        glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
+        glLineWidth( 3.0f );
+        glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES, 1 );
+        glLineWidth( 1.0f );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawArraysIndirect()
+    {
+        glBindVertexArray( drawArrInd_Vao );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArrInd_Dibo );
+        glDrawArraysIndirect( GL_TRIANGLES, nullptr );
+        glDrawArraysIndirect( GL_POINTS, nullptr );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElements()
+    {
+        glBindVertexArray( drawElem_Vao );
+        glDrawElements( GL_TRIANGLES, DRAW_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+        glDrawElements( GL_POINTS, DRAW_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsBaseVertex()
+    {
+        glBindVertexArray( drawElemBV_Vao );
+        glDrawElementsBaseVertex( GL_TRIANGLES, DRAW_ELEM_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
+        glDrawElementsBaseVertex( GL_POINTS, DRAW_ELEM_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsIndirect()
+    {
+        glBindVertexArray( drawElemInd_Vao );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElemInd_Dibo );
+        glDrawElementsIndirect( GL_TRIANGLES, GL_UNSIGNED_INT, nullptr );
+        glDrawElementsIndirect( GL_POINTS, GL_UNSIGNED_INT, nullptr );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsInstanced()
+    {
+        glBindVertexArray( drawElemInst_Vao );
+        glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
+        glDrawElementsInstanced( GL_POINTS, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
+        glLineWidth( 3.0f );
+        glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES,
+                                             1 );
+        glLineWidth( 1.0f );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex()
+    {
+        glBindVertexArray( drawElemInstBV_Vao );
+        glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                           DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
+        glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_BV_NUM_INSTANCES,
+                                           1 );
+        glLineWidth( 3.0f );
+        glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                                       DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
+        glLineWidth( 1.0f );
     }
 
 } // namespace Ouquitoure

@@ -24,12 +24,22 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
+        void drawArrays();
+        void drawArraysInstanced();
+        void drawArraysIndirect();
+        void drawElements();
+        void drawElementsBaseVertex();
+        void drawElementsIndirect();
+        void drawElementsInstanced();
+        void drawElementsInstancedBaseVertex();
+
+    private:
         // glDrawArrays
         GLuint               drawArr_Vao;
         GLuint               drawArr_Vbo;
         constexpr static int DRAW_ARR_NUM_POINTS = 3;
 
-        // glDrawArraysInstanced
+        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
         GLuint               drawArrInst_Vao;
         GLuint               drawArrInst_Vbo;
         GLuint               drawArrInst_VboInst;
