@@ -25,24 +25,24 @@ namespace Ouquitoure
 
     private:
         // glDrawArrays
-        GLuint               drawArraysVao;
-        GLuint               drawArraysVbo;
-        constexpr static int DRAW_ARRAYS_NUM_POINTS = 3;
+        GLuint               drawArr_Vao;
+        GLuint               drawArr_Vbo;
+        constexpr static int DRAW_ARR_NUM_POINTS = 3;
 
         // glDrawArraysInstanced
-        GLuint               drawArraysInstancedVao;
-        GLuint               drawArraysInstancedVbo;
-        GLuint               drawArraysInstancedVboInstanced;
-        constexpr static int DRAW_ARRAYS_INSTANCED_NUM_POINTS    = 3;
-        constexpr static int DRAW_ARRAYS_INSTANCED_NUM_INSTANCES = 4;
+        GLuint               drawArrInst_Vao;
+        GLuint               drawArrInst_Vbo;
+        GLuint               drawArrInst_VboInst;
+        constexpr static int DRAW_ARR_INST_NUM_POINTS    = 3;
+        constexpr static int DRAW_ARR_INST_NUM_INSTANCES = 4;
 
         // glDrawArraysIndirect
-        GLuint               drawArraysIndirectVao;
-        GLuint               drawArraysIndirectVbo;
-        GLuint               drawArraysIndirectVboInstanced;
-        GLuint               drawArraysIndirectDibo;
-        constexpr static int DRAW_ARRAYS_INDIRECT_NUM_POINTS    = 3;
-        constexpr static int DRAW_ARRAYS_INDIRECT_NUM_INSTANCES = 2;
+        GLuint               drawArrInd_Vao;
+        GLuint               drawArrInd_Vbo;
+        GLuint               drawArrInd_VboInst;
+        GLuint               drawArrInd_Dibo;
+        constexpr static int DRAW_ARR_IND_NUM_POINTS    = 3;
+        constexpr static int DRAW_ARR_IND_NUM_INSTANCES = 2;
         typedef struct
         {
             GLuint count;
@@ -52,24 +52,24 @@ namespace Ouquitoure
         } DrawArraysIndirectCommand;
 
         // glDrawElements
-        GLuint               drawElementsVao;
-        GLuint               drawElementsVbo;
-        GLuint               drawElementsEbo;
-        constexpr static int DRAW_ELEMENTS_NUM_POINTS   = 4;
-        constexpr static int DRAW_ELEMENTS_NUM_ELEMENTS = 6;
+        GLuint               drawElem_Vao;
+        GLuint               drawElem_Vbo;
+        GLuint               drawElem_Ebo;
+        constexpr static int DRAW_ELEM_NUM_POINTS   = 4;
+        constexpr static int DRAW_ELEM_NUM_ELEMENTS = 6;
 
         // glDrawElementsBaseVertex
-        GLuint               drawElementsBVVao;
-        GLuint               drawElementsBVVbo;
-        GLuint               drawElementsBVEbo;
-        constexpr static int DRAW_ELEMENTS_BV_NUM_POINTS   = 8;
-        constexpr static int DRAW_ELEMENTS_BV_NUM_ELEMENTS = 6;
+        GLuint               drawElemBV_Vao;
+        GLuint               drawElemBV_Vbo;
+        GLuint               drawElemBV_Ebo;
+        constexpr static int DRAW_ELEM_BV_NUM_POINTS   = 8;
+        constexpr static int DRAW_ELEM_BV_NUM_ELEMENTS = 6;
 
         // glDrawElementsIndirect
-        GLuint drawElementsIndirectVao;
-        GLuint drawElementsIndirectVbo;
-        GLuint drawElementsIndirectEbo;
-        GLuint drawElementsIndirectDibo;
+        GLuint drawElemInd_Vao;
+        GLuint drawElemInd_Vbo;
+        GLuint drawElemInd_Ebo;
+        GLuint drawElemInd_Dibo;
         typedef struct
         {
             GLuint count;
@@ -80,20 +80,20 @@ namespace Ouquitoure
         } DrawElementsIndirectCommand;
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        GLuint               drawElementsInstancedVao;
-        GLuint               drawElementsInstancedVbo;
-        GLuint               drawElementsInstancedVboInstanced;
-        GLuint               drawElementsInstancedEbo;
-        constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS  = 6;
-        constexpr static int DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES = 4;
+        GLuint               drawElemInst_Vao;
+        GLuint               drawElemInst_Vbo;
+        GLuint               drawElemInst_VboInst;
+        GLuint               drawElemInst_Ebo;
+        constexpr static int DRAW_ELEM_INST_NUM_ELEMENTS  = 6;
+        constexpr static int DRAW_ELEM_INST_NUM_INSTANCES = 4;
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        GLuint               drawElementsInstancedBVVao;
-        GLuint               drawElementsInstancedBVVbo;
-        GLuint               drawElementsInstancedBVVboInstanced;
-        GLuint               drawElementsInstancedBVEbo;
-        constexpr static int DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS  = 6;
-        constexpr static int DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES = 3;
+        GLuint               drawElemInstBV_Vao;
+        GLuint               drawElemInstBV_Vbo;
+        GLuint               drawElemInstBV_VboInst;
+        GLuint               drawElemInstBV_Ebo;
+        constexpr static int DRAW_ELEM_INST_BV_NUM_ELEMENTS  = 6;
+        constexpr static int DRAW_ELEM_INST_BV_NUM_INSTANCES = 3;
     };
 
 } // namespace Ouquitoure

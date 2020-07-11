@@ -14,47 +14,47 @@ namespace Ouquitoure
         : OpenGLWidgetWithCamera( name, parent )
 
         // glDrawArrays
-        , drawArraysVao( 0 )
-        , drawArraysVbo( 0 )
+        , drawArr_Vao( 0 )
+        , drawArr_Vbo( 0 )
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        , drawArraysInstancedVao( 0 )
-        , drawArraysInstancedVbo( 0 )
-        , drawArraysInstancedVboInstanced( 0 )
+        , drawArrInst_Vao( 0 )
+        , drawArrInst_Vbo( 0 )
+        , drawArrInst_VboInst( 0 )
 
         // glDrawArraysIndirect
-        , drawArraysIndirectVao( 0 )
-        , drawArraysIndirectVbo( 0 )
-        , drawArraysIndirectVboInstanced( 0 )
-        , drawArraysIndirectDibo( 0 )
+        , drawArrInd_Vao( 0 )
+        , drawArrInd_Vbo( 0 )
+        , drawArrInd_VboInst( 0 )
+        , drawArrInd_Dibo( 0 )
 
         // glDrawElements
-        , drawElementsVao( 0 )
-        , drawElementsVbo( 0 )
-        , drawElementsEbo( 0 )
+        , drawElem_Vao( 0 )
+        , drawElem_Vbo( 0 )
+        , drawElem_Ebo( 0 )
 
         // glDrawElementsBaseVertex
-        , drawElementsBVVao( 0 )
-        , drawElementsBVVbo( 0 )
-        , drawElementsBVEbo( 0 )
+        , drawElemBV_Vao( 0 )
+        , drawElemBV_Vbo( 0 )
+        , drawElemBV_Ebo( 0 )
 
         // glDrawElementsIndirect
-        , drawElementsIndirectVao( 0 )
-        , drawElementsIndirectVbo( 0 )
-        , drawElementsIndirectEbo( 0 )
-        , drawElementsIndirectDibo( 0 )
+        , drawElemInd_Vao( 0 )
+        , drawElemInd_Vbo( 0 )
+        , drawElemInd_Ebo( 0 )
+        , drawElemInd_Dibo( 0 )
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        , drawElementsInstancedVao( 0 )
-        , drawElementsInstancedVbo( 0 )
-        , drawElementsInstancedVboInstanced( 0 )
-        , drawElementsInstancedEbo( 0 )
+        , drawElemInst_Vao( 0 )
+        , drawElemInst_Vbo( 0 )
+        , drawElemInst_VboInst( 0 )
+        , drawElemInst_Ebo( 0 )
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        , drawElementsInstancedBVVao( 0 )
-        , drawElementsInstancedBVVbo( 0 )
-        , drawElementsInstancedBVVboInstanced( 0 )
-        , drawElementsInstancedBVEbo( 0 )
+        , drawElemInstBV_Vao( 0 )
+        , drawElemInstBV_Vbo( 0 )
+        , drawElemInstBV_VboInst( 0 )
+        , drawElemInstBV_Ebo( 0 )
     {
     }
 
@@ -89,88 +89,86 @@ namespace Ouquitoure
         glUniformMatrix4fv( mainProgram->uniformLocation( "u_model" ), 1, GL_FALSE, glm::value_ptr( model ) );
 
         // glDrawArrays
-        glBindVertexArray( drawArraysVao );
-        glDrawArrays( GL_TRIANGLES, 0, DRAW_ARRAYS_NUM_POINTS );
-        glDrawArrays( GL_POINTS, 0, DRAW_ARRAYS_NUM_POINTS );
+        glBindVertexArray( drawArr_Vao );
+        glDrawArrays( GL_TRIANGLES, 0, DRAW_ARR_NUM_POINTS );
+        glDrawArrays( GL_POINTS, 0, DRAW_ARR_NUM_POINTS );
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        glBindVertexArray( drawArraysInstancedVao );
-        glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES );
-        glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES );
+        glBindVertexArray( drawArrInst_Vao );
+        glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
+        glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
         glLineWidth( 3.0f );
-        glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARRAYS_INSTANCED_NUM_POINTS, DRAW_ARRAYS_INSTANCED_NUM_INSTANCES, 1 );
+        glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES, 1 );
         glLineWidth( 1.0f );
 
         // glDrawArraysIndirect
-        glBindVertexArray( drawArraysIndirectVao );
-        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArraysIndirectDibo );
+        glBindVertexArray( drawArrInd_Vao );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArrInd_Dibo );
         glDrawArraysIndirect( GL_TRIANGLES, nullptr );
         glDrawArraysIndirect( GL_POINTS, nullptr );
 
         // glDrawElements
-        glBindVertexArray( drawElementsVao );
-        glDrawElements( GL_TRIANGLES, DRAW_ELEMENTS_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
-        glDrawElements( GL_POINTS, DRAW_ELEMENTS_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+        glBindVertexArray( drawElem_Vao );
+        glDrawElements( GL_TRIANGLES, DRAW_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+        glDrawElements( GL_POINTS, DRAW_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
 
         // glDrawElementsBaseVertex
-        glBindVertexArray( drawElementsBVVao );
-        glDrawElementsBaseVertex( GL_TRIANGLES, DRAW_ELEMENTS_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
-        glDrawElementsBaseVertex( GL_POINTS, DRAW_ELEMENTS_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
+        glBindVertexArray( drawElemBV_Vao );
+        glDrawElementsBaseVertex( GL_TRIANGLES, DRAW_ELEM_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
+        glDrawElementsBaseVertex( GL_POINTS, DRAW_ELEM_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr, 2 );
 
         // glDrawElementsIndirect
-        glBindVertexArray( drawElementsIndirectVao );
-        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElementsIndirectDibo );
+        glBindVertexArray( drawElemInd_Vao );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElemInd_Dibo );
         glDrawElementsIndirect( GL_TRIANGLES, GL_UNSIGNED_INT, nullptr );
         glDrawElementsIndirect( GL_POINTS, GL_UNSIGNED_INT, nullptr );
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        glBindVertexArray( drawElementsInstancedVao );
-        glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                 DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES );
-        glDrawElementsInstanced( GL_POINTS, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                 DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES );
+        glBindVertexArray( drawElemInst_Vao );
+        glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
+        glDrawElementsInstanced( GL_POINTS, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
         glLineWidth( 3.0f );
-        glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                             DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES, 1 );
+        glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES,
+                                             1 );
         glLineWidth( 1.0f );
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        glBindVertexArray( drawElementsInstancedBVVao );
-        glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                           DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES, 1 );
-        glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                           DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES, 1 );
+        glBindVertexArray( drawElemInstBV_Vao );
+        glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                           DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
+        glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_BV_NUM_INSTANCES,
+                                           1 );
         glLineWidth( 3.0f );
-        glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                                       DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES, 1, 1 );
-        glDrawElementsInstancedBaseVertexBaseInstance( GL_POINTS, DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                                       DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES, 1, 1 );
+        glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                                       DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
+        glDrawElementsInstancedBaseVertexBaseInstance( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                                       DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
         glLineWidth( 1.0f );
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
     {
         // glDrawArrays
-        glCreateBuffers( 1, &drawArraysVbo );
-        glCreateVertexArrays( 1, &drawArraysVao );
-        glBindVertexArray( drawArraysVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawArraysVbo );
-        const std::array<Point3p3c, DRAW_ARRAYS_NUM_POINTS> DRAW_ARRAYS_POINTS{ Point3p3c{ 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
-                                                                                Point3p3c{ 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
-                                                                                Point3p3c{ 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f } };
-        glBufferData( GL_ARRAY_BUFFER, DRAW_ARRAYS_NUM_POINTS * sizeof( Point3p3c ), DRAW_ARRAYS_POINTS.data(), GL_STATIC_DRAW );
+        glCreateBuffers( 1, &drawArr_Vbo );
+        glCreateVertexArrays( 1, &drawArr_Vao );
+        glBindVertexArray( drawArr_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawArr_Vbo );
+        const std::array<Point3p3c, DRAW_ARR_NUM_POINTS> DRAW_ARRAYS_POINTS{ Point3p3c{ 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
+                                                                             Point3p3c{ 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f },
+                                                                             Point3p3c{ 1.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f } };
+        glBufferData( GL_ARRAY_BUFFER, DRAW_ARR_NUM_POINTS * sizeof( Point3p3c ), DRAW_ARRAYS_POINTS.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
 
         // glDrawArraysInstanced
-        glCreateBuffers( 1, &drawArraysInstancedVbo );
-        glCreateBuffers( 1, &drawArraysInstancedVboInstanced );
-        glCreateVertexArrays( 1, &drawArraysInstancedVao );
-        glBindVertexArray( drawArraysInstancedVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawArraysInstancedVbo );
-        const std::array<Point3p3c, DRAW_ARRAYS_INSTANCED_NUM_POINTS> DRAW_ARRAYS_INSTANCED_POINTS{
+        glCreateBuffers( 1, &drawArrInst_Vbo );
+        glCreateBuffers( 1, &drawArrInst_VboInst );
+        glCreateVertexArrays( 1, &drawArrInst_Vao );
+        glBindVertexArray( drawArrInst_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawArrInst_Vbo );
+        const std::array<Point3p3c, DRAW_ARR_INST_NUM_POINTS> DRAW_ARRAYS_INSTANCED_POINTS{
             Point3p3c{ 0.0f, -2.0f, 0.0f, 0.75f, 0.75f, 0.75f }, Point3p3c{ 1.0f, -2.0f, 0.0f, 0.75f, 0.75f, 0.75f },
             Point3p3c{ 1.0f, -1.0f, 0.0f, 0.75f, 0.75f, 0.75f }
         };
@@ -179,51 +177,51 @@ namespace Ouquitoure
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
-        glBindBuffer( GL_ARRAY_BUFFER, drawArraysInstancedVboInstanced );
-        const float DRAW_ARRAYS_INSTANCED_Z_OFFSETS[ DRAW_ARRAYS_INSTANCED_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f, -1.5f };
+        glBindBuffer( GL_ARRAY_BUFFER, drawArrInst_VboInst );
+        const float DRAW_ARRAYS_INSTANCED_Z_OFFSETS[ DRAW_ARR_INST_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f, -1.5f };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ARRAYS_INSTANCED_Z_OFFSETS ), DRAW_ARRAYS_INSTANCED_Z_OFFSETS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
         glVertexAttribDivisor( 2, 1 );
 
         // glDrawArraysIndirect
-        glCreateBuffers( 1, &drawArraysIndirectVbo );
-        glCreateBuffers( 1, &drawArraysIndirectDibo );
-        glCreateBuffers( 1, &drawArraysIndirectVboInstanced );
-        glCreateVertexArrays( 1, &drawArraysIndirectVao );
-        glBindVertexArray( drawArraysIndirectVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawArraysIndirectVbo );
-        const Point3p3c DRAW_ARRAYS_INDIRECT_POINTS[ DRAW_ARRAYS_INDIRECT_NUM_POINTS ]{ Point3p3c{ 0.0f, -5.0f, 0.0f, 0.5f, 0.5f, 0.5f },
-                                                                                        Point3p3c{ 1.0f, -5.0f, 0.0f, 0.5f, 0.5f, 0.5f },
-                                                                                        Point3p3c{ 0.5f, -4.0f, 0.0f, 0.5f, 0.5f, 0.5f } };
+        glCreateBuffers( 1, &drawArrInd_Vbo );
+        glCreateBuffers( 1, &drawArrInd_Dibo );
+        glCreateBuffers( 1, &drawArrInd_VboInst );
+        glCreateVertexArrays( 1, &drawArrInd_Vao );
+        glBindVertexArray( drawArrInd_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawArrInd_Vbo );
+        const Point3p3c DRAW_ARRAYS_INDIRECT_POINTS[ DRAW_ARR_IND_NUM_POINTS ]{ Point3p3c{ 0.0f, -5.0f, 0.0f, 0.5f, 0.5f, 0.5f },
+                                                                                Point3p3c{ 1.0f, -5.0f, 0.0f, 0.5f, 0.5f, 0.5f },
+                                                                                Point3p3c{ 0.5f, -4.0f, 0.0f, 0.5f, 0.5f, 0.5f } };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ARRAYS_INDIRECT_POINTS ), DRAW_ARRAYS_INDIRECT_POINTS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
-        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArraysIndirectDibo );
-        const DrawArraysIndirectCommand DRAW_INDIRECT_DATA{ 3, DRAW_ARRAYS_INDIRECT_NUM_INSTANCES, 0, 0 };
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawArrInd_Dibo );
+        const DrawArraysIndirectCommand DRAW_INDIRECT_DATA{ 3, DRAW_ARR_IND_NUM_INSTANCES, 0, 0 };
         glBufferData( GL_DRAW_INDIRECT_BUFFER, sizeof( DRAW_INDIRECT_DATA ), &DRAW_INDIRECT_DATA, GL_STATIC_DRAW );
-        glBindBuffer( GL_ARRAY_BUFFER, drawArraysIndirectVboInstanced );
-        const float DRAW_ARRAYS_INDIRECT_Z_OFFSETS[ DRAW_ARRAYS_INDIRECT_NUM_INSTANCES ]{ 0.0f, -0.5f };
+        glBindBuffer( GL_ARRAY_BUFFER, drawArrInd_VboInst );
+        const float DRAW_ARRAYS_INDIRECT_Z_OFFSETS[ DRAW_ARR_IND_NUM_INSTANCES ]{ 0.0f, -0.5f };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ARRAYS_INDIRECT_Z_OFFSETS ), DRAW_ARRAYS_INDIRECT_Z_OFFSETS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
         glVertexAttribDivisor( 2, 1 );
 
         // glDrawElements
-        glCreateBuffers( 1, &drawElementsVbo );
-        glCreateBuffers( 1, &drawElementsEbo );
-        glCreateVertexArrays( 1, &drawElementsVao );
-        glBindVertexArray( drawElementsVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsVbo );
-        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsEbo );
-        const std::array<Point3p3c, DRAW_ELEMENTS_NUM_POINTS> DRAW_ELEMENTS_POINTS{ Point3p3c{ 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
-                                                                                    Point3p3c{ 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
-                                                                                    Point3p3c{ 3.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f },
-                                                                                    Point3p3c{ 2.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f } };
-        const GLuint                                          DRAW_ELEMENTS_ELEMENTS[ DRAW_ELEMENTS_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
-        glBufferData( GL_ARRAY_BUFFER, DRAW_ELEMENTS_NUM_POINTS * sizeof( Point3p3c ), DRAW_ELEMENTS_POINTS.data(), GL_STATIC_DRAW );
+        glCreateBuffers( 1, &drawElem_Vbo );
+        glCreateBuffers( 1, &drawElem_Ebo );
+        glCreateVertexArrays( 1, &drawElem_Vao );
+        glBindVertexArray( drawElem_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElem_Vbo );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElem_Ebo );
+        const std::array<Point3p3c, DRAW_ELEM_NUM_POINTS> DRAW_ELEMENTS_POINTS{ Point3p3c{ 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                                                Point3p3c{ 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                                                Point3p3c{ 3.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f },
+                                                                                Point3p3c{ 2.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f } };
+        const GLuint                                      DRAW_ELEMENTS_ELEMENTS[ DRAW_ELEM_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
+        glBufferData( GL_ARRAY_BUFFER, DRAW_ELEM_NUM_POINTS * sizeof( Point3p3c ), DRAW_ELEMENTS_POINTS.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
@@ -231,20 +229,20 @@ namespace Ouquitoure
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_ELEMENTS ), DRAW_ELEMENTS_ELEMENTS, GL_STATIC_DRAW );
 
         // glDrawElementsBaseVertex
-        glCreateBuffers( 1, &drawElementsBVEbo );
-        glCreateBuffers( 1, &drawElementsBVVbo );
-        glCreateVertexArrays( 1, &drawElementsBVVao );
-        glBindVertexArray( drawElementsBVVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsBVVbo );
-        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsBVEbo );
-        const std::array<Point3p3c, DRAW_ELEMENTS_BV_NUM_POINTS> DRAW_ELEMENTS_BV_POINTS{
+        glCreateBuffers( 1, &drawElemBV_Ebo );
+        glCreateBuffers( 1, &drawElemBV_Vbo );
+        glCreateVertexArrays( 1, &drawElemBV_Vao );
+        glBindVertexArray( drawElemBV_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElemBV_Vbo );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElemBV_Ebo );
+        const std::array<Point3p3c, DRAW_ELEM_BV_NUM_POINTS> DRAW_ELEMENTS_BV_POINTS{
             Point3p3c{ 2.0f, -1.0f, 0.0f, 0.75f, 0.0f, 0.0f },  Point3p3c{ 3.0f, -1.0f, 0.0f, 0.8f, 0.0f, 0.0f },
             Point3p3c{ 3.0f, -2.0f, 0.0f, 0.75f, 0.0f, 0.0f },  Point3p3c{ 2.0f, -2.0f, 0.0f, 0.8f, 0.0f, 0.0f },
             Point3p3c{ 2.0f, -1.0f, -0.5f, 0.75f, 0.0f, 0.0f }, Point3p3c{ 3.0f, -1.0f, -0.5f, 0.8f, 0.0f, 0.0f },
             Point3p3c{ 3.0f, -2.0f, -0.5f, 0.75f, 0.0f, 0.0f }, Point3p3c{ 2.0f, -2.0f, -0.5f, 0.8f, 0.0f, 0.0f }
         };
-        const GLuint DRAW_ELEMENTS_BV_ELEMENTS[ DRAW_ELEMENTS_BV_NUM_ELEMENTS ]{ 0, 1, 2, 3, 4, 5 };
-        glBufferData( GL_ARRAY_BUFFER, DRAW_ELEMENTS_BV_NUM_POINTS * sizeof( Point3p3c ), DRAW_ELEMENTS_BV_POINTS.data(), GL_STATIC_DRAW );
+        const GLuint DRAW_ELEMENTS_BV_ELEMENTS[ DRAW_ELEM_BV_NUM_ELEMENTS ]{ 0, 1, 2, 3, 4, 5 };
+        glBufferData( GL_ARRAY_BUFFER, DRAW_ELEM_BV_NUM_POINTS * sizeof( Point3p3c ), DRAW_ELEMENTS_BV_POINTS.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
@@ -252,14 +250,14 @@ namespace Ouquitoure
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_BV_ELEMENTS ), DRAW_ELEMENTS_BV_ELEMENTS, GL_STATIC_DRAW );
 
         // glDrawElementsIndirect
-        glCreateVertexArrays( 1, &drawElementsIndirectVao );
-        glCreateBuffers( 1, &drawElementsIndirectVbo );
-        glCreateBuffers( 1, &drawElementsIndirectEbo );
-        glCreateBuffers( 1, &drawElementsIndirectDibo );
-        glBindVertexArray( drawElementsIndirectVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsIndirectVbo );
-        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsIndirectEbo );
-        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElementsIndirectDibo );
+        glCreateVertexArrays( 1, &drawElemInd_Vao );
+        glCreateBuffers( 1, &drawElemInd_Vbo );
+        glCreateBuffers( 1, &drawElemInd_Ebo );
+        glCreateBuffers( 1, &drawElemInd_Dibo );
+        glBindVertexArray( drawElemInd_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElemInd_Vbo );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElemInd_Ebo );
+        glBindBuffer( GL_DRAW_INDIRECT_BUFFER, drawElemInd_Dibo );
         const Point3p3c DRAW_ELEMENTS_INDIRECT_POINTS[]{ Point3p3c{ 2.0f, -4.0f, 0.0f, 0.6f, 0.0f, 0.0f },
                                                          Point3p3c{ 3.0f, -4.0f, 0.0f, 0.6f, 0.0f, 0.0f },
                                                          Point3p3c{ 3.0f, -3.0f, 0.0f, 0.6f, 0.0f, 0.0f },
@@ -275,58 +273,58 @@ namespace Ouquitoure
         glBufferData( GL_DRAW_INDIRECT_BUFFER, sizeof( DRAW_ELEMENTS_INDIRECT_DATA ), DRAW_ELEMENTS_INDIRECT_DATA, GL_STATIC_DRAW );
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        glCreateVertexArrays( 1, &drawElementsInstancedVao );
-        glCreateBuffers( 1, &drawElementsInstancedVbo );
-        glCreateBuffers( 1, &drawElementsInstancedVboInstanced );
-        glCreateBuffers( 1, &drawElementsInstancedEbo );
-        glBindVertexArray( drawElementsInstancedVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsInstancedVbo );
+        glCreateVertexArrays( 1, &drawElemInst_Vao );
+        glCreateBuffers( 1, &drawElemInst_Vbo );
+        glCreateBuffers( 1, &drawElemInst_VboInst );
+        glCreateBuffers( 1, &drawElemInst_Ebo );
+        glBindVertexArray( drawElemInst_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElemInst_Vbo );
         const Point3p3c DRAW_ELEMENTS_INSTANCED_POINTS[]{ Point3p3c{ 2.0f, -6.0f, 0.0f, 0.4f, 0.0f, 0.0f },
                                                           Point3p3c{ 3.0f, -6.0f, 0.0f, 0.4f, 0.0f, 0.0f },
                                                           Point3p3c{ 3.0f, -5.0f, 0.0f, 0.4f, 0.0f, 0.0f },
                                                           Point3p3c{ 2.0f, -5.0f, 0.0f, 0.4f, 0.0f, 0.0f } };
-        const GLuint    DRAW_ELEMENTS_INSTANCED_ELEMENTS[ DRAW_ELEMENTS_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
-        const float     DRAW_ELEMENTS_INSTANCED_Z_OFFSETS[ DRAW_ELEMENTS_INSTANCED_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f, -1.5f };
+        const GLuint    DRAW_ELEMENTS_INSTANCED_ELEMENTS[ DRAW_ELEM_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
+        const float     DRAW_ELEMENTS_INSTANCED_Z_OFFSETS[ DRAW_ELEM_INST_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f, -1.5f };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_POINTS ), DRAW_ELEMENTS_INSTANCED_POINTS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
-        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsInstancedEbo );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElemInst_Ebo );
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_ELEMENTS ), DRAW_ELEMENTS_INSTANCED_ELEMENTS,
                       GL_STATIC_DRAW );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsInstancedVboInstanced );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElemInst_VboInst );
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_Z_OFFSETS ), DRAW_ELEMENTS_INSTANCED_Z_OFFSETS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
         glVertexAttribDivisor( 2, 1 );
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        glCreateVertexArrays( 1, &drawElementsInstancedBVVao );
-        glCreateBuffers( 1, &drawElementsInstancedBVVbo );
-        glCreateBuffers( 1, &drawElementsInstancedBVVboInstanced );
-        glCreateBuffers( 1, &drawElementsInstancedBVEbo );
-        glBindVertexArray( drawElementsInstancedBVVao );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsInstancedBVVbo );
+        glCreateVertexArrays( 1, &drawElemInstBV_Vao );
+        glCreateBuffers( 1, &drawElemInstBV_Vbo );
+        glCreateBuffers( 1, &drawElemInstBV_VboInst );
+        glCreateBuffers( 1, &drawElemInstBV_Ebo );
+        glBindVertexArray( drawElemInstBV_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElemInstBV_Vbo );
         const Point3p3c DRAW_ELEMENTS_INSTANCED_BV_POINTS[]{
             Point3p3c{ 2.0f, -10.0f, 0.0f, 1.0f, 0.3f, 0.3f },   Point3p3c{ 3.0f, -10.0f, 0.0f, 1.0f, 0.3f, 0.3f },
             Point3p3c{ 3.0f, -9.0f, 0.0f, 1.0f, 0.3f, 0.3f },    Point3p3c{ 2.0f, -9.0f, 0.0f, 1.0f, 0.3f, 0.3f },
             Point3p3c{ 2.0f, -10.0f, -0.25f, 1.0f, 0.3f, 0.3f }, Point3p3c{ 3.0f, -10.0f, -0.25f, 1.0f, 0.3f, 0.3f }
         };
-        const GLuint DRAW_ELEMENTS_INSTANCED_BV_ELEMENTS[ DRAW_ELEMENTS_INSTANCED_BV_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
-        const float  DRAW_ELEMENTS_INSTANCED_BV_Z_OFFSETS[ DRAW_ELEMENTS_INSTANCED_BV_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f };
+        const GLuint DRAW_ELEMENTS_INSTANCED_BV_ELEMENTS[ DRAW_ELEM_INST_BV_NUM_ELEMENTS ]{ 0, 1, 2, 2, 3, 0 };
+        const float  DRAW_ELEMENTS_INSTANCED_BV_Z_OFFSETS[ DRAW_ELEM_INST_BV_NUM_INSTANCES ]{ 0.0f, -0.5f, -1.0f };
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_BV_POINTS ), DRAW_ELEMENTS_INSTANCED_BV_POINTS, GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), 0 );
         glEnableVertexAttribArray( 1 );
         glVertexAttribPointer( 1, 3, GL_FLOAT, GL_FALSE, sizeof( Point3p3c ), (void *)( 3 * sizeof( float ) ) );
-        glBindBuffer( GL_ARRAY_BUFFER, drawElementsInstancedBVVboInstanced );
+        glBindBuffer( GL_ARRAY_BUFFER, drawElemInstBV_VboInst );
         glBufferData( GL_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_BV_Z_OFFSETS ), DRAW_ELEMENTS_INSTANCED_BV_Z_OFFSETS,
                       GL_STATIC_DRAW );
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
         glVertexAttribDivisor( 2, 1 );
-        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElementsInstancedBVEbo );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawElemInstBV_Ebo );
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( DRAW_ELEMENTS_INSTANCED_BV_ELEMENTS ), DRAW_ELEMENTS_INSTANCED_BV_ELEMENTS,
                       GL_STATIC_DRAW );
     }
@@ -353,127 +351,127 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::cleanup()
     {
         // glDrawArrays
-        if( drawArraysVao )
+        if( drawArr_Vao )
         {
-            glDeleteVertexArrays( 1, &drawArraysVao );
+            glDeleteVertexArrays( 1, &drawArr_Vao );
         }
-        if( drawArraysVbo )
+        if( drawArr_Vbo )
         {
-            glDeleteBuffers( 1, &drawArraysVbo );
+            glDeleteBuffers( 1, &drawArr_Vbo );
         }
 
         // glDrawArraysInstanced
-        if( drawArraysInstancedVao )
+        if( drawArrInst_Vao )
         {
-            glDeleteVertexArrays( 1, &drawArraysInstancedVao );
+            glDeleteVertexArrays( 1, &drawArrInst_Vao );
         }
-        if( drawArraysInstancedVbo )
+        if( drawArrInst_Vbo )
         {
-            glDeleteBuffers( 1, &drawArraysInstancedVbo );
+            glDeleteBuffers( 1, &drawArrInst_Vbo );
         }
-        if( drawArraysInstancedVboInstanced )
+        if( drawArrInst_VboInst )
         {
-            glDeleteBuffers( 1, &drawArraysInstancedVboInstanced );
+            glDeleteBuffers( 1, &drawArrInst_VboInst );
         }
 
         // glDrawArraysIndirect
-        if( drawArraysIndirectVao )
+        if( drawArrInd_Vao )
         {
-            glDeleteVertexArrays( 1, &drawArraysIndirectVao );
+            glDeleteVertexArrays( 1, &drawArrInd_Vao );
         }
-        if( drawArraysIndirectVbo )
+        if( drawArrInd_Vbo )
         {
-            glDeleteBuffers( 1, &drawArraysIndirectVbo );
+            glDeleteBuffers( 1, &drawArrInd_Vbo );
         }
-        if( drawArraysIndirectVboInstanced )
+        if( drawArrInd_VboInst )
         {
-            glDeleteBuffers( 1, &drawArraysIndirectVboInstanced );
+            glDeleteBuffers( 1, &drawArrInd_VboInst );
         }
-        if( drawArraysIndirectDibo )
+        if( drawArrInd_Dibo )
         {
-            glDeleteBuffers( 1, &drawArraysIndirectDibo );
+            glDeleteBuffers( 1, &drawArrInd_Dibo );
         }
 
         // glDrawElements
-        if( drawElementsVao )
+        if( drawElem_Vao )
         {
-            glDeleteVertexArrays( 1, &drawElementsVao );
+            glDeleteVertexArrays( 1, &drawElem_Vao );
         }
-        if( drawElementsEbo )
+        if( drawElem_Ebo )
         {
-            glDeleteBuffers( 1, &drawElementsEbo );
+            glDeleteBuffers( 1, &drawElem_Ebo );
         }
-        if( drawElementsVbo )
+        if( drawElem_Vbo )
         {
-            glDeleteBuffers( 1, &drawElementsVbo );
+            glDeleteBuffers( 1, &drawElem_Vbo );
         }
 
         // glDrawElementsBaseVertex
-        if( drawElementsBVVao )
+        if( drawElemBV_Vao )
         {
-            glDeleteVertexArrays( 1, &drawElementsBVVao );
+            glDeleteVertexArrays( 1, &drawElemBV_Vao );
         }
-        if( drawElementsBVVbo )
+        if( drawElemBV_Vbo )
         {
-            glDeleteBuffers( 1, &drawElementsBVVbo );
+            glDeleteBuffers( 1, &drawElemBV_Vbo );
         }
-        if( drawElementsBVEbo )
+        if( drawElemBV_Ebo )
         {
-            glDeleteBuffers( 1, &drawElementsBVEbo );
+            glDeleteBuffers( 1, &drawElemBV_Ebo );
         }
 
         // glDrawElementsIndirect
-        if( drawElementsIndirectVao )
+        if( drawElemInd_Vao )
         {
-            glDeleteVertexArrays( 1, &drawElementsIndirectVao );
+            glDeleteVertexArrays( 1, &drawElemInd_Vao );
         }
-        if( drawElementsIndirectVbo )
+        if( drawElemInd_Vbo )
         {
-            glDeleteBuffers( 1, &drawElementsIndirectVbo );
+            glDeleteBuffers( 1, &drawElemInd_Vbo );
         }
-        if( drawElementsIndirectEbo )
+        if( drawElemInd_Ebo )
         {
-            glDeleteBuffers( 1, &drawElementsIndirectEbo );
+            glDeleteBuffers( 1, &drawElemInd_Ebo );
         }
-        if( drawElementsIndirectDibo )
+        if( drawElemInd_Dibo )
         {
-            glDeleteBuffers( 1, &drawElementsIndirectDibo );
+            glDeleteBuffers( 1, &drawElemInd_Dibo );
         }
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        if( drawElementsInstancedVao )
+        if( drawElemInst_Vao )
         {
-            glDeleteVertexArrays( 1, &drawElementsInstancedVao );
+            glDeleteVertexArrays( 1, &drawElemInst_Vao );
         }
-        if( drawElementsInstancedVbo )
+        if( drawElemInst_Vbo )
         {
-            glDeleteBuffers( 1, &drawElementsInstancedVbo );
+            glDeleteBuffers( 1, &drawElemInst_Vbo );
         }
-        if( drawElementsInstancedVboInstanced )
+        if( drawElemInst_VboInst )
         {
-            glDeleteBuffers( 1, &drawElementsInstancedVboInstanced );
+            glDeleteBuffers( 1, &drawElemInst_VboInst );
         }
-        if( drawElementsInstancedEbo )
+        if( drawElemInst_Ebo )
         {
-            glDeleteBuffers( 1, &drawElementsInstancedEbo );
+            glDeleteBuffers( 1, &drawElemInst_Ebo );
         }
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        if( drawElementsInstancedBVVao )
+        if( drawElemInstBV_Vao )
         {
-            glDeleteVertexArrays( 1, &drawElementsInstancedBVVao );
+            glDeleteVertexArrays( 1, &drawElemInstBV_Vao );
         }
-        if( drawElementsInstancedBVVbo )
+        if( drawElemInstBV_Vbo )
         {
-            glDeleteBuffers( 1, &drawElementsInstancedBVVbo );
+            glDeleteBuffers( 1, &drawElemInstBV_Vbo );
         }
-        if( drawElementsInstancedBVVboInstanced )
+        if( drawElemInstBV_VboInst )
         {
-            glDeleteBuffers( 1, &drawElementsInstancedBVVboInstanced );
+            glDeleteBuffers( 1, &drawElemInstBV_VboInst );
         }
-        if( drawElementsInstancedBVEbo )
+        if( drawElemInstBV_Ebo )
         {
-            glDeleteBuffers( 1, &drawElementsInstancedBVEbo );
+            glDeleteBuffers( 1, &drawElemInstBV_Ebo );
         }
 
         // shader programs
