@@ -55,6 +55,11 @@ namespace Ouquitoure
         , drawElemInstBV_Vbo( 0 )
         , drawElemInstBV_VboInst( 0 )
         , drawElemInstBV_Ebo( 0 )
+
+        // glDrawRangeElements
+        , drawRangeElem_Vao( 0 )
+        , drawRangeElem_Vbo( 0 )
+        , drawRangeElem_Ebo( 0 )
     {
     }
 
@@ -111,6 +116,9 @@ namespace Ouquitoure
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
         drawElementsInstancedBaseVertex();
+
+        // glDrawRangeElements
+        drawRangeElements();
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -138,6 +146,9 @@ namespace Ouquitoure
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
         drawElementsInstancedBaseVertex_init();
+
+        // glDrawRangeElements
+        drawRangeElements_init();
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLShaders()
@@ -184,6 +195,9 @@ namespace Ouquitoure
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
         drawElementsInstancedBaseVertex_cleanup();
+
+        // glDrawRangeElements
+        drawRangeElements_cleanup();
 
         // shader programs
         for( auto & shaderProgram: shaderPrograms.values() )
@@ -264,6 +278,13 @@ namespace Ouquitoure
         glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
                                                        DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
         glLineWidth( 1.0f );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawRangeElements()
+    {
+        glBindVertexArray( drawRangeElem_Vao );
+        glDrawRangeElements( GL_TRIANGLES, 3, 6, DRAW_RANGE_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
+        glDrawRangeElements( GL_POINTS, 0, 3, DRAW_RANGE_ELEM_NUM_ELEMENTS, GL_UNSIGNED_INT, nullptr );
     }
 
     //------- initialization --------------
@@ -418,6 +439,22 @@ namespace Ouquitoure
         glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( ELEMENTS ), ELEMENTS, GL_STATIC_DRAW );
     }
 
+    void OpenGLDrawFunctionsWidget::drawRangeElements_init()
+    {
+        glCreateVertexArrays( 1, &drawRangeElem_Vao );
+        glCreateBuffers( 1, &drawRangeElem_Vbo );
+        glCreateBuffers( 1, &drawRangeElem_Ebo );
+        glBindVertexArray( drawRangeElem_Vao );
+        glBindBuffer( GL_ARRAY_BUFFER, drawRangeElem_Vbo );
+        const Point3p3c POINTS[]{ Point3p3c{ 4.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f }, Point3p3c{ 5.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f },
+                                  Point3p3c{ 5.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f }, Point3p3c{ 4.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f } };
+        glBufferData( GL_ARRAY_BUFFER, sizeof( POINTS ), POINTS, GL_STATIC_DRAW );
+        setupVertexArrayAttribs();
+        const GLuint ELEMENTS[]{ 0, 1, 2, 2, 3, 0 };
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, drawRangeElem_Ebo );
+        glBufferData( GL_ELEMENT_ARRAY_BUFFER, sizeof( ELEMENTS ), ELEMENTS, GL_STATIC_DRAW );
+    }
+
     //--------- cleanup ----------
 
     void OpenGLDrawFunctionsWidget::drawArrays_cleanup()
@@ -477,6 +514,13 @@ namespace Ouquitoure
         openGLBufferCleanup( drawElemInstBV_Vbo );
         openGLBufferCleanup( drawElemInstBV_VboInst );
         openGLBufferCleanup( drawElemInstBV_Ebo );
+    }
+
+    void OpenGLDrawFunctionsWidget::drawRangeElements_cleanup()
+    {
+        openGLVertexArrayCleanup( drawRangeElem_Vao );
+        openGLBufferCleanup( drawRangeElem_Vbo );
+        openGLBufferCleanup( drawRangeElem_Ebo );
     }
 
     //--------- utility ---------------
