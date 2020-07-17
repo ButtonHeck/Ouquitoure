@@ -35,16 +35,14 @@ namespace Ouquitoure
         ui->openGLAppsView->setModel( openGLAppsCollectionModel );
         connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), openGLAppsCollectionModel,
                  SLOT( updateCurrentAppInfo( const QModelIndex & ) ) );
-        connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), this,
-                 SLOT( updateDescriptionWindowInfo() ) );
+        connect( ui->openGLAppsView, SIGNAL( clicked( const QModelIndex & ) ), this, SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->openGLAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );
 
         // software stuff
         ui->softwareAppsView->setModel( softwareAppsCollectionModel );
         connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), softwareAppsCollectionModel,
                  SLOT( updateCurrentAppInfo( const QModelIndex & ) ) );
-        connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), this,
-                 SLOT( updateDescriptionWindowInfo() ) );
+        connect( ui->softwareAppsView, SIGNAL( clicked( const QModelIndex & ) ), this, SLOT( updateDescriptionWindowInfo() ) );
         connect( ui->softwareAppsView, SIGNAL( doubleClicked( const QModelIndex & ) ), SLOT( launchApp() ) );
 
         // callback to the "Launch" button
@@ -74,6 +72,7 @@ namespace Ouquitoure
             if( appWindow )
             {
                 appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
+                appWindow->setGeometry( geometry().x(), geometry().y(), appWindow->geometry().width(), appWindow->geometry().height() );
                 return true;
             }
         }
@@ -83,6 +82,7 @@ namespace Ouquitoure
             if( appWindow )
             {
                 appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
+                appWindow->setGeometry( geometry().x(), geometry().y(), appWindow->geometry().width(), appWindow->geometry().height() );
                 return true;
             }
         }
