@@ -32,6 +32,7 @@ namespace Ouquitoure
         void      processKeyboardInput( int keyCode, bool isPressed );
         void      processMouseMove( int x, int y );
         void      updateLastPos( int x, int y );
+        void      setPosition( float x, float y, float z );
 
     signals:
         void viewChanged();

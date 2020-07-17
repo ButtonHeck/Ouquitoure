@@ -110,6 +110,7 @@ namespace Ouquitoure
         initializeOpenGLObjects();
         initializeOpenGLShaders();
 
+        camera.setPosition( 3.0f, -4.0f, 10.0f );
         updateViewMatrixForMainProgram();
         updateProjectionMatrixForMainProgram();
     }

@@ -64,6 +64,14 @@ namespace Ouquitoure
         lastY = y;
     }
 
+    void Camera::setPosition( float x, float y, float z )
+    {
+        position.x = x;
+        position.y = y;
+        position.z = z;
+        emit viewChanged();
+    }
+
     void Camera::timerEvent( QTimerEvent * event )
     {
         Q_UNUSED( event );
