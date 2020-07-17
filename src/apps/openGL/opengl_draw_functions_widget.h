@@ -38,6 +38,8 @@ namespace Ouquitoure
         void multiDrawArrays();
         void multiDrawArraysIndirect();
         void multiDrawElements();
+        void multiDrawElementsBaseVertex();
+        void multiDrawElementsIndirect();
 
         // initialization
         void drawArrays_init();
@@ -53,6 +55,8 @@ namespace Ouquitoure
         void multiDrawArrays_init();
         void multiDrawArraysIndirect_init();
         void multiDrawElements_init();
+        void multiDrawElementsBaseVertex_init();
+        void multiDrawElementsIndirect_init();
 
         // cleanup
         void drawArrays_cleanup();
@@ -68,6 +72,8 @@ namespace Ouquitoure
         void multiDrawArrays_cleanup();
         void multiDrawArraysIndirect_cleanup();
         void multiDrawElements_cleanup();
+        void multiDrawElementsBaseVertex_cleanup();
+        void multiDrawElementsIndirect_cleanup();
 
         // utility functions
         void setupVertexArrayAttribs();
@@ -170,9 +176,22 @@ namespace Ouquitoure
         constexpr static int M_DRAW_ARR_IND_NUM_COMMANDS = 2;
 
         // glMultiDrawElements
-        GLuint mDrawElem_Vao;
-        GLuint mDrawElem_Vbo;
-        GLuint mDrawElem_Ebo;
+        GLuint               mDrawElem_Vao;
+        GLuint               mDrawElem_Vbo;
+        GLuint               mDrawElem_Ebo;
+        constexpr static int M_DRAW_ELEM_NUM_ELEMENTS = 12;
+
+        // glMultiDrawElementsBaseVertex
+        GLuint               mDrawElemBV_Vao;
+        GLuint               mDrawElemBV_Vbo;
+        GLuint               mDrawElemBV_Ebo;
+        constexpr static int M_DRAW_ELEM_BV_NUM_ELEMENTS = 12;
+
+        // glMultiDrawElementsIndirect
+        GLuint mDrawElemInd_Vao;
+        GLuint mDrawElemInd_Vbo;
+        GLuint mDrawElemInd_Ebo;
+        GLuint mDrawElemInd_Dibo;
     };
 
 } // namespace Ouquitoure
