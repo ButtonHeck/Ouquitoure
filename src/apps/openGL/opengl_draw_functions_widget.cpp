@@ -91,6 +91,24 @@ namespace Ouquitoure
         , mDrawElemInd_Ebo( 0 )
         , mDrawElemInd_Dibo( 0 )
     {
+        functionsEnabled[ DRAW_ARRAYS ]                                       = true;
+        functionsEnabled[ DRAW_ARRAYS_INSTANCED ]                             = true;
+        functionsEnabled[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ]               = true;
+        functionsEnabled[ DRAW_ARRAYS_INDIRECT ]                              = true;
+        functionsEnabled[ DRAW_ELEMENTS ]                                     = true;
+        functionsEnabled[ DRAW_ELEMENTS_BASE_VERTEX ]                         = true;
+        functionsEnabled[ DRAW_ELEMENTS_INDIRECT ]                            = true;
+        functionsEnabled[ DRAW_ELEMENTS_INSTANCED ]                           = true;
+        functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ]             = true;
+        functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ]               = true;
+        functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] = true;
+        functionsEnabled[ DRAW_RANGE_ELEMENTS ]                               = true;
+        functionsEnabled[ DRAW_RANGE_ELEMENTS_BASE_VERTEX ]                   = true;
+        functionsEnabled[ MULTI_DRAW_ARRAYS ]                                 = true;
+        functionsEnabled[ MULTI_DRAW_ARRAYS_INDIRECT ]                        = true;
+        functionsEnabled[ MULTI_DRAW_ELEMENTS ]                               = true;
+        functionsEnabled[ MULTI_DRAW_ELEMENTS_BASE_VERTEX ]                   = true;
+        functionsEnabled[ MULTI_DRAW_ELEMENTS_INDIRECT ]                      = true;
     }
 
     OpenGLDrawFunctionsWidget::~OpenGLDrawFunctionsWidget()
@@ -125,49 +143,95 @@ namespace Ouquitoure
         glUniformMatrix4fv( mainProgram->uniformLocation( "u_model" ), 1, GL_FALSE, glm::value_ptr( model ) );
 
         // glDrawArrays
-        drawArrays();
+        if( functionsEnabled[ DRAW_ARRAYS ] )
+        {
+            drawArrays();
+        }
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        drawArraysInstanced();
+        if( functionsEnabled[ DRAW_ARRAYS_INSTANCED ] || functionsEnabled[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ] )
+        {
+            drawArraysInstanced();
+        }
 
         // glDrawArraysIndirect
-        drawArraysIndirect();
+        if( functionsEnabled[ DRAW_ARRAYS_INDIRECT ] )
+        {
+            drawArraysIndirect();
+        }
 
         // glDrawElements
-        drawElements();
+        if( functionsEnabled[ DRAW_ELEMENTS ] )
+        {
+            drawElements();
+        }
 
         // glDrawElementsBaseVertex
-        drawElementsBaseVertex();
+        if( functionsEnabled[ DRAW_ELEMENTS_BASE_VERTEX ] )
+        {
+            drawElementsBaseVertex();
+        }
 
         // glDrawElementsIndirect
-        drawElementsIndirect();
+        if( functionsEnabled[ DRAW_ELEMENTS_INDIRECT ] )
+        {
+            drawElementsIndirect();
+        }
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        drawElementsInstanced();
+        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED ] || functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ] )
+        {
+            drawElementsInstanced();
+        }
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        drawElementsInstancedBaseVertex();
+        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ] ||
+            functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] )
+        {
+            drawElementsInstancedBaseVertex();
+        }
 
         // glDrawRangeElements
-        drawRangeElements();
+        if( functionsEnabled[ DRAW_RANGE_ELEMENTS ] )
+        {
+            drawRangeElements();
+        }
 
         // glDrawRangeElementsBaseVertex
-        drawRangeElementsBaseVertex();
+        if( functionsEnabled[ DRAW_RANGE_ELEMENTS_BASE_VERTEX ] )
+        {
+            drawRangeElementsBaseVertex();
+        }
 
         // glMultiDrawArrays
-        multiDrawArrays();
+        if( functionsEnabled[ MULTI_DRAW_ARRAYS ] )
+        {
+            multiDrawArrays();
+        }
 
         // glMultiDrawArraysIndirect
-        multiDrawArraysIndirect();
+        if( functionsEnabled[ MULTI_DRAW_ARRAYS_INDIRECT ] )
+        {
+            multiDrawArraysIndirect();
+        }
 
         // glMultiDrawElements
-        multiDrawElements();
+        if( functionsEnabled[ MULTI_DRAW_ELEMENTS ] )
+        {
+            multiDrawElements();
+        }
 
         // glMultiDrawElementsBaseVertex
-        multiDrawElementsBaseVertex();
+        if( functionsEnabled[ MULTI_DRAW_ELEMENTS_BASE_VERTEX ] )
+        {
+            multiDrawElementsBaseVertex();
+        }
 
         // glMultiDrawElementsIndirect
-        multiDrawElementsIndirect();
+        if( functionsEnabled[ MULTI_DRAW_ELEMENTS_INDIRECT ] )
+        {
+            multiDrawElementsIndirect();
+        }
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
@@ -304,11 +368,17 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::drawArraysInstanced()
     {
         glBindVertexArray( drawArrInst_Vao );
-        glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
-        glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
-        glLineWidth( 3.0f );
-        glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES, 1 );
-        glLineWidth( 1.0f );
+        if( functionsEnabled[ DRAW_ARRAYS_INSTANCED ] )
+        {
+            glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
+            glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
+        }
+        if( functionsEnabled[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ] )
+        {
+            glLineWidth( 3.0f );
+            glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES, 1 );
+            glLineWidth( 1.0f );
+        }
     }
 
     void OpenGLDrawFunctionsWidget::drawArraysIndirect()
@@ -344,25 +414,37 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::drawElementsInstanced()
     {
         glBindVertexArray( drawElemInst_Vao );
-        glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
-        glDrawElementsInstanced( GL_POINTS, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
-        glLineWidth( 3.0f );
-        glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES,
-                                             1 );
-        glLineWidth( 1.0f );
+        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED ] )
+        {
+            glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
+            glDrawElementsInstanced( GL_POINTS, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
+        }
+        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ] )
+        {
+            glLineWidth( 3.0f );
+            glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                                 DRAW_ELEM_INST_NUM_INSTANCES, 1 );
+            glLineWidth( 1.0f );
+        }
     }
 
     void OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex()
     {
         glBindVertexArray( drawElemInstBV_Vao );
-        glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                           DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
-        glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_BV_NUM_INSTANCES,
-                                           1 );
-        glLineWidth( 3.0f );
-        glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
-                                                       DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
-        glLineWidth( 1.0f );
+        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ] )
+        {
+            glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                               DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
+            glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                               DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
+        }
+        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] )
+        {
+            glLineWidth( 3.0f );
+            glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
+                                                           DRAW_ELEM_INST_BV_NUM_INSTANCES, 1, 1 );
+            glLineWidth( 1.0f );
+        }
     }
 
     void OpenGLDrawFunctionsWidget::drawRangeElements()

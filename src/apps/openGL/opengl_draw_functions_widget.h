@@ -2,6 +2,8 @@
 
 #include "Apps/OpenGL/OpenGLWidgetWithCamera"
 
+#include <unordered_map>
+
 namespace Ouquitoure
 {
 
@@ -11,6 +13,29 @@ namespace Ouquitoure
     class OpenGLDrawFunctionsWidget : public OpenGLWidgetWithCamera
     {
         Q_OBJECT
+    public:
+        enum DRAW_FUNCTIONS
+        {
+            DRAW_ARRAYS = 0,
+            DRAW_ARRAYS_INSTANCED,
+            DRAW_ARRAYS_INSTANCED_BASE_INSTANCE,
+            DRAW_ARRAYS_INDIRECT,
+            DRAW_ELEMENTS,
+            DRAW_ELEMENTS_BASE_VERTEX,
+            DRAW_ELEMENTS_INDIRECT,
+            DRAW_ELEMENTS_INSTANCED,
+            DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE,
+            DRAW_ELEMENTS_INSTANCED_BASE_VERTEX,
+            DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE,
+            DRAW_RANGE_ELEMENTS,
+            DRAW_RANGE_ELEMENTS_BASE_VERTEX,
+            MULTI_DRAW_ARRAYS,
+            MULTI_DRAW_ARRAYS_INDIRECT,
+            MULTI_DRAW_ELEMENTS,
+            MULTI_DRAW_ELEMENTS_BASE_VERTEX,
+            MULTI_DRAW_ELEMENTS_INDIRECT
+        };
+
     public:
         explicit OpenGLDrawFunctionsWidget( const QString & name, QWidget * parent = nullptr );
         ~OpenGLDrawFunctionsWidget();
@@ -192,6 +217,9 @@ namespace Ouquitoure
         GLuint mDrawElemInd_Vbo;
         GLuint mDrawElemInd_Ebo;
         GLuint mDrawElemInd_Dibo;
+
+        // all functions
+        std::unordered_map<DRAW_FUNCTIONS, bool> functionsEnabled;
     };
 
 } // namespace Ouquitoure
