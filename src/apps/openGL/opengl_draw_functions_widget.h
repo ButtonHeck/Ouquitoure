@@ -33,15 +33,20 @@ namespace Ouquitoure
             MULTI_DRAW_ARRAYS_INDIRECT,
             MULTI_DRAW_ELEMENTS,
             MULTI_DRAW_ELEMENTS_BASE_VERTEX,
-            MULTI_DRAW_ELEMENTS_INDIRECT
+            MULTI_DRAW_ELEMENTS_INDIRECT,
+            NUM_FUNCTIONS
         };
 
     public:
         explicit OpenGLDrawFunctionsWidget( const QString & name, QWidget * parent = nullptr );
         ~OpenGLDrawFunctionsWidget();
 
-        void initializeGL() override;
-        void paintGL() override;
+        QString getDrawFunctionName( DRAW_FUNCTIONS functionCode );
+        void    initializeGL() override;
+        void    paintGL() override;
+
+    public slots:
+        void setFunctionEnabled( bool enabled );
 
     protected:
         void initializeOpenGLObjects() override;

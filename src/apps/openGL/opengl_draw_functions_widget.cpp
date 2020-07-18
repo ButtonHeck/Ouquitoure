@@ -116,6 +116,51 @@ namespace Ouquitoure
         cleanup();
     }
 
+    QString OpenGLDrawFunctionsWidget::getDrawFunctionName( OpenGLDrawFunctionsWidget::DRAW_FUNCTIONS functionCode )
+    {
+        switch( functionCode )
+        {
+        case DRAW_ARRAYS:
+            return QString( "glDrawArrays" );
+        case DRAW_ARRAYS_INSTANCED:
+            return QString( "glDrawArraysInstanced" );
+        case DRAW_ARRAYS_INSTANCED_BASE_INSTANCE:
+            return QString( "glDrawArraysInstancedBaseInstance" );
+        case DRAW_ARRAYS_INDIRECT:
+            return QString( "glDrawArraysIndirect" );
+        case DRAW_ELEMENTS:
+            return QString( "glDrawElements" );
+        case DRAW_ELEMENTS_BASE_VERTEX:
+            return QString( "glDrawElementsBaseVertex" );
+        case DRAW_ELEMENTS_INDIRECT:
+            return QString( "glDrawElementsIndirect" );
+        case DRAW_ELEMENTS_INSTANCED:
+            return QString( "glDrawElementsInstanced" );
+        case DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE:
+            return QString( "glDrawElementsInstancedBaseInstance" );
+        case DRAW_ELEMENTS_INSTANCED_BASE_VERTEX:
+            return QString( "glDrawElementsInstancedBaseVertex" );
+        case DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE:
+            return QString( "glDrawElementsInstancedBaseVertexBaseInstance" );
+        case DRAW_RANGE_ELEMENTS:
+            return QString( "glDrawRangeElements" );
+        case DRAW_RANGE_ELEMENTS_BASE_VERTEX:
+            return QString( "glDrawRangeElementsBaseVertex" );
+        case MULTI_DRAW_ARRAYS:
+            return QString( "glMultiDrawArrays" );
+        case MULTI_DRAW_ARRAYS_INDIRECT:
+            return QString( "glMultiDrawArraysIndirect" );
+        case MULTI_DRAW_ELEMENTS:
+            return QString( "glMultiDrawElements" );
+        case MULTI_DRAW_ELEMENTS_BASE_VERTEX:
+            return QString( "glMultiDrawElementsBaseVertex" );
+        case MULTI_DRAW_ELEMENTS_INDIRECT:
+            return QString( "glMultiDrawElementsIndirect" );
+        default:
+            return QString( "Unknown" );
+        }
+    }
+
     void OpenGLDrawFunctionsWidget::initializeGL()
     {
         OpenGLWidgetBase::initializeGL();
@@ -232,6 +277,13 @@ namespace Ouquitoure
         {
             multiDrawElementsIndirect();
         }
+    }
+
+    void OpenGLDrawFunctionsWidget::setFunctionEnabled( bool enabled )
+    {
+        DRAW_FUNCTIONS function = (DRAW_FUNCTIONS)sender()->objectName().toInt();
+        functionsEnabled[function] = enabled;
+        update();
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
