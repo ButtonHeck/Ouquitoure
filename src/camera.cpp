@@ -97,7 +97,7 @@ namespace Ouquitoure
         }
 
         // Up / Down
-        if( keys[ Qt::Key_Space ] )
+        if( keys[ Qt::Key_E ] )
         {
             move( UP, moveSensitivity );
         }
