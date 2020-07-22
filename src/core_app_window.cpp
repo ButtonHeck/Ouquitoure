@@ -1,6 +1,7 @@
 #include "CoreAppWindow"
 
 #include <QToolBar>
+#include <QItemSelectionModel>
 
 #include "AppCollectionModel"
 #include "Apps/AppType"
@@ -47,6 +48,9 @@ namespace Ouquitoure
 
         // callback to the "Launch" button
         connect( ui->launchAppButton, SIGNAL( clicked() ), SLOT( launchApp() ) );
+
+        // callback to the "App name" input
+        connect( ui->appSearchByNameLineEdit, SIGNAL( textChanged( const QString & ) ), SLOT( searchByName( const QString & ) ) );
     }
 
     CoreAppWindow::~CoreAppWindow()
@@ -150,6 +154,41 @@ namespace Ouquitoure
         }
         default:
             throw std::invalid_argument( "Not suitable application type" );
+        }
+    }
+
+    void CoreAppWindow::searchByName( const QString & name )
+    {
+        const APP_TYPE currentChosenType = getAppType();
+        if( currentChosenType == OPENGL_APP )
+        {
+            QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
+            selectionModel->clear();
+            for( int nameIndex = 0; nameIndex < openGLAppsCollectionModel->getApplicationNames().size(); ++nameIndex )
+            {
+                if( openGLAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
+                {
+                    auto modelIndex = ui->openGLAppsView->model()->index( nameIndex, 0 );
+                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
+                    emit ui->openGLAppsView->clicked( modelIndex );
+                    return;
+                }
+            }
+        }
+        else if( currentChosenType == SOFTWARE_APP )
+        {
+            QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
+            selectionModel->clear();
+            for( int nameIndex = 0; nameIndex < softwareAppsCollectionModel->getApplicationNames().size(); ++nameIndex )
+            {
+                if( softwareAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
+                {
+                    auto modelIndex = ui->softwareAppsView->model()->index( nameIndex, 0 );
+                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
+                    emit ui->softwareAppsView->clicked( modelIndex );
+                    return;
+                }
+            }
         }
     }
 

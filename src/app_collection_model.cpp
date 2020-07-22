@@ -16,6 +16,7 @@ namespace Ouquitoure
         beginInsertRows( QModelIndex(), apps.size(), apps.size() );
         apps << app;
         endInsertRows();
+        appsNames.push_back( app->getInfo().getName() );
     }
 
     AppWindowBase * AppCollectionModel::getApplication( const QString & name )
@@ -29,6 +30,11 @@ namespace Ouquitoure
     AppInfo AppCollectionModel::getCurrentAppInfo() const noexcept
     {
         return currentAppInfo;
+    }
+
+    const QVector<QString> & AppCollectionModel::getApplicationNames() const noexcept
+    {
+        return appsNames;
     }
 
     int AppCollectionModel::rowCount( const QModelIndex & parent ) const

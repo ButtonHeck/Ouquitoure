@@ -18,9 +18,10 @@ namespace Ouquitoure
     public:
         explicit AppCollectionModel( QObject * parent = nullptr );
 
-        void            addApplication( AppWindowBase * app );
-        AppWindowBase * getApplication( const QString & name );
-        AppInfo         getCurrentAppInfo() const noexcept;
+        void                     addApplication( AppWindowBase * app );
+        AppWindowBase *          getApplication( const QString & name );
+        AppInfo                  getCurrentAppInfo() const noexcept;
+        const QVector<QString> & getApplicationNames() const noexcept;
 
         int      rowCount( const QModelIndex & parent = QModelIndex() ) const override;
         int      columnCount( const QModelIndex & parent = QModelIndex() ) const override;
@@ -42,6 +43,7 @@ namespace Ouquitoure
     private:
         QVector<AppWindowBase *> apps;
         AppInfo                  currentAppInfo;
+        QVector<QString>         appsNames;
     };
 
 } // namespace Ouquitoure
