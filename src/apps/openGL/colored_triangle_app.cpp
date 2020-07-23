@@ -111,15 +111,14 @@ namespace Ouquitoure
 
     void ColoredTriangleApp::initializeDescription()
     {
-        info = AppInfo( appName, { "basic", "triangle" }, OPENGL_APP );
+        info = AppInfo( appName, { "basic", "2D", "triangle" }, OPENGL_APP );
         info.getDescription().setName( appName );
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "Hello world application. Just draws colored triangle. Vertices positions and "
                                         "colors could be tweaked using Qt GUI." );
         info.getDescription().setAppImage( ":/appImages/ColoredTriangle.png" );
-        info.getDescription().addReference(
-            { QUrl( "https://learnopengl.com/Getting-started/Hello-Triangle" ), "OpenGL hello world" } );
+        info.getDescription().addReference( { QUrl( "https://learnopengl.com/Getting-started/Hello-Triangle" ), "OpenGL hello world" } );
         info.getDescription().addReference(
             { QUrl( "https://www.khronos.org/opengl/wiki/Buffer_Object" ), "OpenGL wiki: buffer objects" } );
         info.getDescription().setNotes( "I've created this test app during Ouquitoure development, just to make sure "
