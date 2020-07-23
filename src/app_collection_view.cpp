@@ -9,7 +9,7 @@ namespace Ouquitoure
         : QTableView( parent )
     {
         horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
-        setSelectionMode( QAbstractItemView::SingleSelection );
+        setSelectionMode( QAbstractItemView::ExtendedSelection );
     }
 
 } // namespace Ouquitoure

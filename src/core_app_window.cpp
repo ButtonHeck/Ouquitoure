@@ -159,7 +159,9 @@ namespace Ouquitoure
 
     void CoreAppWindow::searchByName( const QString & name )
     {
-        const APP_TYPE currentChosenType = getAppType();
+        const APP_TYPE       currentChosenType = getAppType();
+        QVector<QModelIndex> selectedIndices;
+
         if( currentChosenType == OPENGL_APP )
         {
             QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
@@ -169,10 +171,14 @@ namespace Ouquitoure
                 if( openGLAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
                 {
                     auto modelIndex = ui->openGLAppsView->model()->index( nameIndex, 0 );
+                    selectedIndices.push_back( modelIndex );
                     selectionModel->select( modelIndex, QItemSelectionModel::Select );
-                    emit ui->openGLAppsView->clicked( modelIndex );
-                    return;
                 }
+            }
+            // check for exact match
+            if( selectedIndices.size() == 1 )
+            {
+                emit ui->openGLAppsView->clicked( selectedIndices.first() );
             }
         }
         else if( currentChosenType == SOFTWARE_APP )
@@ -184,10 +190,14 @@ namespace Ouquitoure
                 if( softwareAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
                 {
                     auto modelIndex = ui->softwareAppsView->model()->index( nameIndex, 0 );
+                    selectedIndices.push_back( modelIndex );
                     selectionModel->select( modelIndex, QItemSelectionModel::Select );
-                    emit ui->softwareAppsView->clicked( modelIndex );
-                    return;
                 }
+            }
+            // check for exact match
+            if( selectedIndices.size() == 1 )
+            {
+                emit ui->openGLAppsView->clicked( selectedIndices.first() );
             }
         }
     }
