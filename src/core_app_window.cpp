@@ -171,6 +171,10 @@ namespace Ouquitoure
         {
             QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
             selectionModel->clear();
+            if( name.isEmpty() )
+            {
+                return;
+            }
             for( int nameIndex = 0; nameIndex < openGLAppsCollectionModel->getApplicationNames().size(); ++nameIndex )
             {
                 if( openGLAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
@@ -190,6 +194,10 @@ namespace Ouquitoure
         {
             QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
             selectionModel->clear();
+            if( name.isEmpty() )
+            {
+                return;
+            }
             for( int nameIndex = 0; nameIndex < softwareAppsCollectionModel->getApplicationNames().size(); ++nameIndex )
             {
                 if( softwareAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
