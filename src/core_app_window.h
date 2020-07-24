@@ -30,6 +30,7 @@ namespace Ouquitoure
         void switchDescriptionWindowVisible();
         void addApplication( AppWindowBase * app, APP_TYPE type );
         void searchByName( const QString & name );
+        void searchByTags( const QString & tags );
 
     private:
         APP_TYPE getAppType();

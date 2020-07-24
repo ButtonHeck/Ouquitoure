@@ -10,6 +10,8 @@
 #include "Apps/Software/SoftwareAppBase"
 #include "ui_core_app_window.h"
 
+#include <algorithm>
+
 namespace Ouquitoure
 {
     CoreAppWindow::CoreAppWindow( QWidget * parent )
@@ -51,6 +53,9 @@ namespace Ouquitoure
 
         // callback to the "App name" input
         connect( ui->appSearchByNameLineEdit, SIGNAL( textChanged( const QString & ) ), SLOT( searchByName( const QString & ) ) );
+
+        // callback to the "Tags" input
+        connect( ui->appSearchByTagsLineInput, SIGNAL( textChanged( const QString & ) ), SLOT( searchByTags( const QString & ) ) );
     }
 
     CoreAppWindow::~CoreAppWindow()
@@ -170,7 +175,7 @@ namespace Ouquitoure
             {
                 if( openGLAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
                 {
-                    auto modelIndex = ui->openGLAppsView->model()->index( nameIndex, 0 );
+                    auto modelIndex = openGLAppsCollectionModel->index( nameIndex, 0 );
                     selectedIndices.push_back( modelIndex );
                     selectionModel->select( modelIndex, QItemSelectionModel::Select );
                 }
@@ -189,7 +194,7 @@ namespace Ouquitoure
             {
                 if( softwareAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
                 {
-                    auto modelIndex = ui->softwareAppsView->model()->index( nameIndex, 0 );
+                    auto modelIndex = softwareAppsCollectionModel->index( nameIndex, 0 );
                     selectedIndices.push_back( modelIndex );
                     selectionModel->select( modelIndex, QItemSelectionModel::Select );
                 }
@@ -198,6 +203,62 @@ namespace Ouquitoure
             if( selectedIndices.size() == 1 )
             {
                 emit ui->openGLAppsView->clicked( selectedIndices.first() );
+            }
+        }
+    }
+
+    void CoreAppWindow::searchByTags( const QString & tags )
+    {
+        const APP_TYPE       currentChosenType = getAppType();
+        QVector<QModelIndex> selectedIndices;
+        QStringList          separatedTags = tags.split( ";" );
+
+        if( currentChosenType == OPENGL_APP )
+        {
+            QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
+            selectionModel->clear();
+            const auto & appsNames = openGLAppsCollectionModel->getApplicationNames();
+            for( int nameIndex = 0; nameIndex < appsNames.size(); ++nameIndex )
+            {
+                const auto * app         = openGLAppsCollectionModel->getApplication( appsNames[ nameIndex ] );
+                const auto & appTagsList = app->getInfo().getTags();
+                if( std::all_of( separatedTags.cbegin(), separatedTags.cend(), [ & ]( const QString & tag ) {
+                        return appTagsList.contains( tag, Qt::CaseInsensitive );
+                    } ) )
+                {
+                    auto modelIndex = openGLAppsCollectionModel->index( nameIndex, 0 );
+                    selectedIndices.push_back( modelIndex );
+                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
+                }
+            }
+            // check for exact match
+            if( selectedIndices.size() == 1 )
+            {
+                emit ui->openGLAppsView->clicked( selectedIndices.first() );
+            }
+        }
+        else if( currentChosenType == SOFTWARE_APP )
+        {
+            QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
+            selectionModel->clear();
+            const auto & appsNames = softwareAppsCollectionModel->getApplicationNames();
+            for( int nameIndex = 0; nameIndex < appsNames.size(); ++nameIndex )
+            {
+                const auto * app         = softwareAppsCollectionModel->getApplication( appsNames[ nameIndex ] );
+                const auto & appTagsList = app->getInfo().getTags();
+                if( std::all_of( separatedTags.cbegin(), separatedTags.cend(), [ & ]( const QString & tag ) {
+                        return appTagsList.contains( tag, Qt::CaseInsensitive );
+                    } ) )
+                {
+                    auto modelIndex = softwareAppsCollectionModel->index( nameIndex, 0 );
+                    selectedIndices.push_back( modelIndex );
+                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
+                }
+            }
+            // check for exact match
+            if( selectedIndices.size() == 1 )
+            {
+                emit ui->softwareAppsView->clicked( selectedIndices.first() );
             }
         }
     }
