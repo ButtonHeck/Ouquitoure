@@ -1,8 +1,7 @@
 #include "Apps/Software/SoftwareAppBase"
+#include "Log"
 
 #include <QLabel>
-
-#include "Log"
 
 namespace Ouquitoure
 {

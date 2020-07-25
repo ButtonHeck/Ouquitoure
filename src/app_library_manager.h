@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QWidget>
-
 #include "Apps/AppWindowBase"
+
+#include <QWidget>
 
 namespace Ouquitoure
 {

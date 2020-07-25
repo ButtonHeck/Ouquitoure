@@ -1,11 +1,10 @@
 #include "Apps/OpenGL/OpenGLDrawFunctionsWidget"
+#include "Math/Point3Pos3Color"
+#include "Log"
 
 #include <QFile>
 #include <glm/gtc/type_ptr.hpp>
 #include <array>
-
-#include "Math/Point3Pos3Color"
-#include "Log"
 
 namespace Ouquitoure
 {
@@ -281,8 +280,8 @@ namespace Ouquitoure
 
     void OpenGLDrawFunctionsWidget::setFunctionEnabled( bool enabled )
     {
-        DRAW_FUNCTIONS function = (DRAW_FUNCTIONS)sender()->objectName().toInt();
-        functionsEnabled[function] = enabled;
+        DRAW_FUNCTIONS function      = (DRAW_FUNCTIONS)sender()->objectName().toInt();
+        functionsEnabled[ function ] = enabled;
         update();
     }
 

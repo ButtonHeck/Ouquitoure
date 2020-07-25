@@ -1,8 +1,7 @@
 #include "Camera"
+#include "Log"
 
 #include <glm/gtc/matrix_transform.hpp>
-
-#include "Log"
 
 namespace Ouquitoure
 {
@@ -21,7 +20,7 @@ namespace Ouquitoure
         keys[ Qt::Key_A ]     = false;
         keys[ Qt::Key_S ]     = false;
         keys[ Qt::Key_D ]     = false;
-        keys[ Qt::Key_Space ] = false;
+        keys[ Qt::Key_E ]     = false;
         keys[ Qt::Key_Shift ] = false;
     }
 
@@ -158,14 +157,7 @@ namespace Ouquitoure
 
     void Camera::clampPitch()
     {
-        if( pitch >= MAX_PITCH )
-        {
-            pitch = MAX_PITCH;
-        }
-        if( pitch <= MIN_PITCH )
-        {
-            pitch = MIN_PITCH;
-        }
+        pitch = glm::clamp( pitch, MIN_PITCH, MAX_PITCH );
     }
 
 } // namespace Ouquitoure

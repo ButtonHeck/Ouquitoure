@@ -1,9 +1,9 @@
 #pragma once
 
-#include <array>
-
 #include "Apps/OpenGL/OpenGLWidgetBase"
 #include "Math/Point2Pos3Color"
+
+#include <array>
 
 namespace Ouquitoure
 {

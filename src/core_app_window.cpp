@@ -1,8 +1,4 @@
 #include "CoreAppWindow"
-
-#include <QToolBar>
-#include <QItemSelectionModel>
-
 #include "AppCollectionModel"
 #include "Apps/AppType"
 #include "Log"
@@ -10,6 +6,8 @@
 #include "Apps/Software/SoftwareAppBase"
 #include "ui_core_app_window.h"
 
+#include <QToolBar>
+#include <QItemSelectionModel>
 #include <algorithm>
 
 namespace Ouquitoure

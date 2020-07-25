@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QVector2D>
-#include <QVector3D>
-
 #include "Math/Point2D"
 #include "Math/Point3D"
+
+#include <QVector2D>
+#include <QVector3D>
 
 namespace Ouquitoure
 {

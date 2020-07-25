@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Apps/AppType"
+#include "Apps/AppDescription"
+
 #include <QString>
 #include <QStringList>
-
-#include <Apps/AppType>
-#include <Apps/AppDescription>
 
 namespace Ouquitoure
 {

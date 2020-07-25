@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Apps/AppWindowBase"
+
 #include <QHBoxLayout>
 #include <QGroupBox>
-
-#include "Apps/AppWindowBase"
 
 namespace Ouquitoure
 {

@@ -1,9 +1,9 @@
 #pragma once
 
+#include "AppLibraryManager"
+
 #include <QMainWindow>
 #include <QVector>
-
-#include "AppLibraryManager"
 
 namespace Ui
 {

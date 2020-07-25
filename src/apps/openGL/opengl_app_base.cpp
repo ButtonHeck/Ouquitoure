@@ -1,10 +1,9 @@
 #include "Apps/OpenGL/OpenGLAppBase"
+#include "Apps/OpenGL/OpenGLWidgetBase"
+#include "Log"
 
 #include <QDockWidget>
 #include <QResizeEvent>
-
-#include "Apps/OpenGL/OpenGLWidgetBase"
-#include "Log"
 
 namespace Ouquitoure
 {

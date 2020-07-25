@@ -1,5 +1,4 @@
 #include "AppCollectionModel"
-
 #include "Log"
 
 namespace Ouquitoure

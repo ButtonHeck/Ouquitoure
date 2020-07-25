@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QLabel>
+#include "Apps/OpenGL/OpenGLAppBase"
+#include "Apps/OpenGL/ColoredTriangleWidget"
 
-#include <Apps/OpenGL/OpenGLAppBase>
-#include <Apps/OpenGL/ColoredTriangleWidget>
+#include <QLabel>
 
 namespace Ouquitoure
 {

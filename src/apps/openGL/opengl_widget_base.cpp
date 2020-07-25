@@ -1,9 +1,8 @@
 #include "Apps/OpenGL/OpenGLWidgetBase"
+#include "Log"
 
 #include <QOpenGLShader>
 #include <QVector>
-
-#include "Log"
 
 namespace Ouquitoure
 {

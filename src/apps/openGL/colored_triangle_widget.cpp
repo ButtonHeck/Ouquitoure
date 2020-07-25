@@ -44,8 +44,7 @@ namespace Ouquitoure
         glDrawArrays( GL_TRIANGLES, 0, NUM_POINTS );
     }
 
-    const std::array<Ouquitoure::Point2p3c, ColoredTriangleWidget::NUM_POINTS> &
-    ColoredTriangleWidget::getPoints() const noexcept
+    const std::array<Ouquitoure::Point2p3c, ColoredTriangleWidget::NUM_POINTS> & ColoredTriangleWidget::getPoints() const noexcept
     {
         return points;
     }
@@ -123,8 +122,7 @@ namespace Ouquitoure
         }
         fragmentShaderFile.close();
 
-        addShaderProgram( { QOpenGLShader::Vertex, QOpenGLShader::Fragment },
-                          std::forward<decltype( shaderSources )>( shaderSources ) );
+        addShaderProgram( { QOpenGLShader::Vertex, QOpenGLShader::Fragment }, std::forward<decltype( shaderSources )>( shaderSources ) );
     }
 
     void ColoredTriangleWidget::cleanup()

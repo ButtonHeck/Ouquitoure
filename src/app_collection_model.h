@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QAbstractTableModel>
-
 #include "Apps/AppWindowBase"
+
+#include <QAbstractTableModel>
 
 class QMainWindow;
 

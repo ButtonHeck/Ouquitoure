@@ -1,9 +1,8 @@
 #include "Apps/OpenGL/OpenGLDrawFunctionsApp"
+#include "Log"
 
 #include <QKeyEvent>
 #include <QCheckBox>
-
-#include "Log"
 
 namespace Ouquitoure
 {
@@ -41,7 +40,8 @@ namespace Ouquitoure
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "All OpenGL functions usage examples (except drawing transform feedback)" );
         info.getDescription().setAppImage( ":/appImages/OpenGLDrawFunctions.png" );
-        info.getDescription().addReference( {QUrl("https://www.khronos.org/opengl/wiki/Vertex_Rendering"), "Vertex rendering page from OpenGL Wiki"} );
+        info.getDescription().addReference(
+            { QUrl( "https://www.khronos.org/opengl/wiki/Vertex_Rendering" ), "Vertex rendering page from OpenGL Wiki" } );
     }
 
 } // namespace Ouquitoure

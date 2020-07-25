@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QMainWindow>
-
 #include "Apps/AppInfo"
+
+#include <QMainWindow>
 
 namespace Ouquitoure
 {

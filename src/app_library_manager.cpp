@@ -1,5 +1,4 @@
 #include "AppLibraryManager"
-
 #include "Apps/OpenGL/ColoredTriangleApp"
 #include "Apps/OpenGL/OpenGLDrawFunctionsApp"
 
