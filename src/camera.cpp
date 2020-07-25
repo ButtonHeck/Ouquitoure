@@ -16,12 +16,12 @@ namespace Ouquitoure
         startTimer( 1000.0f / 60.0f );
 
         // explicitly define keys for movement
-        keys[ Qt::Key_W ]     = false;
-        keys[ Qt::Key_A ]     = false;
-        keys[ Qt::Key_S ]     = false;
-        keys[ Qt::Key_D ]     = false;
-        keys[ Qt::Key_E ]     = false;
-        keys[ Qt::Key_Shift ] = false;
+        keys[ FORWARD ]  = false;
+        keys[ LEFT ]     = false;
+        keys[ BACKWARD ] = false;
+        keys[ RIGHT ]    = false;
+        keys[ UP ]       = false;
+        keys[ DOWN ]     = false;
     }
 
     glm::mat4 Camera::getViewMatrix() const
@@ -75,34 +75,12 @@ namespace Ouquitoure
     {
         Q_UNUSED( event );
 
-        // Forward / Backward
-        if( keys[ Qt::Key_W ] )
+        for( int & key: keys.keys() )
         {
-            move( FORWARD, moveSensitivity );
-        }
-        if( keys[ Qt::Key_S ] )
-        {
-            move( BACKWARD, moveSensitivity );
-        }
-
-        // Left / Right
-        if( keys[ Qt::Key_A ] )
-        {
-            move( LEFT, moveSensitivity );
-        }
-        if( keys[ Qt::Key_D ] )
-        {
-            move( RIGHT, moveSensitivity );
-        }
-
-        // Up / Down
-        if( keys[ Qt::Key_E ] )
-        {
-            move( UP, moveSensitivity );
-        }
-        if( keys[ Qt::Key_Shift ] )
-        {
-            move( DOWN, moveSensitivity );
+            if( keys[ key ] )
+            {
+                move( (CAMERA_MOVE_DIRECTION)key, moveSensitivity );
+            }
         }
     }
 
