@@ -16,7 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 INCLUDEPATH += "include/" \
-               "deps/include/"
+               "deps/include/" \
+               "src/"
 
 SOURCES += \
     # root
