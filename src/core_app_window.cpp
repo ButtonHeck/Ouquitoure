@@ -61,13 +61,9 @@ namespace Ouquitoure
         delete ui;
     }
 
-    /**
-     * @brief slot to launch an application. An application is chosen based on the app name and
-     * its type that is currently in the selected state of the view
-     */
     bool CoreAppWindow::launchApp()
     {
-        const APP_TYPE appType = getAppType();
+        const APP_TYPE appType = getViewTabCurrentAppType();
         const QString  appName = getAppName( appType );
         OQ_LOG_INFO << appName << " sender: " << sender()->objectName();
 
@@ -98,14 +94,9 @@ namespace Ouquitoure
         }
     }
 
-    /**
-     * @brief slot to update an application HTML info in the description view window.
-     * An application is chosen based on the app name and
-     * its type that is currently in the selected state of the view
-     */
     void CoreAppWindow::updateDescriptionWindowInfo()
     {
-        const APP_TYPE appType = getAppType();
+        const APP_TYPE appType = getViewTabCurrentAppType();
         const QString  appName = getAppName( appType );
 
         AppWindowBase * appWindow = nullptr;
@@ -123,9 +114,6 @@ namespace Ouquitoure
         }
     }
 
-    /**
-     * @brief slot to switch description view window visibility
-     */
     void CoreAppWindow::switchDescriptionWindowVisible()
     {
         if( ui->descriptionDockWidget->isHidden() )
@@ -138,9 +126,6 @@ namespace Ouquitoure
         }
     }
 
-    /**
-     * @brief slot to add application to one of the models defined by the given type
-     */
     void CoreAppWindow::addApplication( AppWindowBase * app, APP_TYPE type )
     {
         switch( type )
@@ -162,7 +147,7 @@ namespace Ouquitoure
 
     void CoreAppWindow::searchByName( const QString & name )
     {
-        const APP_TYPE       currentChosenType = getAppType();
+        const APP_TYPE       currentChosenType = getViewTabCurrentAppType();
         QVector<QModelIndex> selectedIndices;
 
         if( currentChosenType == OPENGL_APP )
@@ -215,7 +200,7 @@ namespace Ouquitoure
 
     void CoreAppWindow::searchByTags( const QString & tags )
     {
-        const APP_TYPE       currentChosenType = getAppType();
+        const APP_TYPE       currentChosenType = getViewTabCurrentAppType();
         QVector<QModelIndex> selectedIndices;
         QStringList          separatedTags = tags.split( ";" );
 
@@ -269,10 +254,7 @@ namespace Ouquitoure
         }
     }
 
-    /**
-     * @brief utility function to get application type based on the view tab widget current index
-     */
-    APP_TYPE CoreAppWindow::getAppType()
+    APP_TYPE CoreAppWindow::getViewTabCurrentAppType()
     {
         const auto APP_TABLE_VIEW_CURRENT_TAB_INDEX = ui->appLibraryTabWidget->currentIndex();
         switch( APP_TABLE_VIEW_CURRENT_TAB_INDEX )
@@ -286,10 +268,6 @@ namespace Ouquitoure
         }
     }
 
-    /**
-     * @brief utility function to get currently chosen application's name from one of the models
-     * defined by the given type
-     */
     QString CoreAppWindow::getAppName( APP_TYPE type )
     {
         switch( type )

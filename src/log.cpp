@@ -4,10 +4,6 @@
 
 namespace Ouquitoure
 {
-    /**
-     * @brief custom message handler callback. Prints message time, message type, its context (if full logging is used)
-     * and then the message itself
-     */
     void logHandler( QtMsgType messageType, const QMessageLogContext & logContext, const QString & message )
     {
         QTime time = QTime::currentTime();

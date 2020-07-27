@@ -13,7 +13,7 @@ namespace Ouquitoure
         , pitch( pitch )
     {
         updateViewDirectionVectors();
-        startTimer( 1000.0f / 60.0f );
+        startTimer( 1000.0f / DEFAULT_FPS );
 
         // explicitly define keys for movement
         keys[ FORWARD ]  = false;
@@ -52,7 +52,7 @@ namespace Ouquitoure
         lastY      = y;
         yaw += deltaX * mouseSensitivity;
         pitch += deltaY * mouseSensitivity;
-        clampPitch();
+        pitch = glm::clamp( pitch, MIN_PITCH, MAX_PITCH );
         updateViewDirectionVectors();
         emit viewChanged();
     }
@@ -119,9 +119,6 @@ namespace Ouquitoure
         emit viewChanged();
     }
 
-    /**
-     * @brief updates front, right and up vectors based on current yaw and pitch angles
-     */
     void Camera::updateViewDirectionVectors()
     {
         float     x = std::cos( glm::radians( yaw ) ) * std::cos( glm::radians( pitch ) );
@@ -131,11 +128,6 @@ namespace Ouquitoure
         front = glm::normalize( newFront );
         right = glm::normalize( glm::cross( front, worldUp ) );
         up    = glm::normalize( glm::cross( right, front ) );
-    }
-
-    void Camera::clampPitch()
-    {
-        pitch = glm::clamp( pitch, MIN_PITCH, MAX_PITCH );
     }
 
 } // namespace Ouquitoure
