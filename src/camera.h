@@ -104,9 +104,8 @@ namespace Ouquitoure
 
     private:
         // Position
-        glm::vec3 position;
-        int       lastX = 0;
-        int       lastY = 0;
+        glm::vec3  position;
+        glm::ivec2 lastMousePos{ 0, 0 };
 
         // View
         glm::vec3 front;
