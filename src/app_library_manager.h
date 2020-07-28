@@ -15,12 +15,22 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         AppLibraryManager();
+
+        /**
+         * @brief instantiates all the applications and emits signals that one was created
+         */
         void loadApplications();
 
     signals:
-        void applicationCreated( AppWindowBase *, APP_TYPE );
+        /**
+         * @brief notifies receiver that manager has added new application
+         * @param app new application
+         * @param appType type of the new application
+         */
+        void applicationCreated( AppWindowBase * app, APP_TYPE appType );
 
     private:
+        ///this widget is used as parent instead of the main window to prevent applications hide when the main window hides
         QWidget invisibleParentForApps;
     };
 

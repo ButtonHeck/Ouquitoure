@@ -76,9 +76,6 @@ namespace Ouquitoure
         return QVariant{};
     }
 
-    /**
-     * @brief slot to update current application info
-     */
     void AppCollectionModel::updateCurrentAppInfo( const QModelIndex & index )
     {
 #ifdef QT_DEBUG

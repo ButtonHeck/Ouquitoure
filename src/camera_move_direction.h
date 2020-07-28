@@ -4,6 +4,10 @@
 
 namespace Ouquitoure
 {
+    /**
+     * @brief enumeration of the possible camera move directions
+     * this also setups keybindings
+     */
     enum CAMERA_MOVE_DIRECTION
     {
         FORWARD  = Qt::Key_W,
@@ -13,4 +17,4 @@ namespace Ouquitoure
         UP       = Qt::Key_E,
         DOWN     = Qt::Key_Shift
     };
-}
+} // namespace Ouquitoure
