@@ -17,6 +17,9 @@ namespace Ouquitoure
         explicit AppWindowBase( QWidget * parent = nullptr );
         virtual ~AppWindowBase() = default;
 
+        /**
+         * @return application info object
+         */
         const AppInfo & getInfo() const noexcept;
 
     protected:

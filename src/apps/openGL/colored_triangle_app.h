@@ -22,6 +22,11 @@ namespace Ouquitoure
         void initializeDescription() override;
 
     private slots:
+        /**
+         * @brief slot to update position label's text. Label is defined by the sender object's name, which contains
+         * information about label ordinal
+         * @param value label text integer representation
+         */
         void updatePositionLabelText( int value );
 
     private:

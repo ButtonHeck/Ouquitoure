@@ -21,6 +21,13 @@ namespace Ouquitoure
         void resizeGL( int width, int height ) override;
 
     protected:
+        /**
+         * @brief creates and adds OpenGL shader program to internal storage
+         * @param types list of shader types provided
+         * @param sources string sources of the shaders
+         * @param programName name of the program
+         * @return true if shader was compiled, linked and added successfully
+         */
         bool addShaderProgram( QVector<QOpenGLShader::ShaderType> && types,
                                QVector<QString> &&                   sources,
                                const QString &                       programName = "main" );

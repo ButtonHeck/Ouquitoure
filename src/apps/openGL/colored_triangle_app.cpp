@@ -125,10 +125,6 @@ namespace Ouquitoure
                                         "that everything works as it expected" );
     }
 
-    /**
-     * @brief slot to update position label's text. Label is defined by the sender object's name, which contains
-     * information about label ordinal
-     */
     void ColoredTriangleApp::updatePositionLabelText( int value )
     {
         bool     isX   = sender()->objectName().left( 1 ) == 'x';

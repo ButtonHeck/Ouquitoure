@@ -19,9 +19,6 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << name << " widget dtor";
     }
 
-    /**
-     * @brief creates and adds OpenGL shader program to internal storage
-     */
     bool OpenGLWidgetBase::addShaderProgram( QVector<QOpenGLShader::ShaderType> && types,
                                              QVector<QString> &&                   sources,
                                              const QString &                       programName )

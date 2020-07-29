@@ -55,9 +55,6 @@ namespace Ouquitoure
         this->notes = notes;
     }
 
-    /**
-     * @brief assembles html string from all descritpion details provided
-     */
     QString AppDescription::getFullDescription() const
     {
         QStringList text{ "<!DOCTYPE html><html><head>" };
