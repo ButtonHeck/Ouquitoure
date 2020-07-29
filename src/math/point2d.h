@@ -6,6 +6,9 @@ namespace Ouquitoure
     {
 
         template<typename T>
+        /**
+         * @brief point union with two components
+         */
         union Point2D
         {
             constexpr static int NUM_ELEMENTS = 2;

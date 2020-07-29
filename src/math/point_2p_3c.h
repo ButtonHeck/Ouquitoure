@@ -12,6 +12,9 @@ namespace Ouquitoure
     {
 
         template<typename T>
+        /**
+         * @brief vertex union with 2 position and 3 color components
+         */
         union Point2Pos3Color
         {
             constexpr static int NUM_ELEMENTS    = Point2D<T>::NUM_ELEMENTS + Point3D<T>::NUM_ELEMENTS;

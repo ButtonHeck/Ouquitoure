@@ -6,6 +6,9 @@ namespace Ouquitoure
     {
 
         template<typename T>
+        /**
+         * @brief point union with three components
+         */
         union Point3D
         {
             constexpr static int NUM_ELEMENTS = 3;

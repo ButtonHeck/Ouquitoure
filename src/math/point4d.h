@@ -6,6 +6,9 @@ namespace Ouquitoure
     {
 
         template<typename T>
+        /**
+         * @brief The Point4D union
+         */
         union Point4D
         {
             constexpr static int NUM_ELEMENTS = 4;
