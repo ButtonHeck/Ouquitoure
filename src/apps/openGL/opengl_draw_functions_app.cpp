@@ -42,6 +42,8 @@ namespace Ouquitoure
         info.getDescription().setAppImage( ":/appImages/OpenGLDrawFunctions.png" );
         info.getDescription().addReference(
             { QUrl( "https://www.khronos.org/opengl/wiki/Vertex_Rendering" ), "Vertex rendering page from OpenGL Wiki" } );
+        info.getDescription().addReference(
+            { QUrl( "http://www.opengl-redbook.com/" ), "OpenGL book: Chapter 3, OpenGL Drawing Commands section" } );
     }
 
 } // namespace Ouquitoure

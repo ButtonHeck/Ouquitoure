@@ -89,24 +89,62 @@ namespace Ouquitoure
         , mDrawElemInd_Ebo( 0 )
         , mDrawElemInd_Dibo( 0 )
     {
-        functionsEnabled[ DRAW_ARRAYS ]                                       = true;
-        functionsEnabled[ DRAW_ARRAYS_INSTANCED ]                             = true;
-        functionsEnabled[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ]               = true;
-        functionsEnabled[ DRAW_ARRAYS_INDIRECT ]                              = true;
-        functionsEnabled[ DRAW_ELEMENTS ]                                     = true;
-        functionsEnabled[ DRAW_ELEMENTS_BASE_VERTEX ]                         = true;
-        functionsEnabled[ DRAW_ELEMENTS_INDIRECT ]                            = true;
-        functionsEnabled[ DRAW_ELEMENTS_INSTANCED ]                           = true;
-        functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ]             = true;
-        functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ]               = true;
-        functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] = true;
-        functionsEnabled[ DRAW_RANGE_ELEMENTS ]                               = true;
-        functionsEnabled[ DRAW_RANGE_ELEMENTS_BASE_VERTEX ]                   = true;
-        functionsEnabled[ MULTI_DRAW_ARRAYS ]                                 = true;
-        functionsEnabled[ MULTI_DRAW_ARRAYS_INDIRECT ]                        = true;
-        functionsEnabled[ MULTI_DRAW_ELEMENTS ]                               = true;
-        functionsEnabled[ MULTI_DRAW_ELEMENTS_BASE_VERTEX ]                   = true;
-        functionsEnabled[ MULTI_DRAW_ELEMENTS_INDIRECT ]                      = true;
+        allDrawFunctions[ DRAW_ARRAYS ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawArrays_init, &OpenGLDrawFunctionsWidget::drawArrays,
+                              &OpenGLDrawFunctionsWidget::drawArrays_cleanup, "glDrawArrays" );
+        allDrawFunctions[ DRAW_ARRAYS_INSTANCED ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawArraysInstanced_init, &OpenGLDrawFunctionsWidget::drawArraysInstanced,
+                              &OpenGLDrawFunctionsWidget::drawArraysInstanced_cleanup, "glDrawArraysInstanced" );
+        allDrawFunctions[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawArraysInstanced_init, &OpenGLDrawFunctionsWidget::drawArraysInstanced,
+                              &OpenGLDrawFunctionsWidget::drawArraysInstanced_cleanup, "glDrawArraysInstancedBaseInstance" );
+        allDrawFunctions[ DRAW_ARRAYS_INDIRECT ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawArraysIndirect_init, &OpenGLDrawFunctionsWidget::drawArraysIndirect,
+                              &OpenGLDrawFunctionsWidget::drawArraysIndirect_cleanup, "glDrawArraysIndirect" );
+        allDrawFunctions[ DRAW_ELEMENTS ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawElements_init, &OpenGLDrawFunctionsWidget::drawElements,
+                              &OpenGLDrawFunctionsWidget::drawElements_cleanup, "glDrawElements" );
+        allDrawFunctions[ DRAW_ELEMENTS_BASE_VERTEX ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::drawElementsBaseVertex_init, &OpenGLDrawFunctionsWidget::drawElementsBaseVertex,
+            &OpenGLDrawFunctionsWidget::drawElementsBaseVertex_cleanup, "glDrawElementsBaseVertex" );
+        allDrawFunctions[ DRAW_ELEMENTS_INDIRECT ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawElementsIndirect_init, &OpenGLDrawFunctionsWidget::drawElementsIndirect,
+                              &OpenGLDrawFunctionsWidget::drawElementsIndirect_cleanup, "glDrawElementsIndirect" );
+        allDrawFunctions[ DRAW_ELEMENTS_INSTANCED ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::drawElementsInstanced_init, &OpenGLDrawFunctionsWidget::drawElementsInstanced,
+            &OpenGLDrawFunctionsWidget::drawElementsInstanced_cleanup, "glDrawElementsInstanced" );
+        allDrawFunctions[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::drawElementsInstanced_init, &OpenGLDrawFunctionsWidget::drawElementsInstanced,
+            &OpenGLDrawFunctionsWidget::drawElementsInstanced_cleanup, "glDrawElementsInstancedBaseInstance" );
+        allDrawFunctions[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex_init,
+                              &OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex,
+                              &OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex_cleanup, "glDrawElementsInstancedBaseVertex" );
+        allDrawFunctions[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex_init,
+            &OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex,
+            &OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex_cleanup, "glDrawElementsInstancedBaseVertexBaseInstance" );
+        allDrawFunctions[ DRAW_RANGE_ELEMENTS ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawRangeElements_init, &OpenGLDrawFunctionsWidget::drawRangeElements,
+                              &OpenGLDrawFunctionsWidget::drawRangeElements_cleanup, "glDrawRangeElements" );
+        allDrawFunctions[ DRAW_RANGE_ELEMENTS_BASE_VERTEX ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::drawRangeElementsBaseVertex_init, &OpenGLDrawFunctionsWidget::drawRangeElementsBaseVertex,
+            &OpenGLDrawFunctionsWidget::drawRangeElementsBaseVertex_cleanup, "glDrawRangeElementsBaseVertex" );
+        allDrawFunctions[ MULTI_DRAW_ARRAYS ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::multiDrawArrays_init, &OpenGLDrawFunctionsWidget::multiDrawArrays,
+                              &OpenGLDrawFunctionsWidget::multiDrawArrays_cleanup, "glMultiDrawArrays" );
+        allDrawFunctions[ MULTI_DRAW_ARRAYS_INDIRECT ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::multiDrawArraysIndirect_init, &OpenGLDrawFunctionsWidget::multiDrawArraysIndirect,
+            &OpenGLDrawFunctionsWidget::multiDrawArraysIndirect_cleanup, "glMultiDrawArraysIndirect" );
+        allDrawFunctions[ MULTI_DRAW_ELEMENTS ] =
+            DrawFunctionData( true, &OpenGLDrawFunctionsWidget::multiDrawElements_init, &OpenGLDrawFunctionsWidget::multiDrawElements,
+                              &OpenGLDrawFunctionsWidget::multiDrawElements_cleanup, "glMultiDrawElements" );
+        allDrawFunctions[ MULTI_DRAW_ELEMENTS_BASE_VERTEX ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::multiDrawElementsBaseVertex_init, &OpenGLDrawFunctionsWidget::multiDrawElementsBaseVertex,
+            &OpenGLDrawFunctionsWidget::multiDrawElementsBaseVertex_cleanup, "glMultiDrawElementsBaseVertex" );
+        allDrawFunctions[ MULTI_DRAW_ELEMENTS_INDIRECT ] = DrawFunctionData(
+            true, &OpenGLDrawFunctionsWidget::multiDrawElementsIndirect_init, &OpenGLDrawFunctionsWidget::multiDrawElementsIndirect,
+            &OpenGLDrawFunctionsWidget::multiDrawElementsIndirect_cleanup, "glMultiDrawElementsIndirect" );
     }
 
     OpenGLDrawFunctionsWidget::~OpenGLDrawFunctionsWidget()
@@ -116,47 +154,7 @@ namespace Ouquitoure
 
     QString OpenGLDrawFunctionsWidget::getDrawFunctionName( OpenGLDrawFunctionsWidget::DRAW_FUNCTIONS functionCode )
     {
-        switch( functionCode )
-        {
-        case DRAW_ARRAYS:
-            return QString( "glDrawArrays" );
-        case DRAW_ARRAYS_INSTANCED:
-            return QString( "glDrawArraysInstanced" );
-        case DRAW_ARRAYS_INSTANCED_BASE_INSTANCE:
-            return QString( "glDrawArraysInstancedBaseInstance" );
-        case DRAW_ARRAYS_INDIRECT:
-            return QString( "glDrawArraysIndirect" );
-        case DRAW_ELEMENTS:
-            return QString( "glDrawElements" );
-        case DRAW_ELEMENTS_BASE_VERTEX:
-            return QString( "glDrawElementsBaseVertex" );
-        case DRAW_ELEMENTS_INDIRECT:
-            return QString( "glDrawElementsIndirect" );
-        case DRAW_ELEMENTS_INSTANCED:
-            return QString( "glDrawElementsInstanced" );
-        case DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE:
-            return QString( "glDrawElementsInstancedBaseInstance" );
-        case DRAW_ELEMENTS_INSTANCED_BASE_VERTEX:
-            return QString( "glDrawElementsInstancedBaseVertex" );
-        case DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE:
-            return QString( "glDrawElementsInstancedBaseVertexBaseInstance" );
-        case DRAW_RANGE_ELEMENTS:
-            return QString( "glDrawRangeElements" );
-        case DRAW_RANGE_ELEMENTS_BASE_VERTEX:
-            return QString( "glDrawRangeElementsBaseVertex" );
-        case MULTI_DRAW_ARRAYS:
-            return QString( "glMultiDrawArrays" );
-        case MULTI_DRAW_ARRAYS_INDIRECT:
-            return QString( "glMultiDrawArraysIndirect" );
-        case MULTI_DRAW_ELEMENTS:
-            return QString( "glMultiDrawElements" );
-        case MULTI_DRAW_ELEMENTS_BASE_VERTEX:
-            return QString( "glMultiDrawElementsBaseVertex" );
-        case MULTI_DRAW_ELEMENTS_INDIRECT:
-            return QString( "glMultiDrawElementsIndirect" );
-        default:
-            return QString( "Unknown" );
-        }
+        return allDrawFunctions[functionCode].functionName;
     }
 
     void OpenGLDrawFunctionsWidget::initializeGL()
@@ -184,151 +182,34 @@ namespace Ouquitoure
         mainProgram->bind();
         glUniformMatrix4fv( mainProgram->uniformLocation( "u_model" ), 1, GL_FALSE, glm::value_ptr( model ) );
 
-        // glDrawArrays
-        if( functionsEnabled[ DRAW_ARRAYS ] )
+        for( auto & functionContext: allDrawFunctions )
         {
-            drawArrays();
-        }
-
-        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        if( functionsEnabled[ DRAW_ARRAYS_INSTANCED ] || functionsEnabled[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ] )
-        {
-            drawArraysInstanced();
-        }
-
-        // glDrawArraysIndirect
-        if( functionsEnabled[ DRAW_ARRAYS_INDIRECT ] )
-        {
-            drawArraysIndirect();
-        }
-
-        // glDrawElements
-        if( functionsEnabled[ DRAW_ELEMENTS ] )
-        {
-            drawElements();
-        }
-
-        // glDrawElementsBaseVertex
-        if( functionsEnabled[ DRAW_ELEMENTS_BASE_VERTEX ] )
-        {
-            drawElementsBaseVertex();
-        }
-
-        // glDrawElementsIndirect
-        if( functionsEnabled[ DRAW_ELEMENTS_INDIRECT ] )
-        {
-            drawElementsIndirect();
-        }
-
-        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED ] || functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ] )
-        {
-            drawElementsInstanced();
-        }
-
-        // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ] ||
-            functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] )
-        {
-            drawElementsInstancedBaseVertex();
-        }
-
-        // glDrawRangeElements
-        if( functionsEnabled[ DRAW_RANGE_ELEMENTS ] )
-        {
-            drawRangeElements();
-        }
-
-        // glDrawRangeElementsBaseVertex
-        if( functionsEnabled[ DRAW_RANGE_ELEMENTS_BASE_VERTEX ] )
-        {
-            drawRangeElementsBaseVertex();
-        }
-
-        // glMultiDrawArrays
-        if( functionsEnabled[ MULTI_DRAW_ARRAYS ] )
-        {
-            multiDrawArrays();
-        }
-
-        // glMultiDrawArraysIndirect
-        if( functionsEnabled[ MULTI_DRAW_ARRAYS_INDIRECT ] )
-        {
-            multiDrawArraysIndirect();
-        }
-
-        // glMultiDrawElements
-        if( functionsEnabled[ MULTI_DRAW_ELEMENTS ] )
-        {
-            multiDrawElements();
-        }
-
-        // glMultiDrawElementsBaseVertex
-        if( functionsEnabled[ MULTI_DRAW_ELEMENTS_BASE_VERTEX ] )
-        {
-            multiDrawElementsBaseVertex();
-        }
-
-        // glMultiDrawElementsIndirect
-        if( functionsEnabled[ MULTI_DRAW_ELEMENTS_INDIRECT ] )
-        {
-            multiDrawElementsIndirect();
+            DrawFunctionData & drawFunctionData = functionContext.second;
+            if( drawFunctionData.enabled )
+            {
+                void ( OpenGLDrawFunctionsWidget::*memberDrawFunction )() = drawFunctionData.drawFunction;
+                auto drawFunction                                         = std::bind( memberDrawFunction, this );
+                drawFunction();
+            }
         }
     }
 
     void OpenGLDrawFunctionsWidget::setFunctionEnabled( bool enabled )
     {
-        DRAW_FUNCTIONS function      = (DRAW_FUNCTIONS)sender()->objectName().toInt();
-        functionsEnabled[ function ] = enabled;
+        DRAW_FUNCTIONS function              = (DRAW_FUNCTIONS)sender()->objectName().toInt();
+        allDrawFunctions[ function ].enabled = enabled;
         update();
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLObjects()
     {
-        // glDrawArrays
-        drawArrays_init();
-
-        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        drawArraysInstanced_init();
-
-        // glDrawArraysIndirect
-        drawArraysIndirect_init();
-
-        // glDrawElements
-        drawElements_init();
-
-        // glDrawElementsBaseVertex
-        drawElementsBaseVertex_init();
-
-        // glDrawElementsIndirect
-        drawElementsIndirect_init();
-
-        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        drawElementsInstanced_init();
-
-        // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        drawElementsInstancedBaseVertex_init();
-
-        // glDrawRangeElements
-        drawRangeElements_init();
-
-        // glDrawRangeElementsBaseVertex
-        drawRangeElementsBaseVertex_init();
-
-        // glMultiDrawArrays
-        multiDrawArrays_init();
-
-        // glMultiDrawArraysIndirect
-        multiDrawArraysIndirect_init();
-
-        // glMultiDrawElements
-        multiDrawElements_init();
-
-        // glMultiDrawElementsBaseVertex
-        multiDrawElementsBaseVertex_init();
-
-        // glMultiDrawElementsIndirect
-        multiDrawElementsIndirect_init();
+        for( auto & functionContext: allDrawFunctions )
+        {
+            DrawFunctionData & drawFunctionData                       = functionContext.second;
+            void ( OpenGLDrawFunctionsWidget::*memberInitFunction )() = drawFunctionData.initFunction;
+            auto initFunction                                         = std::bind( memberInitFunction, this );
+            initFunction();
+        }
     }
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLShaders()
@@ -338,50 +219,13 @@ namespace Ouquitoure
 
     void OpenGLDrawFunctionsWidget::cleanup()
     {
-        // glDrawArrays
-        drawArrays_cleanup();
-
-        // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        drawArraysInstanced_cleanup();
-
-        // glDrawArraysIndirect
-        drawArraysIndirect_cleanup();
-
-        // glDrawElements
-        drawElements_cleanup();
-
-        // glDrawElementsBaseVertex
-        drawElementsBaseVertex_cleanup();
-
-        // glDrawElementsIndirect
-        drawElementsIndirect_cleanup();
-
-        // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        drawElementsInstanced_cleanup();
-
-        // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        drawElementsInstancedBaseVertex_cleanup();
-
-        // glDrawRangeElements
-        drawRangeElements_cleanup();
-
-        // glDrawRangeElementsBaseVertex
-        drawRangeElementsBaseVertex_cleanup();
-
-        // glMultiDrawArrays
-        multiDrawArrays_cleanup();
-
-        // glMultiDrawArraysIndirect
-        multiDrawArraysIndirect_cleanup();
-
-        // glMultiDrawElements
-        multiDrawElements_cleanup();
-
-        // glMultiDrawElementsBaseVertex
-        multiDrawElementsBaseVertex_cleanup();
-
-        // glMultiDrawElementsIndirect
-        multiDrawElementsIndirect_cleanup();
+        for( auto & functionContext: allDrawFunctions )
+        {
+            DrawFunctionData & drawFunctionData                          = functionContext.second;
+            void ( OpenGLDrawFunctionsWidget::*memberCleanupFunction )() = drawFunctionData.cleanupFunction;
+            auto cleanupFunction                                         = std::bind( memberCleanupFunction, this );
+            cleanupFunction();
+        }
 
         openGLShaderProgramsCleanup();
     }
@@ -398,12 +242,12 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::drawArraysInstanced()
     {
         glBindVertexArray( drawArrInst_Vao );
-        if( functionsEnabled[ DRAW_ARRAYS_INSTANCED ] )
+        if( allDrawFunctions[ DRAW_ARRAYS_INSTANCED ].enabled )
         {
             glDrawArraysInstanced( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
             glDrawArraysInstanced( GL_POINTS, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES );
         }
-        if( functionsEnabled[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ] )
+        if( allDrawFunctions[ DRAW_ARRAYS_INSTANCED_BASE_INSTANCE ].enabled )
         {
             glLineWidth( 3.0f );
             glDrawArraysInstancedBaseInstance( GL_TRIANGLES, 0, DRAW_ARR_INST_NUM_POINTS, DRAW_ARR_INST_NUM_INSTANCES, 1 );
@@ -444,12 +288,12 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::drawElementsInstanced()
     {
         glBindVertexArray( drawElemInst_Vao );
-        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED ] )
+        if( allDrawFunctions[ DRAW_ELEMENTS_INSTANCED ].enabled )
         {
             glDrawElementsInstanced( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
             glDrawElementsInstanced( GL_POINTS, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0, DRAW_ELEM_INST_NUM_INSTANCES );
         }
-        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ] )
+        if( allDrawFunctions[ DRAW_ELEMENTS_INSTANCED_BASE_INSTANCE ].enabled )
         {
             glLineWidth( 3.0f );
             glDrawElementsInstancedBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
@@ -461,14 +305,14 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::drawElementsInstancedBaseVertex()
     {
         glBindVertexArray( drawElemInstBV_Vao );
-        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ] )
+        if( allDrawFunctions[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX ].enabled )
         {
             glDrawElementsInstancedBaseVertex( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
                                                DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
             glDrawElementsInstancedBaseVertex( GL_POINTS, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
                                                DRAW_ELEM_INST_BV_NUM_INSTANCES, 1 );
         }
-        if( functionsEnabled[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ] )
+        if( allDrawFunctions[ DRAW_ELEMENTS_INSTANCED_BASE_VERTEX_BASE_INSTANCE ].enabled )
         {
             glLineWidth( 3.0f );
             glDrawElementsInstancedBaseVertexBaseInstance( GL_TRIANGLES, DRAW_ELEM_INST_BV_NUM_ELEMENTS, GL_UNSIGNED_INT, 0,
@@ -940,6 +784,28 @@ namespace Ouquitoure
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
         glVertexAttribDivisor( 2, 1 );
+    }
+
+    OpenGLDrawFunctionsWidget::DrawFunctionData::DrawFunctionData( bool enabled,
+                                                                   void ( OpenGLDrawFunctionsWidget::*initFunction )(),
+                                                                   void ( OpenGLDrawFunctionsWidget::*drawFunction )(),
+                                                                   void ( OpenGLDrawFunctionsWidget::*cleanupFunction )(),
+                                                                   const QString & functionName )
+        : enabled( enabled )
+        , initFunction( initFunction )
+        , drawFunction( drawFunction )
+        , cleanupFunction( cleanupFunction )
+        , functionName( functionName )
+    {
+    }
+
+    OpenGLDrawFunctionsWidget::DrawFunctionData::DrawFunctionData()
+        : enabled( false )
+        , initFunction( nullptr )
+        , drawFunction( nullptr )
+        , cleanupFunction( nullptr )
+        , functionName( "Unknown" )
+    {
     }
 
 } // namespace Ouquitoure

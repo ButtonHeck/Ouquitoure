@@ -221,8 +221,25 @@ namespace Ouquitoure
         GLuint mDrawElemInd_Ebo;
         GLuint mDrawElemInd_Dibo;
 
-        // all functions
-        std::unordered_map<DRAW_FUNCTIONS, bool> functionsEnabled;
+        /**
+         * @brief utility struct containing init, draw and cleanup function pointers, name and enabled state of the draw function
+         */
+        struct DrawFunctionData
+        {
+            DrawFunctionData( bool enabled,
+                              void ( OpenGLDrawFunctionsWidget::*initFunction )(),
+                              void ( OpenGLDrawFunctionsWidget::*drawFunction )(),
+                              void ( OpenGLDrawFunctionsWidget::*cleanupFunction )(),
+                              const QString & functionName );
+            DrawFunctionData();
+            bool enabled                                           = false;
+            void ( OpenGLDrawFunctionsWidget::*initFunction )()    = nullptr;
+            void ( OpenGLDrawFunctionsWidget::*drawFunction )()    = nullptr;
+            void ( OpenGLDrawFunctionsWidget::*cleanupFunction )() = nullptr;
+            QString functionName;
+        };
+
+        std::unordered_map<DRAW_FUNCTIONS, DrawFunctionData> allDrawFunctions;
     };
 
 } // namespace Ouquitoure
