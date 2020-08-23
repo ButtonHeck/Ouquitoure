@@ -15,7 +15,11 @@ namespace Ouquitoure
     {
     public:
         explicit OpenGLWidgetBase( const QString & name, QWidget * parent = nullptr );
+#ifdef QT_DEBUG
         virtual ~OpenGLWidgetBase();
+#else
+        virtual ~OpenGLWidgetBase() = default;
+#endif
 
         void initializeGL() override;
         void resizeGL( int width, int height ) override;

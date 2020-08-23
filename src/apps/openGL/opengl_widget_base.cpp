@@ -15,10 +15,12 @@ namespace Ouquitoure
         OQ_LOG_DEBUG << name << " widget ctor";
     }
 
+#ifdef QT_DEBUG
     OpenGLWidgetBase::~OpenGLWidgetBase()
     {
         OQ_LOG_DEBUG << name << " widget dtor";
     }
+#endif
 
     bool OpenGLWidgetBase::addShaderProgram( QVector<QOpenGLShader::ShaderType> && types,
                                              QVector<QString> &&                   sources,

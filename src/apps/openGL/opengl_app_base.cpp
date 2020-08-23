@@ -39,10 +39,12 @@ namespace Ouquitoure
         mainLayout->addLayout( appLayout );
     }
 
+#ifdef QT_DEBUG
     OpenGLAppBase::~OpenGLAppBase()
     {
         OQ_LOG_DEBUG << appName << " app dtor";
     }
+#endif
 
     void OpenGLAppBase::installOpenGLViewWidget( OpenGLWidgetBase & widget )
     {

@@ -20,7 +20,11 @@ namespace Ouquitoure
          * @brief setup generic ui and layout stuff
          */
         explicit OpenGLAppBase( const QString & name, QWidget * parent = nullptr );
+#ifdef QT_DEBUG
         virtual ~OpenGLAppBase();
+#else
+        virtual ~OpenGLAppBase() = default;
+#endif
 
         void resizeEvent( QResizeEvent * event ) override;
         void closeEvent( QCloseEvent * event ) override;
