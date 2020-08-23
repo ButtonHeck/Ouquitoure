@@ -1,7 +1,5 @@
 #include "Apps/OpenGL/ColoredTriangleWidget"
 
-#include <QFile>
-
 namespace Ouquitoure
 {
 
@@ -23,11 +21,6 @@ namespace Ouquitoure
     void ColoredTriangleWidget::initializeGL()
     {
         OpenGLWidgetBase::initializeGL();
-        /* QDockWidget (un)docking invokes reinitialization of a GL context,
-         * thus every OpenGL related objects (shader programs, buffers etc.) should be deleted explicitly
-         * (if any of them were created during previous context initialization)
-         */
-        cleanup();
 
         glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
         initializeOpenGLObjects();
@@ -99,38 +92,14 @@ namespace Ouquitoure
 
     void ColoredTriangleWidget::initializeOpenGLShaders()
     {
-        QVector<QString> shaderSources;
-        QFile            vertexShaderFile( ":/shaders/ColoredTriangle/main.vs" );
-        if( vertexShaderFile.open( QIODevice::ReadOnly ) )
-        {
-            shaderSources << vertexShaderFile.readAll();
-        }
-        vertexShaderFile.close();
-        QFile fragmentShaderFile( ":/shaders/ColoredTriangle/main.fs" );
-        if( fragmentShaderFile.open( QIODevice::ReadOnly ) )
-        {
-            shaderSources << fragmentShaderFile.readAll();
-        }
-        fragmentShaderFile.close();
-
-        addShaderProgram( { QOpenGLShader::Vertex, QOpenGLShader::Fragment }, std::forward<decltype( shaderSources )>( shaderSources ) );
+        OpenGLWidgetBase::initializeOpenGLMainShaderProgram( "ColoredTriangle" );
     }
 
     void ColoredTriangleWidget::cleanup()
     {
-        if( vao )
-        {
-            glDeleteVertexArrays( 1, &vao );
-        }
-        if( vbo )
-        {
-            glDeleteBuffers( 1, &vbo );
-        }
-        for( auto & shaderProgram: shaderPrograms.values() )
-        {
-            glDeleteProgram( shaderProgram->programId() );
-        }
-        shaderPrograms.clear();
+        openGLVertexArrayCleanup( vao );
+        openGLBufferCleanup( vbo );
+        openGLShaderProgramsCleanup();
     }
 
     void ColoredTriangleWidget::updateData()

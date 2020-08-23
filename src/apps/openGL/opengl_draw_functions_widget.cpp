@@ -2,7 +2,6 @@
 #include "Math/Point3Pos3Color"
 #include "Log"
 
-#include <QFile>
 #include <glm/gtc/type_ptr.hpp>
 #include <array>
 
@@ -163,7 +162,6 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsWidget::initializeGL()
     {
         OpenGLWidgetBase::initializeGL();
-        cleanup();
 
         glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
         glPointSize( 5.0f );
@@ -335,21 +333,7 @@ namespace Ouquitoure
 
     void OpenGLDrawFunctionsWidget::initializeOpenGLShaders()
     {
-        QVector<QString> shaderSources;
-        QFile            vertexShaderFile( ":/shaders/OpenGLDrawFunctions/main.vs" );
-        if( vertexShaderFile.open( QIODevice::ReadOnly ) )
-        {
-            shaderSources << vertexShaderFile.readAll();
-        }
-        vertexShaderFile.close();
-        QFile fragmentShaderFile( ":/shaders/OpenGLDrawFunctions/main.fs" );
-        if( fragmentShaderFile.open( QIODevice::ReadOnly ) )
-        {
-            shaderSources << fragmentShaderFile.readAll();
-        }
-        fragmentShaderFile.close();
-
-        addShaderProgram( { QOpenGLShader::Vertex, QOpenGLShader::Fragment }, std::forward<decltype( shaderSources )>( shaderSources ) );
+        OpenGLWidgetBase::initializeOpenGLMainShaderProgram( "OpenGLDrawFunctions" );
     }
 
     void OpenGLDrawFunctionsWidget::cleanup()
@@ -399,12 +383,7 @@ namespace Ouquitoure
         // glMultiDrawElementsIndirect
         multiDrawElementsIndirect_cleanup();
 
-        // shader programs
-        for( auto & shaderProgram: shaderPrograms.values() )
-        {
-            glDeleteProgram( shaderProgram->programId() );
-        }
-        shaderPrograms.clear();
+        openGLShaderProgramsCleanup();
     }
 
     //-------- drawing -------------
@@ -961,22 +940,6 @@ namespace Ouquitoure
         glEnableVertexAttribArray( 2 );
         glVertexAttribPointer( 2, 1, GL_FLOAT, GL_FALSE, sizeof( GLfloat ), 0 );
         glVertexAttribDivisor( 2, 1 );
-    }
-
-    void OpenGLDrawFunctionsWidget::openGLBufferCleanup( GLuint & bufferObject )
-    {
-        if( bufferObject )
-        {
-            glDeleteBuffers( 1, &bufferObject );
-        }
-    }
-
-    void OpenGLDrawFunctionsWidget::openGLVertexArrayCleanup( GLuint & vertexArray )
-    {
-        if( vertexArray )
-        {
-            glDeleteVertexArrays( 1, &vertexArray );
-        }
     }
 
 } // namespace Ouquitoure

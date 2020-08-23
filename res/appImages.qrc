@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>appImages/ColoredTriangle.png</file>
         <file>appImages/OpenGLDrawFunctions.png</file>
+        <file>appImages/SubroutinesExample.png</file>
     </qresource>
 </RCC>

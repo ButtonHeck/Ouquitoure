@@ -108,8 +108,6 @@ namespace Ouquitoure
         // utility functions
         void setupVertexArrayAttribs();
         void setupVertexArrayInstancedAttribs();
-        void openGLBufferCleanup( GLuint & bufferObject );
-        void openGLVertexArrayCleanup( GLuint & vertexArray );
 
     private:
         // glDrawArrays

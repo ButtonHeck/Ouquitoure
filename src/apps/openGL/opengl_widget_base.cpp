@@ -3,6 +3,7 @@
 
 #include <QOpenGLShader>
 #include <QVector>
+#include <QFile>
 
 namespace Ouquitoure
 {
@@ -55,12 +56,63 @@ namespace Ouquitoure
         return true;
     }
 
+    void OpenGLWidgetBase::openGLBufferCleanup( GLuint & bufferObject )
+    {
+        if( bufferObject )
+        {
+            glDeleteBuffers( 1, &bufferObject );
+        }
+    }
+
+    void OpenGLWidgetBase::openGLVertexArrayCleanup( GLuint & vertexArray )
+    {
+        if( vertexArray )
+        {
+            glDeleteVertexArrays( 1, &vertexArray );
+        }
+    }
+
+    void OpenGLWidgetBase::openGLShaderProgramsCleanup()
+    {
+        for( auto & shaderProgram: shaderPrograms.values() )
+        {
+            glDeleteProgram( shaderProgram->programId() );
+        }
+        shaderPrograms.clear();
+    }
+
+    void OpenGLWidgetBase::initializeOpenGLMainShaderProgram( const char * dirName )
+    {
+        QString          shadersPath = QString{ ":/shaders/" }.append( dirName );
+        QVector<QString> shaderSources;
+        QFile            vertexShaderFile( QString{ shadersPath }.append( "/main.vs" ) );
+        if( vertexShaderFile.open( QIODevice::ReadOnly ) )
+        {
+            shaderSources << vertexShaderFile.readAll();
+        }
+        vertexShaderFile.close();
+        QFile fragmentShaderFile( QString{ shadersPath }.append( "/main.fs" ) );
+        if( fragmentShaderFile.open( QIODevice::ReadOnly ) )
+        {
+            shaderSources << fragmentShaderFile.readAll();
+        }
+        fragmentShaderFile.close();
+
+        addShaderProgram( { QOpenGLShader::Vertex, QOpenGLShader::Fragment }, std::forward<decltype( shaderSources )>( shaderSources ) );
+    }
+
     void OpenGLWidgetBase::initializeGL()
     {
         OQ_LOG_INFO << name << " GL context initialization";
         initializeOpenGLFunctions();
         glFunctionsInitialized = true;
         makeCurrent();
+
+        /* QDockWidget (un)docking invokes reinitialization of a GL context,
+         * thus every OpenGL related objects (shader programs, buffers etc.) should be deleted explicitly
+         * (if any of them were created during previous context initialization)
+         */
+        cleanup();
     }
 
     void OpenGLWidgetBase::resizeGL( int width, int height )
