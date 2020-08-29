@@ -10,12 +10,6 @@ namespace Ouquitoure
     {
     }
 
-    BufferCollection::BufferCollection( QOpenGLFunctions_4_5_Core * functions, int flags )
-        : functions( functions )
-    {
-        create( flags );
-    }
-
     BufferCollection::BufferCollection( BufferCollection && old ) noexcept
         : functions( old.functions )
     {

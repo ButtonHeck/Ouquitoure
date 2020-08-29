@@ -27,7 +27,6 @@ namespace Ouquitoure
     {
     public:
         explicit BufferCollection( QOpenGLFunctions_4_5_Core * const functions );
-        BufferCollection( QOpenGLFunctions_4_5_Core * functions, int flags );
         BufferCollection( BufferCollection && old ) noexcept;
         BufferCollection( BufferCollection & copy );
         ~BufferCollection();
