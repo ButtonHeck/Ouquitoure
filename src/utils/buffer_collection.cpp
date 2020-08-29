@@ -143,26 +143,32 @@ namespace Ouquitoure
         if( objects[ VAO ] )
         {
             functions->glDeleteVertexArrays( 1, &objects[ VAO ] );
+            objects[VAO] = 0;
         }
         if( objects[ VBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ VBO ] );
+            objects[ VBO ] = 0;
         }
         if( objects[ INSTANCE_VBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ INSTANCE_VBO ] );
+            objects[ INSTANCE_VBO ] = 0;
         }
         if( objects[ EBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ EBO ] );
+            objects[ EBO ] = 0;
         }
         if( objects[ DIBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ DIBO ] );
+            objects[ DIBO ] = 0;
         }
         if( objects[ TFBO ] )
         {
             functions->glDeleteTransformFeedbacks( 1, &objects[ TFBO ] );
+            objects[ TFBO ] = 0;
         }
     }
 
@@ -171,26 +177,32 @@ namespace Ouquitoure
         if( flag & VAO )
         {
             functions->glDeleteVertexArrays( 1, &objects[ VAO ] );
+            objects[ VAO ] = 0;
         }
         else if( flag & VBO )
         {
             functions->glDeleteBuffers( 1, &objects[ VBO ] );
+            objects[ VBO ] = 0;
         }
         else if( flag & INSTANCE_VBO )
         {
             functions->glDeleteBuffers( 1, &objects[ INSTANCE_VBO ] );
+            objects[ INSTANCE_VBO ] = 0;
         }
         else if( flag & EBO )
         {
             functions->glDeleteBuffers( 1, &objects[ EBO ] );
+            objects[ EBO ] = 0;
         }
         else if( flag & DIBO )
         {
             functions->glDeleteBuffers( 1, &objects[ DIBO ] );
+            objects[ DIBO ] = 0;
         }
         else if( flag & TFBO )
         {
             functions->glDeleteTransformFeedbacks( 1, &objects[ TFBO ] );
+            objects[ TFBO ] = 0;
         }
         else
         {

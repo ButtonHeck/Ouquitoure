@@ -27,7 +27,9 @@ SOURCES += \
     # opengl apps class
     $$files(src/apps/openGL/*.cpp) \
     # software base class
-    $$files(src/apps/software/*.cpp)
+    $$files(src/apps/software/*.cpp) \
+    # utilities
+    $$files(src/utils/*.cpp)
 
 HEADERS += \
     # root
@@ -39,7 +41,9 @@ HEADERS += \
     # opengl apps
     $$files(src/apps/openGL/*.h) \
     # software apps
-    $$files(src/apps/software/*.h)
+    $$files(src/apps/software/*.h) \
+    # utilities
+    $$files(src/utils/*.h)
 
 FORMS += $$files(src/*.ui)
 
@@ -57,4 +61,6 @@ DISTFILES += \
     # opengl apps
     $$files(include/Apps/OpenGL/*) \
     # software apps
-    $$files(include/Apps/Software/*)
+    $$files(include/Apps/Software/*) \
+    # utilities
+    $$files(include/Utils/*)

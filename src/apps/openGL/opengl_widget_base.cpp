@@ -58,22 +58,6 @@ namespace Ouquitoure
         return true;
     }
 
-    void OpenGLWidgetBase::openGLBufferCleanup( GLuint & bufferObject )
-    {
-        if( bufferObject )
-        {
-            glDeleteBuffers( 1, &bufferObject );
-        }
-    }
-
-    void OpenGLWidgetBase::openGLVertexArrayCleanup( GLuint & vertexArray )
-    {
-        if( vertexArray )
-        {
-            glDeleteVertexArrays( 1, &vertexArray );
-        }
-    }
-
     void OpenGLWidgetBase::openGLShaderProgramsCleanup()
     {
         for( auto & shaderProgram: shaderPrograms.values() )

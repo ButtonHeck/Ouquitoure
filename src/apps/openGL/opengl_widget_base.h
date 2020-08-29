@@ -49,18 +49,6 @@ namespace Ouquitoure
         virtual void cleanup() = 0;
 
         /**
-         * @brief delete opengl buffer object
-         * @param bufferObject buffer object to delete
-         */
-        void openGLBufferCleanup( GLuint & bufferObject );
-
-        /**
-         * @brief delete opengl vertex array object
-         * @param vertexArray vertex array object to delete
-         */
-        void openGLVertexArrayCleanup( GLuint & vertexArray );
-
-        /**
          * @brief delete all registered shader programs for a widget
          */
         void openGLShaderProgramsCleanup();

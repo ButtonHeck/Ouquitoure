@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Apps/OpenGL/OpenGLWidgetWithCamera"
+#include "Utils/BufferCollection"
 
 #include <unordered_map>
 
@@ -111,22 +112,16 @@ namespace Ouquitoure
 
     private:
         // glDrawArrays
-        GLuint               drawArr_Vao;
-        GLuint               drawArr_Vbo;
+        BufferCollection     drawArrBuffers;
         constexpr static int DRAW_ARR_NUM_POINTS = 3;
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        GLuint               drawArrInst_Vao;
-        GLuint               drawArrInst_Vbo;
-        GLuint               drawArrInst_VboInst;
+        BufferCollection     drawArrInstBuffers;
         constexpr static int DRAW_ARR_INST_NUM_POINTS    = 3;
         constexpr static int DRAW_ARR_INST_NUM_INSTANCES = 4;
 
         // glDrawArraysIndirect
-        GLuint               drawArrInd_Vao;
-        GLuint               drawArrInd_Vbo;
-        GLuint               drawArrInd_VboInst;
-        GLuint               drawArrInd_Dibo;
+        BufferCollection     drawArrIndBuffers;
         constexpr static int DRAW_ARR_IND_NUM_POINTS    = 3;
         constexpr static int DRAW_ARR_IND_NUM_INSTANCES = 2;
         typedef struct
@@ -138,23 +133,16 @@ namespace Ouquitoure
         } DrawArraysIndirectCommand;
 
         // glDrawElements
-        GLuint               drawElem_Vao;
-        GLuint               drawElem_Vbo;
-        GLuint               drawElem_Ebo;
+        BufferCollection     drawElemBuffers;
         constexpr static int DRAW_ELEM_NUM_ELEMENTS = 6;
 
         // glDrawElementsBaseVertex
-        GLuint               drawElemBV_Vao;
-        GLuint               drawElemBV_Vbo;
-        GLuint               drawElemBV_Ebo;
+        BufferCollection     drawElemBVBuffers;
         constexpr static int DRAW_ELEM_BV_NUM_POINTS   = 8;
         constexpr static int DRAW_ELEM_BV_NUM_ELEMENTS = 6;
 
         // glDrawElementsIndirect
-        GLuint drawElemInd_Vao;
-        GLuint drawElemInd_Vbo;
-        GLuint drawElemInd_Ebo;
-        GLuint drawElemInd_Dibo;
+        BufferCollection drawElemIndBuffers;
         typedef struct
         {
             GLuint count;
@@ -165,61 +153,41 @@ namespace Ouquitoure
         } DrawElementsIndirectCommand;
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        GLuint               drawElemInst_Vao;
-        GLuint               drawElemInst_Vbo;
-        GLuint               drawElemInst_VboInst;
-        GLuint               drawElemInst_Ebo;
+        BufferCollection     drawElemInstBuffers;
         constexpr static int DRAW_ELEM_INST_NUM_ELEMENTS  = 6;
         constexpr static int DRAW_ELEM_INST_NUM_INSTANCES = 4;
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        GLuint               drawElemInstBV_Vao;
-        GLuint               drawElemInstBV_Vbo;
-        GLuint               drawElemInstBV_VboInst;
-        GLuint               drawElemInstBV_Ebo;
+        BufferCollection     drawElemInstBVBuffers;
         constexpr static int DRAW_ELEM_INST_BV_NUM_ELEMENTS  = 6;
         constexpr static int DRAW_ELEM_INST_BV_NUM_INSTANCES = 3;
 
         // glDrawRangeElements
-        GLuint               drawRangeElem_Vao;
-        GLuint               drawRangeElem_Vbo;
-        GLuint               drawRangeElem_Ebo;
+        BufferCollection     drawRangeElemBuffers;
         constexpr static int DRAW_RANGE_ELEM_NUM_ELEMENTS = 6;
 
         // glDrawRangeElementsBaseVertex
-        GLuint               drawRangeElemBV_Vao;
-        GLuint               drawRangeElemBV_Vbo;
-        GLuint               drawRangeElemBV_Ebo;
+        BufferCollection     drawRangeElemBVBuffers;
         constexpr static int DRAW_RANGE_ELEM_BV_NUM_ELEMENTS = 6;
 
         // glMultiDrawArrays
-        GLuint               mDrawArr_Vao;
-        GLuint               mDrawArr_Vbo;
+        BufferCollection     mDrawArrBuffers;
         constexpr static int M_DRAW_ARR_NUM_POINTS = 6;
 
         // glMultiDrawArraysIndirect
-        GLuint               mDrawArrInd_Vao;
-        GLuint               mDrawArrInd_Vbo;
-        GLuint               mDrawArrInd_Dibo;
+        BufferCollection     mDrawArrIndBuffers;
         constexpr static int M_DRAW_ARR_IND_NUM_COMMANDS = 2;
 
         // glMultiDrawElements
-        GLuint               mDrawElem_Vao;
-        GLuint               mDrawElem_Vbo;
-        GLuint               mDrawElem_Ebo;
+        BufferCollection     mDrawElemBuffers;
         constexpr static int M_DRAW_ELEM_NUM_ELEMENTS = 12;
 
         // glMultiDrawElementsBaseVertex
-        GLuint               mDrawElemBV_Vao;
-        GLuint               mDrawElemBV_Vbo;
-        GLuint               mDrawElemBV_Ebo;
+        BufferCollection     mDrawElemBVBuffers;
         constexpr static int M_DRAW_ELEM_BV_NUM_ELEMENTS = 12;
 
         // glMultiDrawElementsIndirect
-        GLuint mDrawElemInd_Vao;
-        GLuint mDrawElemInd_Vbo;
-        GLuint mDrawElemInd_Ebo;
-        GLuint mDrawElemInd_Dibo;
+        BufferCollection mDrawElemIndBuffers;
 
         /**
          * @brief utility struct containing init, draw and cleanup function pointers, name and enabled state of the draw function

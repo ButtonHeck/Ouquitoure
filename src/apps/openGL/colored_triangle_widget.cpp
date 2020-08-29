@@ -5,8 +5,7 @@ namespace Ouquitoure
 
     ColoredTriangleWidget::ColoredTriangleWidget( const QString & name, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
-        , vao( 0 )
-        , vbo( 0 )
+        , buffers( this )
     {
         points[ 0 ] = Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 };
         points[ 1 ] = Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 };
@@ -21,6 +20,7 @@ namespace Ouquitoure
     void ColoredTriangleWidget::initializeGL()
     {
         OpenGLWidgetBase::initializeGL();
+        buffers.create( VAO | VBO );
 
         glClearColor( 0.1f, 0.1f, 0.1f, 1.0f );
         initializeOpenGLObjects();
@@ -79,10 +79,7 @@ namespace Ouquitoure
 
     void ColoredTriangleWidget::initializeOpenGLObjects()
     {
-        glCreateBuffers( 1, &vbo );
-        glCreateVertexArrays( 1, &vao );
-        glBindVertexArray( vao );
-        glBindBuffer( GL_ARRAY_BUFFER, vbo );
+        buffers.bind( VAO | VBO );
         glBufferData( GL_ARRAY_BUFFER, NUM_POINTS * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, sizeof( Point2p3c ), 0 );
@@ -97,8 +94,7 @@ namespace Ouquitoure
 
     void ColoredTriangleWidget::cleanup()
     {
-        openGLVertexArrayCleanup( vao );
-        openGLBufferCleanup( vbo );
+        buffers.deleteBuffers();
         openGLShaderProgramsCleanup();
     }
 

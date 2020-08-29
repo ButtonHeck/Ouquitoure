@@ -2,6 +2,7 @@
 
 #include "Apps/OpenGL/OpenGLWidgetBase"
 #include "Math/Point2Pos3Color"
+#include "Utils/BufferCollection"
 
 #include <array>
 
@@ -39,8 +40,7 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
-        GLuint                            vbo;
-        GLuint                            vao;
+        BufferCollection                  buffers;
         std::array<Point2p3c, NUM_POINTS> points;
         GLint                             subroutineUniformLocation;
         QMap<QString, GLuint>             subroutineIndices;

@@ -7,8 +7,7 @@ namespace Ouquitoure
 
     SubroutinesExampleWidget::SubroutinesExampleWidget( const QString & name, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
-        , vbo( 0 )
-        , vao( 0 )
+        , buffers( this )
         , subroutineUniformLocation( 0 )
     {
         points[ 0 ] = Point2p3c{ -0.8, -0.8, 1.0, 0.33, 0.1 };
@@ -49,8 +48,8 @@ namespace Ouquitoure
 
     void SubroutinesExampleWidget::switchSubroutine()
     {
-        //technically there should be created array with the size of max uniform locations and be updated at one exact uniform location (which represents colorFunc),
-        //but in glsl code I've hardcoded location of that uniform to be 0.
+        // technically there should be created array with the size of max uniform locations and be updated at one exact uniform location
+        // (which represents colorFunc), but in glsl code I've hardcoded location of that uniform to be 0.
         makeCurrent();
         QString name = sender()->objectName();
         if( subroutineIndices.contains( name ) )
@@ -63,10 +62,8 @@ namespace Ouquitoure
 
     void SubroutinesExampleWidget::initializeOpenGLObjects()
     {
-        glCreateBuffers( 1, &vbo );
-        glCreateVertexArrays( 1, &vao );
-        glBindVertexArray( vao );
-        glBindBuffer( GL_ARRAY_BUFFER, vbo );
+        buffers.create( VAO | VBO );
+        buffers.bind( VAO | VBO );
         glBufferData( GL_ARRAY_BUFFER, NUM_POINTS * sizeof( Point2p3c ), points.data(), GL_STATIC_DRAW );
         glEnableVertexAttribArray( 0 );
         glVertexAttribPointer( 0, 2, GL_FLOAT, GL_FALSE, sizeof( Point2p3c ), 0 );
@@ -81,8 +78,7 @@ namespace Ouquitoure
 
     void SubroutinesExampleWidget::cleanup()
     {
-        openGLBufferCleanup( vbo );
-        openGLVertexArrayCleanup( vao );
+        buffers.deleteBuffers();
         openGLShaderProgramsCleanup();
     }
 
