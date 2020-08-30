@@ -5,35 +5,36 @@
 
 namespace Ouquitoure
 {
-    BufferCollection::BufferCollection( QOpenGLFunctions_4_5_Core * const functions )
+    BufferCollection::BufferCollection( QOpenGLFunctions_4_5_Core * const functions, size_t size )
         : functions( functions )
     {
+        objects.reserve( size );
     }
 
     BufferCollection::BufferCollection( BufferCollection && old ) noexcept
         : functions( old.functions )
     {
-        if( old.objects[ VAO ] )
+        if( old.objects.contains( VAO ) && old.objects[ VAO ] )
         {
             objects[ VAO ] = old.objects[ VAO ];
         }
-        if( old.objects[ VBO ] )
+        if( old.objects.contains( VBO ) && old.objects[ VBO ] )
         {
             objects[ VBO ] = old.objects[ VBO ];
         }
-        if( old.objects[ INSTANCE_VBO ] )
+        if( old.objects.contains( INSTANCE_VBO ) && old.objects[ INSTANCE_VBO ] )
         {
             objects[ INSTANCE_VBO ] = old.objects[ INSTANCE_VBO ];
         }
-        if( old.objects[ EBO ] )
+        if( old.objects.contains( EBO ) && old.objects[ EBO ] )
         {
             objects[ EBO ] = old.objects[ EBO ];
         }
-        if( old.objects[ DIBO ] )
+        if( old.objects.contains( DIBO ) && old.objects[ DIBO ] )
         {
             objects[ DIBO ] = old.objects[ DIBO ];
         }
-        if( old.objects[ TFBO ] )
+        if( old.objects.contains( TFBO ) && old.objects[ TFBO ] )
         {
             objects[ TFBO ] = old.objects[ TFBO ];
         }
@@ -43,27 +44,27 @@ namespace Ouquitoure
     BufferCollection::BufferCollection( BufferCollection & copy )
         : functions( copy.functions )
     {
-        if( copy.objects[ VAO ] )
+        if( copy.objects.contains( VAO ) && copy.objects[ VAO ] )
         {
             objects[ VAO ] = copy.objects[ VAO ];
         }
-        if( copy.objects[ VBO ] )
+        if( copy.objects.contains( VBO ) && copy.objects[ VBO ] )
         {
             objects[ VBO ] = copy.objects[ VBO ];
         }
-        if( copy.objects[ INSTANCE_VBO ] )
+        if( copy.objects.contains( INSTANCE_VBO ) && copy.objects[ INSTANCE_VBO ] )
         {
             objects[ INSTANCE_VBO ] = copy.objects[ INSTANCE_VBO ];
         }
-        if( copy.objects[ EBO ] )
+        if( copy.objects.contains( EBO ) && copy.objects[ EBO ] )
         {
             objects[ EBO ] = copy.objects[ EBO ];
         }
-        if( copy.objects[ DIBO ] )
+        if( copy.objects.contains( DIBO ) && copy.objects[ DIBO ] )
         {
             objects[ DIBO ] = copy.objects[ DIBO ];
         }
-        if( copy.objects[ TFBO ] )
+        if( copy.objects.contains( TFBO ) && copy.objects[ TFBO ] )
         {
             objects[ TFBO ] = copy.objects[ TFBO ];
         }
@@ -74,7 +75,7 @@ namespace Ouquitoure
         deleteBuffers();
     }
 
-    void BufferCollection::bindZero( int flag ) noexcept
+    void BufferCollection::bindZero( int flag ) const noexcept
     {
         if( flag & VAO )
         {
@@ -102,36 +103,60 @@ namespace Ouquitoure
     {
         if( flags & VAO )
         {
+            if( objects.contains( VAO ) && objects[ VAO ] != 0 )
+            {
+                functions->glDeleteVertexArrays( 1, &objects[ VAO ] );
+            }
             GLuint vao;
             functions->glCreateVertexArrays( 1, &vao );
             objects[ VAO ] = vao;
         }
         if( flags & VBO )
         {
+            if( objects.contains( VBO ) && objects[ VBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ VBO ] );
+            }
             GLuint vbo;
             functions->glCreateBuffers( 1, &vbo );
             objects[ VBO ] = vbo;
         }
         if( flags & INSTANCE_VBO )
         {
+            if( objects.contains( INSTANCE_VBO ) && objects[ INSTANCE_VBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ INSTANCE_VBO ] );
+            }
             GLuint vbo;
             functions->glCreateBuffers( 1, &vbo );
             objects[ INSTANCE_VBO ] = vbo;
         }
         if( flags & EBO )
         {
+            if( objects.contains( EBO ) && objects[ EBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ EBO ] );
+            }
             GLuint ebo;
             functions->glCreateBuffers( 1, &ebo );
             objects[ EBO ] = ebo;
         }
         if( flags & DIBO )
         {
+            if( objects.contains( DIBO ) && objects[ DIBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ DIBO ] );
+            }
             GLuint dibo;
             functions->glCreateBuffers( 1, &dibo );
             objects[ DIBO ] = dibo;
         }
         if( flags & TFBO )
         {
+            if( objects.contains( DIBO ) && objects[ DIBO ] != 0 )
+            {
+                functions->glDeleteTransformFeedbacks( 1, &objects[ TFBO ] );
+            }
             GLuint tfbo;
             functions->glCreateTransformFeedbacks( 1, &tfbo );
             objects[ TFBO ] = tfbo;
@@ -140,69 +165,64 @@ namespace Ouquitoure
 
     void BufferCollection::deleteBuffers()
     {
-        if( objects[ VAO ] )
+        if( objects.contains( VAO ) && objects[ VAO ] )
         {
             functions->glDeleteVertexArrays( 1, &objects[ VAO ] );
-            objects[VAO] = 0;
         }
-        if( objects[ VBO ] )
+        if( objects.contains( VBO ) && objects[ VBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ VBO ] );
-            objects[ VBO ] = 0;
         }
-        if( objects[ INSTANCE_VBO ] )
+        if( objects.contains( INSTANCE_VBO ) && objects[ INSTANCE_VBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ INSTANCE_VBO ] );
-            objects[ INSTANCE_VBO ] = 0;
         }
-        if( objects[ EBO ] )
+        if( objects.contains( EBO ) && objects[ EBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ EBO ] );
-            objects[ EBO ] = 0;
         }
-        if( objects[ DIBO ] )
+        if( objects.contains( DIBO ) && objects[ DIBO ] )
         {
             functions->glDeleteBuffers( 1, &objects[ DIBO ] );
-            objects[ DIBO ] = 0;
         }
-        if( objects[ TFBO ] )
+        if( objects.contains( TFBO ) && objects[ TFBO ] )
         {
             functions->glDeleteTransformFeedbacks( 1, &objects[ TFBO ] );
-            objects[ TFBO ] = 0;
         }
+        objects.clear();
     }
 
     void BufferCollection::deleteBuffer( int flag )
     {
-        if( flag & VAO )
+        if( ( flag & VAO ) && objects.contains( VAO ) )
         {
             functions->glDeleteVertexArrays( 1, &objects[ VAO ] );
-            objects[ VAO ] = 0;
+            objects.erase( VAO );
         }
-        else if( flag & VBO )
+        else if( ( flag & VBO ) && objects.contains( VBO ) )
         {
             functions->glDeleteBuffers( 1, &objects[ VBO ] );
-            objects[ VBO ] = 0;
+            objects.erase( VBO );
         }
-        else if( flag & INSTANCE_VBO )
+        else if( ( flag & INSTANCE_VBO ) && objects.contains( INSTANCE_VBO ) )
         {
             functions->glDeleteBuffers( 1, &objects[ INSTANCE_VBO ] );
-            objects[ INSTANCE_VBO ] = 0;
+            objects.erase( INSTANCE_VBO );
         }
-        else if( flag & EBO )
+        else if( ( flag & EBO ) && objects.contains( EBO ) )
         {
             functions->glDeleteBuffers( 1, &objects[ EBO ] );
-            objects[ EBO ] = 0;
+            objects.erase( EBO );
         }
-        else if( flag & DIBO )
+        else if( ( flag & DIBO ) && objects.contains( DIBO ) )
         {
             functions->glDeleteBuffers( 1, &objects[ DIBO ] );
-            objects[ DIBO ] = 0;
+            objects.erase( DIBO );
         }
-        else if( flag & TFBO )
+        else if( ( flag & TFBO ) && objects.contains( TFBO ) )
         {
             functions->glDeleteTransformFeedbacks( 1, &objects[ TFBO ] );
-            objects[ TFBO ] = 0;
+            objects.erase( TFBO );
         }
         else
         {
@@ -210,61 +230,29 @@ namespace Ouquitoure
         }
     }
 
-    GLuint & BufferCollection::get( int flag )
+    void BufferCollection::bind( int flags )
     {
-        if( flag & VAO )
-        {
-            return objects[ VAO ];
-        }
-        else if( flag & VBO )
-        {
-            return objects[ VBO ];
-        }
-        else if( flag & INSTANCE_VBO )
-        {
-            return objects[ INSTANCE_VBO ];
-        }
-        else if( flag & EBO )
-        {
-            return objects[ EBO ];
-        }
-        else if( flag & DIBO )
-        {
-            return objects[ DIBO ];
-        }
-        else if( flag & TFBO )
-        {
-            return objects[ TFBO ];
-        }
-        else
-        {
-            throw std::invalid_argument( "Unknown GL object enum flag" );
-        }
-    }
-
-    void BufferCollection::bind( int flag )
-    {
-        if( flag & VAO )
+        if( ( flags & VAO ) && objects.contains( VAO ) )
         {
             functions->glBindVertexArray( objects[ VAO ] );
         }
-        if( flag & VBO )
+        if( ( flags & VBO ) && objects.contains( VBO ) )
         {
             functions->glBindBuffer( GL_ARRAY_BUFFER, objects[ VBO ] );
         }
-        if( flag & INSTANCE_VBO )
+        if( ( flags & INSTANCE_VBO ) && objects.contains( INSTANCE_VBO ) )
         {
             functions->glBindBuffer( GL_ARRAY_BUFFER, objects[ INSTANCE_VBO ] );
         }
-        if( flag & EBO )
+        if( ( flags & EBO ) && objects.contains( EBO ) )
         {
             functions->glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, objects[ EBO ] );
         }
-        if( flag & DIBO )
+        if( ( flags & DIBO ) && objects.contains( DIBO ) )
         {
             functions->glBindBuffer( GL_DRAW_INDIRECT_BUFFER, objects[ DIBO ] );
         }
-        if( flag & TFBO )
+        if( ( flags & TFBO ) && objects.contains( TFBO ) )
         {
             functions->glBindTransformFeedback( GL_TRANSFORM_FEEDBACK, objects[ TFBO ] );
         }
@@ -274,36 +262,60 @@ namespace Ouquitoure
     {
         if( flag & VAO )
         {
+            if( objects.contains( VAO ) && objects[ VAO ] != 0 )
+            {
+                functions->glDeleteVertexArrays( 1, &objects[ VAO ] );
+            }
             GLuint vao;
             functions->glCreateVertexArrays( 1, &vao );
             objects[ VAO ] = vao;
         }
         else if( flag & VBO )
         {
+            if( objects.contains( VBO ) && objects[ VBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ VBO ] );
+            }
             GLuint vbo;
             functions->glCreateBuffers( 1, &vbo );
             objects[ VBO ] = vbo;
         }
         else if( flag & INSTANCE_VBO )
         {
+            if( objects.contains( INSTANCE_VBO ) && objects[ INSTANCE_VBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ INSTANCE_VBO ] );
+            }
             GLuint vbo;
             functions->glCreateBuffers( 1, &vbo );
             objects[ INSTANCE_VBO ] = vbo;
         }
         else if( flag & EBO )
         {
+            if( objects.contains( EBO ) && objects[ EBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ EBO ] );
+            }
             GLuint ebo;
             functions->glCreateBuffers( 1, &ebo );
             objects[ EBO ] = ebo;
         }
         else if( flag & DIBO )
         {
+            if( objects.contains( DIBO ) && objects[ DIBO ] != 0 )
+            {
+                functions->glDeleteBuffers( 1, &objects[ DIBO ] );
+            }
             GLuint dibo;
             functions->glCreateBuffers( 1, &dibo );
             objects[ DIBO ] = dibo;
         }
         else if( flag & TFBO )
         {
+            if( objects.contains( DIBO ) && objects[ DIBO ] != 0 )
+            {
+                functions->glDeleteTransformFeedbacks( 1, &objects[ TFBO ] );
+            }
             GLuint tfbo;
             functions->glCreateTransformFeedbacks( 1, &tfbo );
             objects[ TFBO ] = tfbo;

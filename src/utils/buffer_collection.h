@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QOpenGLFunctions_4_5_Core>
-#include <unordered_map>
+#include <parallel_hashmap/phmap.h>
 
 namespace Ouquitoure
 {
@@ -10,12 +10,12 @@ namespace Ouquitoure
      */
     enum OPENGL_OBJECT : int
     {
-        VAO          = 0x000001,
-        VBO          = 0x000010,
-        INSTANCE_VBO = 0x000100,
-        EBO          = 0x001000,
-        DIBO         = 0x010000,
-        TFBO         = 0x100000
+        VAO          = 0b000001,
+        VBO          = 0b000010,
+        INSTANCE_VBO = 0b000100,
+        EBO          = 0b001000,
+        DIBO         = 0b010000,
+        TFBO         = 0b100000
     };
 
     /**
@@ -26,7 +26,7 @@ namespace Ouquitoure
     class BufferCollection final
     {
     public:
-        explicit BufferCollection( QOpenGLFunctions_4_5_Core * const functions );
+        BufferCollection( QOpenGLFunctions_4_5_Core * const functions, size_t size );
         BufferCollection( BufferCollection && old ) noexcept;
         BufferCollection( BufferCollection & copy );
         ~BufferCollection();
@@ -35,7 +35,7 @@ namespace Ouquitoure
          * @brief replaces all bind-to-zero GL calls boilerplate code in one function
          * @param flag indicator of the GL object type that should be unbound
          */
-        void bindZero( int flags ) noexcept;
+        void bindZero( int flags ) const noexcept;
 
         /**
          * @brief sends create command to OpenGL side and stores object's ID in the storage
@@ -55,16 +55,10 @@ namespace Ouquitoure
         void deleteBuffer( int flag );
 
         /**
-         * @brief return a GL object's ID
-         * @param flag indicator of the GL object type whose ID should be returned
-         */
-        GLuint & get( int flag );
-
-        /**
          * @brief sends bind command to OpenGL for a chosen GL objects
          * @param flag indicator of the GL object to be bound
          */
-        void bind( int flag );
+        void bind( int flags );
 
         /**
          * @brief similar to create method, but intended to be used after collection has been created and supposed to take one type per call
@@ -73,8 +67,8 @@ namespace Ouquitoure
         void add( int flag );
 
     private:
+        phmap::flat_hash_map<int, GLuint> objects;
         QOpenGLFunctions_4_5_Core * const functions;
-        std::unordered_map<int, GLuint>   objects;
     };
 
 } // namespace Ouquitoure
