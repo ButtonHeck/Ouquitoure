@@ -7,7 +7,7 @@ namespace Ouquitoure
 
     SubroutinesExampleWidget::SubroutinesExampleWidget( const QString & name, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
-        , buffers( this )
+        , buffers( this, 2 )
         , subroutineUniformLocation( 0 )
     {
         points[ 0 ] = Point2p3c{ -0.8, -0.8, 1.0, 0.33, 0.1 };

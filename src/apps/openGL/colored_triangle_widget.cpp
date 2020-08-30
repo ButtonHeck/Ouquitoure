@@ -5,7 +5,7 @@ namespace Ouquitoure
 
     ColoredTriangleWidget::ColoredTriangleWidget( const QString & name, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
-        , buffers( this )
+        , buffers( this, 2 )
     {
         points[ 0 ] = Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 };
         points[ 1 ] = Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 };

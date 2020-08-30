@@ -12,49 +12,49 @@ namespace Ouquitoure
         : OpenGLWidgetWithCamera( name, parent )
 
         // glDrawArrays
-        , drawArrBuffers( this )
+        , drawArrBuffers( this, 2 )
 
         // glDrawArraysInstanced + glDrawArraysInstancedBaseInstance
-        , drawArrInstBuffers( this )
+        , drawArrInstBuffers( this, 3 )
 
         // glDrawArraysIndirect
-        , drawArrIndBuffers( this )
+        , drawArrIndBuffers( this, 4 )
 
         // glDrawElements
-        , drawElemBuffers( this )
+        , drawElemBuffers( this, 3 )
 
         // glDrawElementsBaseVertex
-        , drawElemBVBuffers( this )
+        , drawElemBVBuffers( this, 3 )
 
         // glDrawElementsIndirect
-        , drawElemIndBuffers( this )
+        , drawElemIndBuffers( this, 4 )
 
         // glDrawElementsInstanced + glDrawElementsInstancedBaseInstance
-        , drawElemInstBuffers( this )
+        , drawElemInstBuffers( this, 4 )
 
         // glDrawElementsInstancedBaseVertex + glDrawElementsInstancedBaseVertexBaseInstance
-        , drawElemInstBVBuffers( this )
+        , drawElemInstBVBuffers( this, 4 )
 
         // glDrawRangeElements
-        , drawRangeElemBuffers( this )
+        , drawRangeElemBuffers( this, 3 )
 
         // glDrawRangeElementsBaseVertex
-        , drawRangeElemBVBuffers( this )
+        , drawRangeElemBVBuffers( this, 3 )
 
         // glMultiDrawArrays
-        , mDrawArrBuffers( this )
+        , mDrawArrBuffers( this, 2 )
 
         // glMultiDrawArraysIndirect
-        , mDrawArrIndBuffers( this )
+        , mDrawArrIndBuffers( this, 3 )
 
         // glMultiDrawElements
-        , mDrawElemBuffers( this )
+        , mDrawElemBuffers( this, 3 )
 
         // glMultiDrawElementsBaseVertex
-        , mDrawElemBVBuffers( this )
+        , mDrawElemBVBuffers( this, 3 )
 
         // glMultiDrawElementsIndirect
-        , mDrawElemIndBuffers( this )
+        , mDrawElemIndBuffers( this, 4 )
     {
         allDrawFunctions[ DRAW_ARRAYS ] =
             DrawFunctionData( true, &OpenGLDrawFunctionsWidget::drawArrays_init, &OpenGLDrawFunctionsWidget::drawArrays,
