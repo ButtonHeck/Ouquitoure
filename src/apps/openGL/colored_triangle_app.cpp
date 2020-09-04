@@ -1,4 +1,5 @@
 #include "Apps/OpenGL/ColoredTriangleApp"
+#include "Utils/RGBGuiPalettes"
 
 #include <QLabel>
 #include <QSlider>
@@ -13,6 +14,9 @@ namespace Ouquitoure
     {
         initializeDescription();
         installOpenGLViewWidget( viewWidget );
+
+        // Palettes and label names
+        RGBGuiPalettes palettes;
 
         // GUI view and layouts setup
         QVBoxLayout * controlsLayout = new QVBoxLayout( controlsGroupBox );
@@ -63,21 +67,13 @@ namespace Ouquitoure
             connect( xSlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
             connect( ySlider, SIGNAL( valueChanged( int ) ), &viewWidget, SLOT( vertexPositionChanged( int ) ) );
 
-            // Palettes and label names
-            QPalette redPalette;
-            redPalette.setColor( QPalette::WindowText, Qt::red );
-            QPalette greenPalette;
-            greenPalette.setColor( QPalette::WindowText, Qt::darkGreen );
-            QPalette bluePalette;
-            bluePalette.setColor( QPalette::WindowText, Qt::blue );
-            QVector<QPalette> palettes{ redPalette, greenPalette, bluePalette };
-            QStringList       labels{ "R", "G", "B" };
-
-            for( int colorIndex = 0; colorIndex < palettes.size(); ++colorIndex )
+            for( int colorIndex = 0; colorIndex < RGBGuiPalettes::NUM_ELEMENTS; ++colorIndex )
             {
                 // Label
-                QLabel * label = new QLabel( labels[ colorIndex ] );
-                label->setPalette( palettes[ colorIndex ] );
+                const QString &  labelString    = palettes.getLabel( colorIndex );
+                const QPalette & currentPalette = palettes.getPalette( colorIndex );
+                QLabel *         label          = new QLabel( labelString );
+                label->setPalette( currentPalette );
                 label->setFont( colorLabelsFont );
                 label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
                 settingsLayout->addWidget( label, 2 + colorIndex, 1, 1, 1 );
@@ -90,7 +86,7 @@ namespace Ouquitoure
                 settingsLayout->addWidget( spinBox, 2 + colorIndex, 2, 1, 1 );
                 // Slider
                 QSlider * slider = new QSlider( Qt::Horizontal );
-                slider->setObjectName( labels[ colorIndex ] + QString::number( pointIndex ) );
+                slider->setObjectName( labelString + QString::number( pointIndex ) );
                 slider->setTickInterval( 1 );
                 slider->setRange( 0, 255 );
                 slider->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
@@ -112,7 +108,6 @@ namespace Ouquitoure
     void ColoredTriangleApp::initializeDescription()
     {
         info = AppInfo( appName, { "basic", "2D", "triangle" }, OPENGL_APP );
-        info.getDescription().setName( appName );
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "Hello world application. Just draws colored triangle. Vertices positions and "
