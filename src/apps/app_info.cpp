@@ -8,6 +8,7 @@ namespace Ouquitoure
         , tags( tags )
         , type( type )
     {
+        description.setName( this->name );
     }
 
     AppInfo::AppInfo( const QString & name, const std::initializer_list<QString> & tags, Ouquitoure::APP_TYPE type )
@@ -15,6 +16,7 @@ namespace Ouquitoure
         , tags( tags )
         , type( type )
     {
+        description.setName( this->name );
     }
 
     const QString & AppInfo::getName() const noexcept

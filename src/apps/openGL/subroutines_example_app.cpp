@@ -35,7 +35,6 @@ namespace Ouquitoure
     void SubroutinesExampleApp::initializeDescription()
     {
         info = AppInfo( appName, { "basic", "2D", "subroutines" }, OPENGL_APP );
-        info.getDescription().setName( appName );
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "Testing how to use subroutine mechanics in OpenGL shaders in both GLSL and client side code."

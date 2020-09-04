@@ -35,7 +35,6 @@ namespace Ouquitoure
     void OpenGLDrawFunctionsApp::initializeDescription()
     {
         info = AppInfo( appName, { "basic", "3D", "draw_functions" }, OPENGL_APP );
-        info.getDescription().setName( appName );
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "All OpenGL functions usage examples (except drawing transform feedback)" );
