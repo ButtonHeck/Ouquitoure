@@ -6,5 +6,7 @@
         <file>shaders/OpenGLDrawFunctions/main.vs</file>
         <file>shaders/SubroutinesExample/main.fs</file>
         <file>shaders/SubroutinesExample/main.vs</file>
+        <file>shaders/BlendModes/main.vs</file>
+        <file>shaders/BlendModes/main.fs</file>
     </qresource>
 </RCC>

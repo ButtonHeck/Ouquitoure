@@ -2,6 +2,7 @@
 #include "Apps/OpenGL/ColoredTriangleApp"
 #include "Apps/OpenGL/OpenGLDrawFunctionsApp"
 #include "Apps/OpenGL/SubroutinesExampleApp"
+#include "Apps/OpenGL/BlendModesApp"
 
 namespace Ouquitoure
 {
@@ -20,6 +21,9 @@ namespace Ouquitoure
         emit applicationCreated( app, OPENGL_APP );
 
         app = new SubroutinesExampleApp( "Subroutines example", &invisibleParentForApps );
+        emit applicationCreated( app, OPENGL_APP );
+
+        app = new BlendModesApp( "Blend modes", &invisibleParentForApps );
         emit applicationCreated( app, OPENGL_APP );
     }
 

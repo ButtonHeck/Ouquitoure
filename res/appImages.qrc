@@ -3,5 +3,6 @@
         <file>appImages/ColoredTriangle.png</file>
         <file>appImages/OpenGLDrawFunctions.png</file>
         <file>appImages/SubroutinesExample.png</file>
+        <file>appImages/BlendModes.png</file>
     </qresource>
 </RCC>
