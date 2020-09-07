@@ -10,9 +10,9 @@ namespace Ouquitoure
         , buffers( this, 2 )
         , subroutineUniformLocation( 0 )
     {
-        points[ 0 ] = Point2p3c{ -0.8, -0.8, 1.0, 0.33, 0.1 };
-        points[ 1 ] = Point2p3c{ -0.0, 0.8, 0.2, 1.0, 0.5 };
-        points[ 2 ] = Point2p3c{ 0.8, -0.8, 0.5, 0.2, 1.0 };
+        points[ 0 ] = Point2p3c{ -0.8f, -0.8f, 1.0f, 0.33f, 0.1f };
+        points[ 1 ] = Point2p3c{ -0.0f, 0.8f, 0.2f, 1.0f, 0.5f };
+        points[ 2 ] = Point2p3c{ 0.8f, -0.8f, 0.5f, 0.2f, 1.0f };
     }
 
     SubroutinesExampleWidget::~SubroutinesExampleWidget()

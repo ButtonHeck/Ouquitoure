@@ -7,9 +7,9 @@ namespace Ouquitoure
         : OpenGLWidgetBase( name, parent )
         , buffers( this, 2 )
     {
-        points[ 0 ] = Point2p3c{ 0.5, 0.5, 1.0, 0.0, 0.0 };
-        points[ 1 ] = Point2p3c{ -0.5, 0.5, 0.0, 1.0, 0.0 };
-        points[ 2 ] = Point2p3c{ -0.5, -0.5, 0.0, 0.0, 1.0 };
+        points[ 0 ] = Point2p3c{ 0.5f, 0.5f, 1.0f, 0.0f, 0.0f };
+        points[ 1 ] = Point2p3c{ -0.5f, 0.5f, 0.0f, 1.0f, 0.0f };
+        points[ 2 ] = Point2p3c{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f };
     }
 
     ColoredTriangleWidget::~ColoredTriangleWidget()
@@ -43,17 +43,11 @@ namespace Ouquitoure
 
     void ColoredTriangleWidget::vertexPositionChanged( int value )
     {
-        bool        isX              = sender()->objectName().left( 1 ) == 'x';
-        int         index            = sender()->objectName().right( 1 ).toInt();
-        const float NORMALIZED_VALUE = value / 100.0;
-        if( isX )
-        {
-            points[ index ].x() = NORMALIZED_VALUE;
-        }
-        else
-        {
-            points[ index ].y() = NORMALIZED_VALUE;
-        }
+        bool        isX               = sender()->objectName().left( 1 ) == 'x';
+        int         index             = sender()->objectName().right( 1 ).toInt();
+        const float NORMALIZED_VALUE  = value / 100.0;
+        float &     positionComponent = isX ? points[ index ].x() : points[ index ].y();
+        positionComponent             = NORMALIZED_VALUE;
         updateData();
     }
 
