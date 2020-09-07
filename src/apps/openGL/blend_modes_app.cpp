@@ -105,9 +105,9 @@ namespace Ouquitoure
             QButtonGroup * modesRadioButtons = new QButtonGroup( blendModesLayout );
             for( int blendModeIndex = 0; blendModeIndex < NUM_BLEND_MODES; ++blendModeIndex )
             {
-                QRadioButton * modeButton = new QRadioButton( QString( BLEND_MODES[ blendModeIndex ].second.data() ) );
-                modeButton->setObjectName(
-                    QString::number( parameterIndex ).append( QString::number( BLEND_MODES[ blendModeIndex ].first ) ) );
+                const auto & [ blendCode, blendName ] = BLEND_MODES[ blendModeIndex ];
+                QRadioButton * modeButton             = new QRadioButton( QString( blendName.data() ) );
+                modeButton->setObjectName( QString::number( parameterIndex ).append( QString::number( blendCode ) ) );
                 modesRadioButtons->addButton( modeButton );
                 blendModesLayout->addWidget( modeButton );
                 connect( modeButton, SIGNAL( clicked() ), &viewWidget, SLOT( blendFuncModeChanged() ) );
@@ -166,8 +166,9 @@ namespace Ouquitoure
         QButtonGroup * equationsButtonGroup = new QButtonGroup( equationsLayout );
         for( int blendEquationIndex = 0; blendEquationIndex < NUM_BLEND_EQUATIONS; ++blendEquationIndex )
         {
-            QRadioButton * equationButton = new QRadioButton( QString( BLEND_EQUATIONS[ blendEquationIndex ].second.data() ) );
-            equationButton->setObjectName( QString::number( BLEND_EQUATIONS[ blendEquationIndex ].first ) );
+            const auto & [ equationCode, equationNameView ] = BLEND_EQUATIONS[ blendEquationIndex ];
+            QRadioButton * equationButton                   = new QRadioButton( QString( equationNameView.data() ) );
+            equationButton->setObjectName( QString::number( equationCode ) );
             equationsButtonGroup->addButton( equationButton );
             equationsLayout->addWidget( equationButton );
             connect( equationButton, SIGNAL( clicked() ), &viewWidget, SLOT( blendFuncEquationChanged() ) );

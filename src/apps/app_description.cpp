@@ -102,10 +102,10 @@ namespace Ouquitoure
 
         // application references links
         text << "<p><u>References</u>:<br>";
-        for( auto & reference: references )
+        for( const auto & [ urlLink, urlName ]: references )
         {
-            text << "<u>" << reference.first.url() << "</u><br>";
-            text << "<i>" << reference.second << "</i><br>";
+            text << "<u>" << urlLink.url() << "</u><br>";
+            text << "<i>" << urlName << "</i><br>";
         }
         text << "</p>";
 
