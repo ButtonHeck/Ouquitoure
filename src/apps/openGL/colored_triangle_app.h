@@ -16,7 +16,6 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         ColoredTriangleApp( const QString & appName, QWidget * parent );
-        ~ColoredTriangleApp() = default;
 
     protected:
         void initializeDescription() override;

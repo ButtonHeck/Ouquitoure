@@ -13,7 +13,6 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         SubroutinesExampleApp( const QString & appName, QWidget * parent );
-        ~SubroutinesExampleApp() = default;
 
     protected:
         void initializeDescription() override;

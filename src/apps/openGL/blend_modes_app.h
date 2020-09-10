@@ -13,7 +13,6 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         BlendModesApp( const QString & appName, QWidget * parent );
-        ~BlendModesApp() = default;
 
     protected:
         void initializeDescription() override;
