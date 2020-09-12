@@ -3,6 +3,7 @@
 #include "Apps/OpenGL/OpenGLDrawFunctionsApp"
 #include "Apps/OpenGL/SubroutinesExampleApp"
 #include "Apps/OpenGL/BlendModesApp"
+#include "Apps/OpenGL/ImageProcessingApp"
 
 namespace Ouquitoure
 {
@@ -24,6 +25,9 @@ namespace Ouquitoure
         emit applicationCreated( app, OQ_OPENGL_APP );
 
         app = new BlendModesApp( "Blend modes", &invisibleParentForApps );
+        emit applicationCreated( app, OQ_OPENGL_APP );
+
+        app = new ImageProcessingApp( "Image processing", &invisibleParentForApps );
         emit applicationCreated( app, OQ_OPENGL_APP );
     }
 
