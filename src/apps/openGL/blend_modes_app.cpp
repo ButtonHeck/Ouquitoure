@@ -178,7 +178,7 @@ namespace Ouquitoure
 
     void BlendModesApp::initializeDescription()
     {
-        info = AppInfo( appName, { "basic", "2D", "blending" }, OPENGL_APP );
+        info = AppInfo( appName, { "basic", "2D", "blending" }, OQ_OPENGL_APP );
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "Application for playing with different blend factors for source and destination, blend equation "

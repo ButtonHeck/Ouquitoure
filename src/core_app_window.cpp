@@ -69,7 +69,7 @@ namespace Ouquitoure
 
         switch( appType )
         {
-        case OPENGL_APP:
+        case OQ_OPENGL_APP:
         {
             AppWindowBase * appWindow = openGLAppsCollectionModel->getApplication( appName );
             if( appWindow )
@@ -79,7 +79,7 @@ namespace Ouquitoure
                 return true;
             }
         }
-        case SOFTWARE_APP:
+        case OQ_SOFTWARE_APP:
         {
             AppWindowBase * appWindow = softwareAppsCollectionModel->getApplication( appName );
             if( appWindow )
@@ -100,11 +100,11 @@ namespace Ouquitoure
         const QString  appName = getAppName( appType );
 
         AppWindowBase * appWindow = nullptr;
-        if( appType == OPENGL_APP )
+        if( appType == OQ_OPENGL_APP )
         {
             appWindow = openGLAppsCollectionModel->getApplication( appName );
         }
-        else if( appType == SOFTWARE_APP )
+        else if( appType == OQ_SOFTWARE_APP )
         {
             appWindow = softwareAppsCollectionModel->getApplication( appName );
         }
@@ -130,12 +130,12 @@ namespace Ouquitoure
     {
         switch( type )
         {
-        case OPENGL_APP:
+        case OQ_OPENGL_APP:
         {
             openGLAppsCollectionModel->addApplication( app );
             break;
         }
-        case SOFTWARE_APP:
+        case OQ_SOFTWARE_APP:
         {
             softwareAppsCollectionModel->addApplication( app );
             break;
@@ -150,7 +150,7 @@ namespace Ouquitoure
         const APP_TYPE       currentChosenType = getViewTabCurrentAppType();
         QVector<QModelIndex> selectedIndices;
 
-        if( currentChosenType == OPENGL_APP )
+        if( currentChosenType == OQ_OPENGL_APP )
         {
             QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
             selectionModel->clear();
@@ -173,7 +173,7 @@ namespace Ouquitoure
                 emit ui->openGLAppsView->clicked( selectedIndices.first() );
             }
         }
-        else if( currentChosenType == SOFTWARE_APP )
+        else if( currentChosenType == OQ_SOFTWARE_APP )
         {
             QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
             selectionModel->clear();
@@ -204,7 +204,7 @@ namespace Ouquitoure
         QVector<QModelIndex> selectedIndices;
         QStringList          separatedTags = tags.split( ";" );
 
-        if( currentChosenType == OPENGL_APP )
+        if( currentChosenType == OQ_OPENGL_APP )
         {
             QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
             selectionModel->clear();
@@ -228,7 +228,7 @@ namespace Ouquitoure
                 emit ui->openGLAppsView->clicked( selectedIndices.first() );
             }
         }
-        else if( currentChosenType == SOFTWARE_APP )
+        else if( currentChosenType == OQ_SOFTWARE_APP )
         {
             QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
             selectionModel->clear();
@@ -260,9 +260,9 @@ namespace Ouquitoure
         switch( APP_TABLE_VIEW_CURRENT_TAB_INDEX )
         {
         case 0:
-            return OPENGL_APP;
+            return OQ_OPENGL_APP;
         case 1:
-            return SOFTWARE_APP;
+            return OQ_SOFTWARE_APP;
         default:
             throw std::runtime_error( "Not suitable app type for table view tab index" );
         }
@@ -272,9 +272,9 @@ namespace Ouquitoure
     {
         switch( type )
         {
-        case OPENGL_APP:
+        case OQ_OPENGL_APP:
             return openGLAppsCollectionModel->getCurrentAppInfo().getName();
-        case SOFTWARE_APP:
+        case OQ_SOFTWARE_APP:
             return softwareAppsCollectionModel->getCurrentAppInfo().getName();
         default:
             throw std::invalid_argument( "Not suitable application type" );
