@@ -8,5 +8,7 @@
         <file>shaders/SubroutinesExample/main.vs</file>
         <file>shaders/BlendModes/main.vs</file>
         <file>shaders/BlendModes/main.fs</file>
+        <file>shaders/ImageProcessing/main.fs</file>
+        <file>shaders/ImageProcessing/main.vs</file>
     </qresource>
 </RCC>

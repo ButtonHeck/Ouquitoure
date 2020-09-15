@@ -33,6 +33,7 @@ namespace Ouquitoure
         BufferCollection                  buffers;
         std::array<Point2p2t, NUM_POINTS> points;
         QImage                            image;
+        GLuint                            textureID;
     };
 
 } // namespace Ouquitoure
