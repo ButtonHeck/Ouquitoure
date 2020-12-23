@@ -67,11 +67,10 @@ namespace Ouquitoure
         const QString  appName = getAppName( appType );
         OQ_LOG_INFO << appName << " sender: " << sender()->objectName();
 
-        switch( appType )
+        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( appType );
+        if( appCollectionModel )
         {
-        case OQ_OPENGL_APP:
-        {
-            AppWindowBase * appWindow = openGLAppsCollectionModel->getApplication( appName );
+            AppWindowBase * appWindow = appCollectionModel->getApplication( appName );
             if( appWindow )
             {
                 appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
@@ -79,19 +78,7 @@ namespace Ouquitoure
                 return true;
             }
         }
-        case OQ_SOFTWARE_APP:
-        {
-            AppWindowBase * appWindow = softwareAppsCollectionModel->getApplication( appName );
-            if( appWindow )
-            {
-                appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
-                appWindow->setGeometry( geometry().x(), geometry().y(), appWindow->geometry().width(), appWindow->geometry().height() );
-                return true;
-            }
-        }
-        default:
-            return false;
-        }
+        return false;
     }
 
     void CoreAppWindow::updateDescriptionWindowInfo()
@@ -99,15 +86,8 @@ namespace Ouquitoure
         const APP_TYPE appType = getViewTabCurrentAppType();
         const QString  appName = getAppName( appType );
 
-        AppWindowBase * appWindow = nullptr;
-        if( appType == OQ_OPENGL_APP )
-        {
-            appWindow = openGLAppsCollectionModel->getApplication( appName );
-        }
-        else if( appType == OQ_SOFTWARE_APP )
-        {
-            appWindow = softwareAppsCollectionModel->getApplication( appName );
-        }
+        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( appType );
+        AppWindowBase *      appWindow          = appCollectionModel ? appCollectionModel->getApplication( appName ) : nullptr;
         if( appWindow )
         {
             ui->descriptionView->setHtml( appWindow->getInfo().getDescription().getFullDescription() );
@@ -128,20 +108,10 @@ namespace Ouquitoure
 
     void CoreAppWindow::addApplication( AppWindowBase * app, APP_TYPE type )
     {
-        switch( type )
+        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( type );
+        if( appCollectionModel )
         {
-        case OQ_OPENGL_APP:
-        {
-            openGLAppsCollectionModel->addApplication( app );
-            break;
-        }
-        case OQ_SOFTWARE_APP:
-        {
-            softwareAppsCollectionModel->addApplication( app );
-            break;
-        }
-        default:
-            throw std::invalid_argument( "Not suitable application type" );
+            appCollectionModel->addApplication( app );
         }
     }
 
@@ -270,14 +240,21 @@ namespace Ouquitoure
 
     QString CoreAppWindow::getAppName( APP_TYPE type )
     {
-        switch( type )
+        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( type );
+        return appCollectionModel ? appCollectionModel->getCurrentAppInfo().getName() : "";
+    }
+
+    AppCollectionModel * CoreAppWindow::getAppCollectionModelForType( APP_TYPE appType )
+    {
+        switch( appType )
         {
         case OQ_OPENGL_APP:
-            return openGLAppsCollectionModel->getCurrentAppInfo().getName();
+            return openGLAppsCollectionModel;
         case OQ_SOFTWARE_APP:
-            return softwareAppsCollectionModel->getCurrentAppInfo().getName();
+            return softwareAppsCollectionModel;
         default:
-            throw std::invalid_argument( "Not suitable application type" );
+            OQ_LOG_WARNING << "No app collection model for given appType: " << appType;
+            return nullptr;
         }
     }
 

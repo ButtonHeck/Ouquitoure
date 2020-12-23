@@ -83,6 +83,13 @@ namespace Ouquitoure
          */
         QString getAppName( APP_TYPE type );
 
+        /**
+         * @brief get pointer of application collection model for a given application type enumerator
+         * @param appType app type enumerator
+         * @return application collection model pointer or nullptr of enumerator is incorrect of not implemented
+         */
+        AppCollectionModel * getAppCollectionModelForType( APP_TYPE appType );
+
     private:
         Ui::CoreAppWindow *  ui;
         AppCollectionModel * openGLAppsCollectionModel;
