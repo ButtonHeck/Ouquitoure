@@ -7,8 +7,8 @@ namespace Ouquitoure
      */
     enum APP_TYPE
     {
-        OQ_OPENGL_APP   = 0,
-        OQ_SOFTWARE_APP = 1,
+        OQ_APP_TYPE_OPENGL   = 0,
+        OQ_APP_TYPE_SOFTWARE = 1,
         OQ_NUM_APP_TYPES
     };
 } // namespace Ouquitoure

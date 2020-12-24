@@ -107,7 +107,7 @@ namespace Ouquitoure
 
     void ColoredTriangleApp::initializeDescription()
     {
-        info = AppInfo( appName, { "basic", "2D", "triangle" }, OQ_OPENGL_APP );
+        info = AppInfo( appName, { "basic", "2D", "triangle" }, OQ_APP_TYPE_OPENGL );
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
         info.getDescription().setBrief( "Hello world application. Just draws colored triangle. Vertices positions and "

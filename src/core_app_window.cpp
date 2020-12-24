@@ -120,7 +120,7 @@ namespace Ouquitoure
         const APP_TYPE       currentChosenType = getViewTabCurrentAppType();
         QVector<QModelIndex> selectedIndices;
 
-        if( currentChosenType == OQ_OPENGL_APP )
+        if( currentChosenType == OQ_APP_TYPE_OPENGL )
         {
             QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
             selectionModel->clear();
@@ -143,7 +143,7 @@ namespace Ouquitoure
                 emit ui->openGLAppsView->clicked( selectedIndices.first() );
             }
         }
-        else if( currentChosenType == OQ_SOFTWARE_APP )
+        else if( currentChosenType == OQ_APP_TYPE_SOFTWARE )
         {
             QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
             selectionModel->clear();
@@ -174,7 +174,7 @@ namespace Ouquitoure
         QVector<QModelIndex> selectedIndices;
         QStringList          separatedTags = tags.split( ";" );
 
-        if( currentChosenType == OQ_OPENGL_APP )
+        if( currentChosenType == OQ_APP_TYPE_OPENGL )
         {
             QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
             selectionModel->clear();
@@ -198,7 +198,7 @@ namespace Ouquitoure
                 emit ui->openGLAppsView->clicked( selectedIndices.first() );
             }
         }
-        else if( currentChosenType == OQ_SOFTWARE_APP )
+        else if( currentChosenType == OQ_APP_TYPE_SOFTWARE )
         {
             QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
             selectionModel->clear();
@@ -230,9 +230,9 @@ namespace Ouquitoure
         switch( APP_TABLE_VIEW_CURRENT_TAB_INDEX )
         {
         case 0:
-            return OQ_OPENGL_APP;
+            return OQ_APP_TYPE_OPENGL;
         case 1:
-            return OQ_SOFTWARE_APP;
+            return OQ_APP_TYPE_SOFTWARE;
         default:
             throw std::runtime_error( "Not suitable app type for table view tab index" );
         }
@@ -248,9 +248,9 @@ namespace Ouquitoure
     {
         switch( appType )
         {
-        case OQ_OPENGL_APP:
+        case OQ_APP_TYPE_OPENGL:
             return openGLAppsCollectionModel;
-        case OQ_SOFTWARE_APP:
+        case OQ_APP_TYPE_SOFTWARE:
             return softwareAppsCollectionModel;
         default:
             OQ_LOG_WARNING << "No app collection model for given appType: " << appType;

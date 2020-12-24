@@ -16,19 +16,19 @@ namespace Ouquitoure
     void AppLibraryManager::loadApplications()
     {
         OpenGLAppBase * app = new ColoredTriangleApp( "Colored Triangle", &invisibleParentForApps );
-        emit            applicationCreated( app, OQ_OPENGL_APP );
+        emit            applicationCreated( app, OQ_APP_TYPE_OPENGL );
 
         app = new OpenGLDrawFunctionsApp( "OpenGL Draw Functions", &invisibleParentForApps );
-        emit applicationCreated( app, OQ_OPENGL_APP );
+        emit applicationCreated( app, OQ_APP_TYPE_OPENGL );
 
         app = new SubroutinesExampleApp( "Subroutines example", &invisibleParentForApps );
-        emit applicationCreated( app, OQ_OPENGL_APP );
+        emit applicationCreated( app, OQ_APP_TYPE_OPENGL );
 
         app = new BlendModesApp( "Blend modes", &invisibleParentForApps );
-        emit applicationCreated( app, OQ_OPENGL_APP );
+        emit applicationCreated( app, OQ_APP_TYPE_OPENGL );
 
         app = new ImageProcessingApp( "Image processing", &invisibleParentForApps );
-        emit applicationCreated( app, OQ_OPENGL_APP );
+        emit applicationCreated( app, OQ_APP_TYPE_OPENGL );
     }
 
 } // namespace Ouquitoure

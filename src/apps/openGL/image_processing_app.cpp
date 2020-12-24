@@ -13,7 +13,7 @@ namespace Ouquitoure
 
     void ImageProcessingApp::initializeDescription()
     {
-        info = AppInfo{ appName, { "image", "filters", "2D" }, OQ_OPENGL_APP };
+        info = AppInfo{ appName, { "image", "filters", "2D" }, OQ_APP_TYPE_OPENGL };
         info.getDescription().setAuthor( "Ilya Malgin (Buttonheck)" );
         info.getDescription().setEmail( "buttonheck@gmail.com" );
     }
