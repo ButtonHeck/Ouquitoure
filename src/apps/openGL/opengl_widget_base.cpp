@@ -1,5 +1,6 @@
 #include "Apps/OpenGL/OpenGLWidgetBase"
 #include "Log"
+#include "Utils/LogicalTokens"
 
 #include <QOpenGLShader>
 #include <QVector>
@@ -26,7 +27,7 @@ namespace Ouquitoure
                                              QVector<QString> &&                   sources,
                                              const QString &                       programName )
     {
-        if( !glFunctionsInitialized )
+        if( not glFunctionsInitialized )
         {
             OQ_LOG_WARNING << "Could not add shader program as OpenGL functions were not initialized";
             return false;
@@ -36,7 +37,7 @@ namespace Ouquitoure
         {
             QOpenGLShader * shader = new QOpenGLShader{ types[ shaderSourceIndex ] };
             shader->compileSourceCode( sources[ shaderSourceIndex ] );
-            if( !shader->isCompiled() )
+            if( not shader->isCompiled() )
             {
                 OQ_LOG_CRITICAL << name << " - Shader compilation error: " << shader->log();
                 return false;
@@ -49,7 +50,7 @@ namespace Ouquitoure
             shaderProgram->addShader( shaders[ shaderIndex ] );
         }
         shaderProgram->link();
-        if( !shaderProgram->isLinked() )
+        if( not shaderProgram->isLinked() )
         {
             OQ_LOG_CRITICAL << name << " - Shader program link error: " << shaderProgram->log();
             return false;

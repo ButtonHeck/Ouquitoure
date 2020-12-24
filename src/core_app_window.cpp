@@ -4,6 +4,7 @@
 #include "Log"
 #include "Apps/OpenGL/OpenGLAppBase"
 #include "Apps/Software/SoftwareAppBase"
+#include "Utils/LogicalTokens"
 #include "ui_core_app_window.h"
 
 #include <QToolBar>
@@ -118,7 +119,7 @@ namespace Ouquitoure
         AppCollectionView *   appCollectionView  = getAppCollectionViewForType( currentChosenType );
         QItemSelectionModel * selectionModel     = getSelectionModelForType( currentChosenType );
         AppCollectionModel *  appCollectionModel = getAppCollectionModelForType( currentChosenType );
-        if( !selectionModel || !appCollectionModel || !appCollectionView )
+        if( not selectionModel || not appCollectionModel || not appCollectionView )
         {
             return;
         }
@@ -155,7 +156,7 @@ namespace Ouquitoure
         AppCollectionView *   appCollectionView  = getAppCollectionViewForType( currentChosenType );
         QItemSelectionModel * selectionModel     = getSelectionModelForType( currentChosenType );
         AppCollectionModel *  appCollectionModel = getAppCollectionModelForType( currentChosenType );
-        if( !selectionModel || !appCollectionModel || !appCollectionView )
+        if( not selectionModel || not appCollectionModel || not appCollectionView )
         {
             return;
         }
