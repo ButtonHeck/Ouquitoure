@@ -64,19 +64,15 @@ namespace Ouquitoure
     bool CoreAppWindow::launchApp()
     {
         const APP_TYPE appType = getViewTabCurrentAppType();
-        const QString  appName = getAppName( appType );
+        const QString  appName = getCurrentlyChosenAppName( appType );
         OQ_LOG_INFO << appName << " sender: " << sender()->objectName();
 
-        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( appType );
-        if( appCollectionModel )
+        AppWindowBase * appWindow = getCurrentlyChosenAppWindow( appType, appName );
+        if( appWindow )
         {
-            AppWindowBase * appWindow = appCollectionModel->getApplication( appName );
-            if( appWindow )
-            {
-                appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
-                appWindow->setGeometry( geometry().x(), geometry().y(), appWindow->geometry().width(), appWindow->geometry().height() );
-                return true;
-            }
+            appWindow->isHidden() ? appWindow->show() : appWindow->activateWindow();
+            appWindow->setGeometry( geometry().x(), geometry().y(), appWindow->geometry().width(), appWindow->geometry().height() );
+            return true;
         }
         return false;
     }
@@ -84,10 +80,9 @@ namespace Ouquitoure
     void CoreAppWindow::updateDescriptionWindowInfo()
     {
         const APP_TYPE appType = getViewTabCurrentAppType();
-        const QString  appName = getAppName( appType );
+        const QString  appName = getCurrentlyChosenAppName( appType );
 
-        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( appType );
-        AppWindowBase *      appWindow          = appCollectionModel ? appCollectionModel->getApplication( appName ) : nullptr;
+        const AppWindowBase * appWindow = getCurrentlyChosenAppWindow( appType, appName );
         if( appWindow )
         {
             ui->descriptionView->setHtml( appWindow->getInfo().getDescription().getFullDescription() );
@@ -120,51 +115,34 @@ namespace Ouquitoure
         const APP_TYPE       currentChosenType = getViewTabCurrentAppType();
         QVector<QModelIndex> selectedIndices;
 
-        if( currentChosenType == OQ_APP_TYPE_OPENGL )
+        AppCollectionView *   appCollectionView  = getAppCollectionViewForType( currentChosenType );
+        QItemSelectionModel * selectionModel     = getSelectionModelForType( currentChosenType );
+        AppCollectionModel *  appCollectionModel = getAppCollectionModelForType( currentChosenType );
+        if( !selectionModel || !appCollectionModel || !appCollectionView )
         {
-            QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
-            selectionModel->clear();
-            if( name.isEmpty() )
+            return;
+        }
+        selectionModel->clear();
+        if( name.isEmpty() )
+        {
+            return;
+        }
+
+        // accumulate selections based on current name input
+        for( int nameIndex = 0; nameIndex < appCollectionModel->getApplicationNames().size(); ++nameIndex )
+        {
+            if( appCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
             {
-                return;
-            }
-            for( int nameIndex = 0; nameIndex < openGLAppsCollectionModel->getApplicationNames().size(); ++nameIndex )
-            {
-                if( openGLAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
-                {
-                    auto modelIndex = openGLAppsCollectionModel->index( nameIndex, 0 );
-                    selectedIndices.push_back( modelIndex );
-                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
-                }
-            }
-            // check for exact match
-            if( selectedIndices.size() == 1 )
-            {
-                emit ui->openGLAppsView->clicked( selectedIndices.first() );
+                auto modelIndex = appCollectionModel->index( nameIndex, 0 );
+                selectedIndices.push_back( modelIndex );
+                selectionModel->select( modelIndex, QItemSelectionModel::Select );
             }
         }
-        else if( currentChosenType == OQ_APP_TYPE_SOFTWARE )
+
+        // check for exact match
+        if( selectedIndices.size() == 1 )
         {
-            QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
-            selectionModel->clear();
-            if( name.isEmpty() )
-            {
-                return;
-            }
-            for( int nameIndex = 0; nameIndex < softwareAppsCollectionModel->getApplicationNames().size(); ++nameIndex )
-            {
-                if( softwareAppsCollectionModel->getApplicationNames()[ nameIndex ].contains( name, Qt::CaseInsensitive ) )
-                {
-                    auto modelIndex = softwareAppsCollectionModel->index( nameIndex, 0 );
-                    selectedIndices.push_back( modelIndex );
-                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
-                }
-            }
-            // check for exact match
-            if( selectedIndices.size() == 1 )
-            {
-                emit ui->openGLAppsView->clicked( selectedIndices.first() );
-            }
+            emit appCollectionView->clicked( selectedIndices.first() );
         }
     }
 
@@ -174,53 +152,35 @@ namespace Ouquitoure
         QVector<QModelIndex> selectedIndices;
         QStringList          separatedTags = tags.split( ";" );
 
-        if( currentChosenType == OQ_APP_TYPE_OPENGL )
+        AppCollectionView *   appCollectionView  = getAppCollectionViewForType( currentChosenType );
+        QItemSelectionModel * selectionModel     = getSelectionModelForType( currentChosenType );
+        AppCollectionModel *  appCollectionModel = getAppCollectionModelForType( currentChosenType );
+        if( !selectionModel || !appCollectionModel || !appCollectionView )
         {
-            QItemSelectionModel * selectionModel = ui->openGLAppsView->selectionModel();
-            selectionModel->clear();
-            const auto & appsNames = openGLAppsCollectionModel->getApplicationNames();
-            for( int nameIndex = 0; nameIndex < appsNames.size(); ++nameIndex )
+            return;
+        }
+        selectionModel->clear();
+
+        // accumulate selections based on current tags input
+        const auto & appsNames = appCollectionModel->getApplicationNames();
+        for( int nameIndex = 0; nameIndex < appsNames.size(); ++nameIndex )
+        {
+            const auto * app         = appCollectionModel->getApplication( appsNames[ nameIndex ] );
+            const auto & appTagsList = app->getInfo().getTags();
+            if( std::all_of( separatedTags.cbegin(), separatedTags.cend(), [ & ]( const QString & tag ) {
+                    return appTagsList.contains( tag, Qt::CaseInsensitive );
+                } ) )
             {
-                const auto * app         = openGLAppsCollectionModel->getApplication( appsNames[ nameIndex ] );
-                const auto & appTagsList = app->getInfo().getTags();
-                if( std::all_of( separatedTags.cbegin(), separatedTags.cend(), [ & ]( const QString & tag ) {
-                        return appTagsList.contains( tag, Qt::CaseInsensitive );
-                    } ) )
-                {
-                    auto modelIndex = openGLAppsCollectionModel->index( nameIndex, 0 );
-                    selectedIndices.push_back( modelIndex );
-                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
-                }
-            }
-            // check for exact match
-            if( selectedIndices.size() == 1 )
-            {
-                emit ui->openGLAppsView->clicked( selectedIndices.first() );
+                auto modelIndex = appCollectionModel->index( nameIndex, 0 );
+                selectedIndices.push_back( modelIndex );
+                selectionModel->select( modelIndex, QItemSelectionModel::Select );
             }
         }
-        else if( currentChosenType == OQ_APP_TYPE_SOFTWARE )
+
+        // check for exact match
+        if( selectedIndices.size() == 1 )
         {
-            QItemSelectionModel * selectionModel = ui->softwareAppsView->selectionModel();
-            selectionModel->clear();
-            const auto & appsNames = softwareAppsCollectionModel->getApplicationNames();
-            for( int nameIndex = 0; nameIndex < appsNames.size(); ++nameIndex )
-            {
-                const auto * app         = softwareAppsCollectionModel->getApplication( appsNames[ nameIndex ] );
-                const auto & appTagsList = app->getInfo().getTags();
-                if( std::all_of( separatedTags.cbegin(), separatedTags.cend(), [ & ]( const QString & tag ) {
-                        return appTagsList.contains( tag, Qt::CaseInsensitive );
-                    } ) )
-                {
-                    auto modelIndex = softwareAppsCollectionModel->index( nameIndex, 0 );
-                    selectedIndices.push_back( modelIndex );
-                    selectionModel->select( modelIndex, QItemSelectionModel::Select );
-                }
-            }
-            // check for exact match
-            if( selectedIndices.size() == 1 )
-            {
-                emit ui->softwareAppsView->clicked( selectedIndices.first() );
-            }
+            emit appCollectionView->clicked( selectedIndices.first() );
         }
     }
 
@@ -238,9 +198,9 @@ namespace Ouquitoure
         }
     }
 
-    QString CoreAppWindow::getAppName( APP_TYPE type )
+    QString CoreAppWindow::getCurrentlyChosenAppName( APP_TYPE type )
     {
-        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( type );
+        const AppCollectionModel * appCollectionModel = getAppCollectionModelForType( type );
         return appCollectionModel ? appCollectionModel->getCurrentAppInfo().getName() : "";
     }
 
@@ -256,6 +216,32 @@ namespace Ouquitoure
             OQ_LOG_WARNING << "No app collection model for given appType: " << appType;
             return nullptr;
         }
+    }
+
+    AppWindowBase * CoreAppWindow::getCurrentlyChosenAppWindow( APP_TYPE appType, const QString & appName )
+    {
+        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( appType );
+        return appCollectionModel ? appCollectionModel->getApplication( appName ) : nullptr;
+    }
+
+    AppCollectionView * CoreAppWindow::getAppCollectionViewForType( APP_TYPE appType )
+    {
+        switch( appType )
+        {
+        case OQ_APP_TYPE_OPENGL:
+            return ui->openGLAppsView;
+        case OQ_APP_TYPE_SOFTWARE:
+            return ui->softwareAppsView;
+        default:
+            OQ_LOG_WARNING << " No app collection view for a given type: " << appType;
+            return nullptr;
+        }
+    }
+
+    QItemSelectionModel * CoreAppWindow::getSelectionModelForType( APP_TYPE appType )
+    {
+        const AppCollectionView * appCollectionView = getAppCollectionViewForType( appType );
+        return appCollectionView ? appCollectionView->selectionModel() : nullptr;
     }
 
 } // namespace Ouquitoure

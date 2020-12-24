@@ -10,9 +10,12 @@ namespace Ui
     class CoreAppWindow;
 }
 
+class QItemSelectionModel;
+
 namespace Ouquitoure
 {
     class AppCollectionModel;
+    class AppCollectionView;
 
     /**
      * @brief Ouquitoure main window class
@@ -81,14 +84,36 @@ namespace Ouquitoure
          * @param type application type
          * @return name of the app that is to be launched
          */
-        QString getAppName( APP_TYPE type );
+        QString getCurrentlyChosenAppName( APP_TYPE type );
 
         /**
          * @brief get pointer of application collection model for a given application type enumerator
          * @param appType app type enumerator
-         * @return application collection model pointer or nullptr of enumerator is incorrect of not implemented
+         * @return application collection model pointer or nullptr if enumerator is incorrect of not implemented
          */
         AppCollectionModel * getAppCollectionModelForType( APP_TYPE appType );
+
+        /**
+         * @brief get app window that is currently chosen in the preview
+         * @param appType application type
+         * @param appName name for the application of interest
+         * @return application window pointer or nullptr if no app with the given name was found
+         */
+        AppWindowBase * getCurrentlyChosenAppWindow( APP_TYPE appType, const QString & appName );
+
+        /**
+         * @brief get application collection view for a given app type enumerator
+         * @param appType app type enumerator
+         * @return application collection view pointer or nullptr if enumerator is incorrect or not implemented
+         */
+        AppCollectionView * getAppCollectionViewForType( APP_TYPE appType );
+
+        /**
+         * @brief get selection of a view for a given app type enumerator
+         * @param appType application type enumerator
+         * @return selection model pointer or nullptr if enumerator is incorrect or not implemented
+         */
+        QItemSelectionModel * getSelectionModelForType( APP_TYPE appType );
 
     private:
         Ui::CoreAppWindow *  ui;
