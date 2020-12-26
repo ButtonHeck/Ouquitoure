@@ -5,7 +5,9 @@
 #include "Apps/OpenGL/OpenGLAppBase"
 #include "Apps/Software/SoftwareAppBase"
 #include "Utils/LogicalTokens"
+#include "CameraSettingsDialog"
 #include "ui_core_app_window.h"
+#include "ui_camera_settings_dialog.h"
 
 #include <QToolBar>
 #include <QItemSelectionModel>
@@ -19,6 +21,7 @@ namespace Ouquitoure
         , openGLAppsCollectionModel( new AppCollectionModel{ this } )
         , softwareAppsCollectionModel( new AppCollectionModel{ this } )
         , appLibraryManager()
+        , cameraSettingsDialog( new CameraSettingsDialog( this ) )
     {
         ui->setupUi( this );
         setWindowIcon( QIcon( ":/icons/logo.ico" ) );
@@ -27,6 +30,7 @@ namespace Ouquitoure
         addToolBar( toolbar );
         toolbar->addAction( QIcon( ":/icons/show_description_icon.png" ), "Show description", this,
                             SLOT( switchDescriptionWindowVisible() ) );
+        toolbar->addAction( QIcon( ":/icons/camera.png" ), "Camera settings", this, SLOT( showCameraSettingsDialog() ) );
 
         // load applications
         connect( &appLibraryManager, SIGNAL( applicationCreated( AppWindowBase *, APP_TYPE ) ), this,
@@ -183,6 +187,13 @@ namespace Ouquitoure
         {
             emit appCollectionView->clicked( selectedIndices.first() );
         }
+    }
+
+    void CoreAppWindow::showCameraSettingsDialog()
+    {
+        Ui::CameraSettingsDialog cameraDialogUI;
+        cameraDialogUI.setupUi( cameraSettingsDialog );
+        cameraSettingsDialog->show();
     }
 
     APP_TYPE CoreAppWindow::getViewTabCurrentAppType()

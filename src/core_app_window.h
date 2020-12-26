@@ -16,6 +16,7 @@ namespace Ouquitoure
 {
     class AppCollectionModel;
     class AppCollectionView;
+    class CameraSettingsDialog;
 
     /**
      * @brief Ouquitoure main window class
@@ -72,6 +73,11 @@ namespace Ouquitoure
          */
         void searchByTags( const QString & tags );
 
+        /**
+         * @brief shows 3D camera settings dialog
+         */
+        void showCameraSettingsDialog();
+
     private:
         /**
          * @brief utility function to get application type based on the view tab widget current index
@@ -116,9 +122,10 @@ namespace Ouquitoure
         QItemSelectionModel * getSelectionModelForType( APP_TYPE appType );
 
     private:
-        Ui::CoreAppWindow *  ui;
-        AppCollectionModel * openGLAppsCollectionModel;
-        AppCollectionModel * softwareAppsCollectionModel;
-        AppLibraryManager    appLibraryManager;
+        Ui::CoreAppWindow *    ui;
+        AppCollectionModel *   openGLAppsCollectionModel;
+        AppCollectionModel *   softwareAppsCollectionModel;
+        AppLibraryManager      appLibraryManager;
+        CameraSettingsDialog * cameraSettingsDialog;
     };
 } // namespace Ouquitoure

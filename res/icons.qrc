@@ -3,5 +3,6 @@
         <file>icons/show_description_icon.png</file>
         <file>icons/settings.png</file>
         <file>icons/logo.ico</file>
+        <file>icons/camera.png</file>
     </qresource>
 </RCC>
