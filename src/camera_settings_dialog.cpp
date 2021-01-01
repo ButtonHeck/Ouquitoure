@@ -6,7 +6,9 @@ namespace Ouquitoure
 
     CameraSettingsDialog::CameraSettingsDialog( QWidget * parent )
         : QDialog( parent )
+        , ui()
     {
+        ui.setupUi( this );
     }
 
 #ifdef QT_DEBUG

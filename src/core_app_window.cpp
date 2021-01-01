@@ -7,7 +7,6 @@
 #include "Utils/LogicalTokens"
 #include "CameraSettingsDialog"
 #include "ui_core_app_window.h"
-#include "ui_camera_settings_dialog.h"
 
 #include <QToolBar>
 #include <QItemSelectionModel>
@@ -191,8 +190,6 @@ namespace Ouquitoure
 
     void CoreAppWindow::showCameraSettingsDialog()
     {
-        Ui::CameraSettingsDialog cameraDialogUI;
-        cameraDialogUI.setupUi( cameraSettingsDialog );
         cameraSettingsDialog->show();
     }
 

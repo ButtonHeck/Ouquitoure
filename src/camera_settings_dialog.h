@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ui_camera_settings_dialog.h"
+
 #include <QDialog>
 #include <QMainWindow>
 
@@ -16,6 +18,8 @@ namespace Ouquitoure
 #else
         ~CameraSettingsDialog() = default;
 #endif
+    private:
+        Ui::CameraSettingsDialog ui;
     };
 
 } // namespace Ouquitoure
