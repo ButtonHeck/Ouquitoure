@@ -28,28 +28,20 @@ namespace Ouquitoure
         const std::array<Point2p4c, NUM_POINTS> & getPoints() const noexcept;
 
     public slots:
-        /**
-         * @brief slot to update quad color, sender which connects to this slot,
-         * should have name that include info about the quad and color indices to be updated
-         * @param value value of the color (expected to be in range from 0 to 255)
-         */
+        /// @brief slot to update quad color, sender which connects to this slot,
+        /// should have name that include info about the quad and color indices to be updated
+        /// @param value value of the color (expected to be in range from 0 to 255)
         void quadColorChanged( int value );
 
-        /**
-         * @brief slot to update blend function mode for either source or destination,
-         * depending on a name of the sender
-         */
+        /// @brief slot to update blend function mode for either source or destination,
+        /// depending on a name of the sender
         void blendFuncModeChanged();
 
-        /**
-         * @brief update blend color component, object name of the sender should be exactly color component letter (eg. R)
-         * @param value value of the color (expected to be in range from 0 to 255)
-         */
+        /// @brief update blend color component, object name of the sender should be exactly color component letter (eg. R)
+        /// @param value value of the color (expected to be in range from 0 to 255)
         void blendColorChanged( int value );
 
-        /**
-         * @brief update blend equation, object name of the sender should be exactly GLenum equation code
-         */
+        /// @brief update blend equation, object name of the sender should be exactly GLenum equation code
         void blendFuncEquationChanged();
 
     protected:
@@ -58,9 +50,7 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
-        /**
-         * @brief helper function to update vertex buffer data
-         */
+        /// @brief helper function to update vertex buffer data
         void updateData();
 
     private:

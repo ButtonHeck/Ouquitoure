@@ -84,36 +84,36 @@ namespace Ouquitoure
         }
     }
 
-    void Camera::move( CAMERA_MOVE_DIRECTION direction, float value )
+    void Camera::move( CAMERA_MOVE_DIRECTION direction, float velocity )
     {
         // Forward / Backward
         if( direction == FORWARD )
         {
-            position += front * value;
+            position += front * velocity;
         }
         else if( direction == BACKWARD )
         {
-            position -= front * value;
+            position -= front * velocity;
         }
 
         // Left / Right
         if( direction == LEFT )
         {
-            position -= right * value;
+            position -= right * velocity;
         }
         else if( direction == RIGHT )
         {
-            position += right * value;
+            position += right * velocity;
         }
 
         // Up / Down
         if( direction == UP )
         {
-            position += worldUp * value;
+            position += worldUp * velocity;
         }
         else if( direction == DOWN )
         {
-            position -= worldUp * value;
+            position -= worldUp * velocity;
         }
 
         emit viewChanged();

@@ -5,12 +5,11 @@
 #define OQ_LOG_ALWAYS_FULL false
 #define OQ_LOG_FORCE_NOOP  false
 
+/// this enables printing additional info with a message itself
 #define OQ_LOG_PRECISION_FULL "@Ouqre-log-full"
 #if( OQ_LOG_FORCE_NOOP )
 
-/**
- * @brief utility object that bypasses any logging
- */
+/// @brief utility object that bypasses any logging
 struct logSinkhole
 {
     template<typename T>
@@ -50,12 +49,9 @@ struct logSinkhole
 
 namespace Ouquitoure
 {
-    /**
-     * @brief custom message handler callback. Prints message time, message type, its context (if full logging is used)
-     * and then the message itself
-     * @param messageType message type
-     * @param logContext context of the received message
-     * @param message message to log
-     */
+    /// @brief custom message handler callback. Prints message time, message type, its context (if full logging is used)
+    /// and then the message itself
+    /// @param messageType message type (debug, warning etc.)
+    /// @param logContext context of the received message (file, function, line number)
     void logHandler( QtMsgType messageType, const QMessageLogContext & logContext, const QString & message );
 } // namespace Ouquitoure

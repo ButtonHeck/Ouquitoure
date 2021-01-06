@@ -5,9 +5,7 @@
 
 namespace Ouquitoure
 {
-    /**
-     * @brief integer flag representing each buffer object (and transform feedback)
-     */
+    /// @brief integer flag representing each buffer object (and transform feedback)
     enum OPENGL_OBJECT : int
     {
         VAO          = 0b000001,
@@ -31,39 +29,27 @@ namespace Ouquitoure
         BufferCollection( BufferCollection & copy );
         ~BufferCollection();
 
-        /**
-         * @brief replaces all bind-to-zero GL calls boilerplate code in one function
-         * @param flag indicator of the GL object type that should be unbound
-         */
+        /// @brief replaces all bind-to-zero GL calls boilerplate code in one function
+        /// @param flag indicator of the GL object type that should be unbound
         void bindZero( int flags ) const noexcept;
 
-        /**
-         * @brief sends create command to OpenGL side and stores object's ID in the storage
-         * @param flags integer union of individual flags
-         */
+        /// @brief sends create command to OpenGL side and stores object's ID in the storage
+        /// @param flags integer union of individual flags
         void create( int flags );
 
-        /**
-         * @brief sends command to OpenGL to delete each GL object if one exists in a collection
-         */
+        /// @brief sends command to OpenGL to delete each GL object if one exists in a collection
         void deleteBuffers();
 
-        /**
-         * @brief sends command to OpenGL to delete a particular GL object
-         * @param flag indicator of the GL object type that should be deleted
-         */
+        /// @brief sends command to OpenGL to delete a particular GL object
+        /// @param flag indicator of the GL object type that should be deleted
         void deleteBuffer( int flag );
 
-        /**
-         * @brief sends bind command to OpenGL for a chosen GL objects
-         * @param flag indicator of the GL object to be bound
-         */
+        /// @brief sends bind command to OpenGL for a chosen GL objects
+        /// @param flags mask of the GL objects to be bound
         void bind( int flags );
 
-        /**
-         * @brief similar to create method, but intended to be used after collection has been created and supposed to take one type per call
-         * @param flag indicator of the GL object to be created
-         */
+        /// @brief similar to create method, but intended to be used after collection has been created, takes one type per call
+        /// @param flag indicator of the GL object to be created
         void add( int flag );
 
     private:

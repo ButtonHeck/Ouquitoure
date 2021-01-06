@@ -27,18 +27,14 @@ namespace Ouquitoure
         const std::array<Point2p3c, NUM_POINTS> & getPoints() const noexcept;
 
     public slots:
-        /**
-         * @brief slot to update vertex position. Vertex is defined by the signal sender object name, which contains
-         * information of a vertex ordinal and its coordinate to update
-         * @param value position new value
-         */
+        /// @brief slot to update vertex position. Vertex is defined by the signal sender object name, which contains
+        /// information of a vertex ordinal and its coordinate to update
+        /// @param value position new value
         void vertexPositionChanged( int value );
 
-        /**
-         * @brief slot to update vertex color. Vertex is defined by the signal sender object name, which contains
-         * information of a vertex ordinal and its color component to update
-         * @param value color new value
-         */
+        /// @brief slot to update vertex color. Vertex is defined by the signal sender object name, which contains
+        /// information of a vertex ordinal and its color component to update
+        /// @param value color new value
         void vertexColorChanged( int value );
 
     protected:
@@ -47,9 +43,7 @@ namespace Ouquitoure
         void cleanup() override;
 
     private:
-        /**
-         * @brief helper function to update vertex buffer object
-         */
+        /// @brief helper function to update vertex buffer object
         void updateData();
 
     private:

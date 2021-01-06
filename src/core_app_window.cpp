@@ -32,8 +32,7 @@ namespace Ouquitoure
         toolbar->addAction( QIcon( ":/icons/camera.png" ), "Camera settings", this, SLOT( showCameraSettingsDialog() ) );
 
         // load applications
-        connect( &appLibraryManager, SIGNAL( applicationCreated( AppWindowBase *, APP_TYPE ) ), this,
-                 SLOT( addApplication( AppWindowBase *, APP_TYPE ) ) );
+        connect( &appLibraryManager, SIGNAL( applicationCreated( AppWindowBase * ) ), this, SLOT( addApplication( AppWindowBase * ) ) );
         appLibraryManager.loadApplications();
 
         // opengl stuff
@@ -105,12 +104,15 @@ namespace Ouquitoure
         }
     }
 
-    void CoreAppWindow::addApplication( AppWindowBase * app, APP_TYPE type )
+    void CoreAppWindow::addApplication( AppWindowBase * app )
     {
-        AppCollectionModel * appCollectionModel = getAppCollectionModelForType( type );
-        if( appCollectionModel )
+        if( app )
         {
-            appCollectionModel->addApplication( app );
+            AppCollectionModel * appCollectionModel = getAppCollectionModelForType( app->getInfo().getType() );
+            if( appCollectionModel )
+            {
+                appCollectionModel->addApplication( app );
+            }
         }
     }
 

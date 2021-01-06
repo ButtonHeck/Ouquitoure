@@ -17,15 +17,11 @@ namespace Ouquitoure
         explicit AppWindowBase( QWidget * parent = nullptr );
         virtual ~AppWindowBase() = default;
 
-        /**
-         * @return application info object
-         */
+        /// @return application info object
         const AppInfo & getInfo() const noexcept;
 
     protected:
-        /**
-         * @brief initializes description object (name, author, brief etc.)
-         */
+        /// @brief initializes description object (name, author, brief etc.)
         virtual void initializeDescription() = 0;
 
     protected:

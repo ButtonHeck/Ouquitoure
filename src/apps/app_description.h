@@ -17,10 +17,6 @@ namespace Ouquitoure
         using ReferenceInfo = QPair<QUrl, QString>;
 
         AppDescription() = default;
-
-        /**
-         * @brief initializes all member variables
-         */
         AppDescription( const QString &                name,
                         const QString &                author,
                         const QString &                email,
@@ -37,9 +33,7 @@ namespace Ouquitoure
         void addReference( const ReferenceInfo & reference );
         void setNotes( const QString & notes );
 
-        /**
-         * @brief assembles html string from all descritpion details provided
-         */
+        /// @brief assembles html string from all descritpion details provided
         QString getFullDescription() const;
 
     private:

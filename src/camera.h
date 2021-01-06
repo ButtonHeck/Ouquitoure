@@ -25,81 +25,42 @@ namespace Ouquitoure
         constexpr static float DEFAULT_FPS               = 60.0f;
 
     public:
-        /**
-         * @brief sets initial position, view angles and controls keybindings
-         */
+        /// @brief sets initial position, view angles and controls keybindings
         Camera( float x, float y, float z, float yaw = -90.0f, float pitch = 0.0f );
 
-        /**
-         * @brief get view matrix for the current camera setup
-         * @return GLM mat4 view matrix
-         */
+        /// @brief get view matrix for the current camera setup
         glm::mat4 getViewMatrix() const;
 
-        /**
-         * @brief set field of view
-         * @param field of view (in degrees)
-         */
+        /// @brief set field of view (in degrees)
         void setFov( float fov ) noexcept;
 
-        /**
-         * @brief get current field of view value
-         * @return field of view (in degrees)
-         */
+        /// @brief get current field of view value (in degrees)
         float getFov() const noexcept;
 
-        /**
-         * @brief record key press or key release event
-         * @param keyCode key code
-         * @param isPressed bool flag
-         */
+        /// @brief record key press/release event
         void processKeyboardInput( int keyCode, bool isPressed );
 
-        /**
-         * @brief process mouse move event and update view vectors
-         * @param x x pos of the mouse event
-         * @param y y pos of the mouse event
-         */
+        /// @brief process mouse move event (x,y) and update view vectors
         void processMouseMove( int x, int y );
 
-        /**
-         * @brief register new x and y values for last position
-         * @param x new last x
-         * @param y new last y
-         */
+        /// @brief register new x and y values for last position
         void updateLastPos( int x, int y );
 
-        /**
-         * @brief sets position coordinates
-         * @param x
-         * @param y
-         * @param z
-         */
+        /// @brief sets position coordinates
         void setPosition( float x, float y, float z );
 
     signals:
-        /**
-         * @brief use this signal in case position or view vectors were changed
-         */
+        /// @brief use this signal in case position or view vectors were changed
         void viewChanged();
 
     private:
-        /**
-         * @brief processes input events for camera for each update
-         * @param event
-         */
+        /// @brief processes input events for camera for each update
         void timerEvent( QTimerEvent * event ) override;
 
-        /**
-         * @brief updates position of the camera
-         * @param direction
-         * @param value
-         */
-        void move( CAMERA_MOVE_DIRECTION direction, float value = 1.0f );
+        /// @brief updates position of the camera
+        void move( CAMERA_MOVE_DIRECTION direction, float velocity = 1.0f );
 
-        /**
-         * @brief updates front, right and up vectors based on current yaw and pitch angles
-         */
+        /// @brief updates front, right and up vectors based on current yaw and pitch angles
         void updateViewDirectionVectors();
 
     private:

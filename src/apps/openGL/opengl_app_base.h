@@ -16,10 +16,9 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        /**
-         * @brief setup generic ui and layout stuff
-         */
+        /// @brief setup generic ui and layout stuff
         explicit OpenGLAppBase( const QString & name, QWidget * parent = nullptr );
+
 #ifdef QT_DEBUG
         virtual ~OpenGLAppBase();
 #else
@@ -30,10 +29,7 @@ namespace Ouquitoure
         void closeEvent( QCloseEvent * event ) override;
 
     protected:
-        /**
-         * @brief sets given view widget as the dock widget contents
-         * @param widget
-         */
+        /// @brief sets given view widget as the dock widget contents
         void installOpenGLViewWidget( OpenGLWidgetBase & widget );
 
     protected:

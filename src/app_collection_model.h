@@ -18,49 +18,29 @@ namespace Ouquitoure
     public:
         explicit AppCollectionModel( QObject * parent = nullptr );
 
-        /**
-         * @brief adds application to the model
-         * @param app new application
-         */
+        /// @brief adds application to the model
         void addApplication( AppWindowBase * app );
 
-        /**
-         * @brief get application for its name
-         * @param name name of the application
-         * @return pointer to the application of nullptr if not found
-         */
+        /// @brief get application for its name
+        /// @return pointer to the application of nullptr if not found
         AppWindowBase * getApplication( const QString & name );
 
-        /**
-         * @brief get the current application information
-         * @return appInfo object
-         */
+        /// @brief get the current application information object
         AppInfo getCurrentAppInfo() const noexcept;
 
-        /**
-         * @brief get all containing in model applications names
-         * @return vector of application names
-         */
+        /// @brief get names of all the applications containing in model
         const QVector<QString> & getApplicationNames() const noexcept;
 
-        /**
-         * @brief effectively returns number of applications in model
-         */
+        /// @brief effectively returns number of applications in model
         int rowCount( const QModelIndex & parent = QModelIndex() ) const override;
 
-        /**
-         * @brief get the columns number
-         */
+        /// @brief get the columns number
         int columnCount( const QModelIndex & parent = QModelIndex() ) const override;
 
-        /**
-         * @brief returns either name of the application or the set of its tags if the index is valid
-         */
+        /// @brief returns either name of the application or the set of its tags if the index is valid
         QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
 
-        /**
-         * @brief returns name of the column
-         */
+        /// @brief returns name of the column
         QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const override;
 
     private:
@@ -73,10 +53,7 @@ namespace Ouquitoure
         static constexpr const char * MODEL_COLUMNS_NAMES[ MODEL_COLUMNS::NUM_COLUMNS ]{ "App name", "Tags" };
 
     private slots:
-        /**
-         * @brief slot to update current application info
-         * @param index index representing current application
-         */
+        /// @brief slot to update current application info
         void updateCurrentAppInfo( const QModelIndex & index );
 
     private:

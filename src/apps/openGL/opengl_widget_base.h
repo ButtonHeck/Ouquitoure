@@ -25,32 +25,24 @@ namespace Ouquitoure
         void resizeGL( int width, int height ) override;
 
     protected:
-        /**
-         * @brief creates and adds OpenGL shader program to internal storage
-         * @param types list of shader types provided
-         * @param sources string sources of the shaders
-         * @param programName name of the program
-         * @return true if shader was compiled, linked and added successfully
-         */
+        /// @brief creates and adds OpenGL shader program to internal storage
+        /// @param types list of shader types provided
+        /// @param sources string sources of the shaders
+        /// @param programName name of the program
+        /// @return true if shader was compiled, linked and added successfully
         bool
         addShaderProgram( QVector<QOpenGLShader::ShaderType> && types, QVector<QString> && sources, const QString & programName = "main" );
 
-        /**
-         * @brief initializes all OpenGL buffers, vertex arrays etc.
-         */
+        /// @brief initializes all OpenGL buffers, vertex arrays etc.
         virtual void initializeOpenGLObjects() = 0;
-        /**
-         * @brief initializes all shader programs
-         */
+
+        /// @brief initializes all shader programs
         virtual void initializeOpenGLShaders() = 0;
-        /**
-         * @brief performs all cleanup routines for OpenGL objects and other stuff
-         */
+
+        /// @brief performs all cleanup routines for OpenGL objects and other stuff
         virtual void cleanup() = 0;
 
-        /**
-         * @brief delete all registered shader programs for a widget
-         */
+        /// @brief delete all registered shader programs for a widget
         void openGLShaderProgramsCleanup();
 
     protected:

@@ -10,9 +10,7 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        /**
-         * @brief connects camera update signal with this widget
-         */
+        /// @brief besides constructing, connects camera update signal with this widget
         explicit OpenGLWidgetWithCamera( const QString & name, QWidget * parent = nullptr );
 
         Camera & getCamera();

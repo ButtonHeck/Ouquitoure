@@ -2,9 +2,7 @@
 
 namespace Ouquitoure
 {
-    /**
-     * @brief enumeration of possible application types
-     */
+    /// @brief enumeration of possible application types
     enum APP_TYPE
     {
         OQ_APP_TYPE_OPENGL   = 0,

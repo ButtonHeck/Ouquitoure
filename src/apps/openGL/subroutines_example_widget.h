@@ -29,9 +29,7 @@ namespace Ouquitoure
         void paintGL() override;
 
     public slots:
-        /**
-         * @brief slot to update shader active subroutine function
-         */
+        /// @brief slot to update shader active subroutine function
         void switchSubroutine();
 
     protected:

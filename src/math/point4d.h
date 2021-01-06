@@ -4,7 +4,7 @@ namespace Ouquitoure::Math
 {
     template<typename T>
     /**
-     * @brief The Point4D union
+     * @brief point union with four components
      */
     union Point4D
     {
