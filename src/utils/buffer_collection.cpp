@@ -41,35 +41,6 @@ namespace Ouquitoure
         old.objects.clear();
     }
 
-    BufferCollection::BufferCollection( BufferCollection & copy )
-        : functions( copy.functions )
-    {
-        if( copy.objects.contains( VAO ) && copy.objects[ VAO ] )
-        {
-            objects[ VAO ] = copy.objects[ VAO ];
-        }
-        if( copy.objects.contains( VBO ) && copy.objects[ VBO ] )
-        {
-            objects[ VBO ] = copy.objects[ VBO ];
-        }
-        if( copy.objects.contains( INSTANCE_VBO ) && copy.objects[ INSTANCE_VBO ] )
-        {
-            objects[ INSTANCE_VBO ] = copy.objects[ INSTANCE_VBO ];
-        }
-        if( copy.objects.contains( EBO ) && copy.objects[ EBO ] )
-        {
-            objects[ EBO ] = copy.objects[ EBO ];
-        }
-        if( copy.objects.contains( DIBO ) && copy.objects[ DIBO ] )
-        {
-            objects[ DIBO ] = copy.objects[ DIBO ];
-        }
-        if( copy.objects.contains( TFBO ) && copy.objects[ TFBO ] )
-        {
-            objects[ TFBO ] = copy.objects[ TFBO ];
-        }
-    }
-
     BufferCollection::~BufferCollection()
     {
         deleteBuffers();
