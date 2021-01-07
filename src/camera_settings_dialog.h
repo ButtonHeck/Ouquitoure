@@ -7,6 +7,10 @@
 
 namespace Ouquitoure
 {
+    /**
+     * @brief Camera settings dialog,
+     * keyboard bindings, fov and other settings
+     */
     class CameraSettingsDialog : public QDialog
     {
         Q_OBJECT

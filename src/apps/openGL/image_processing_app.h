@@ -6,6 +6,9 @@
 namespace Ouquitoure
 {
 
+    /**
+     * @brief Image processing application
+     */
     class ImageProcessingApp : public OpenGLAppBase
     {
         Q_OBJECT

@@ -10,6 +10,9 @@
 namespace Ouquitoure
 {
 
+    /**
+     * @brief Image processing view widget
+     */
     class ImageProcessingWidget : public OpenGLWidgetBase
     {
         Q_OBJECT

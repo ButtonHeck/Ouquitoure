@@ -6,6 +6,9 @@
 namespace Ouquitoure
 {
 
+    /**
+     * @brief Base class for all OpenGL view widgets that use virtual camera
+     */
     class OpenGLWidgetWithCamera : public OpenGLWidgetBase
     {
         Q_OBJECT
