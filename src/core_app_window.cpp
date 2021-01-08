@@ -20,8 +20,8 @@ namespace Ouquitoure
         , openGLAppsCollectionModel( new AppCollectionModel{ this } )
         , softwareAppsCollectionModel( new AppCollectionModel{ this } )
         , appLibraryManager()
-        , cameraSettingsDialog( new CameraSettingsDialog( this ) )
         , keybindingsManager()
+        , cameraSettingsDialog( new CameraSettingsDialog( keybindingsManager, this ) )
     {
         ui->setupUi( this );
         setWindowIcon( QIcon( ":/icons/logo.ico" ) );

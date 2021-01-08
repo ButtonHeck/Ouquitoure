@@ -1,5 +1,7 @@
 #include "KeybindingsManager"
 
+#include <QKeySequence>
+
 namespace Ouquitoure
 {
 
@@ -22,6 +24,26 @@ namespace Ouquitoure
     void KeybindingsManager::setCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection, Qt::Key newKey )
     {
         cameraKeys[ moveDirection ] = newKey;
+    }
+
+    QString KeybindingsManager::getStringRepresentation( Qt::Key key ) const
+    {
+        if( key == Qt::Key_Shift )
+        {
+            return "Shift";
+        }
+        else if( key == Qt::Key_Control )
+        {
+            return "Ctrl";
+        }
+        else if( key == Qt::Key_Alt )
+        {
+            return "Alt";
+        }
+        else
+        {
+            return QKeySequence( key ).toString();
+        }
     }
 
 } // namespace Ouquitoure

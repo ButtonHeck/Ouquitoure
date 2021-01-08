@@ -87,7 +87,7 @@ namespace Ouquitoure
         AppCollectionModel *   openGLAppsCollectionModel;
         AppCollectionModel *   softwareAppsCollectionModel;
         AppLibraryManager      appLibraryManager;
-        CameraSettingsDialog * cameraSettingsDialog;
         KeybindingsManager     keybindingsManager;
+        CameraSettingsDialog * cameraSettingsDialog;
     };
 } // namespace Ouquitoure

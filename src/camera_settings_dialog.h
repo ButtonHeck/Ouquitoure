@@ -7,6 +7,8 @@
 
 namespace Ouquitoure
 {
+    class KeybindingsManager;
+
     /**
      * @brief Camera settings dialog,
      * keyboard bindings, fov and other settings
@@ -15,7 +17,7 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit CameraSettingsDialog( QWidget * parent = nullptr );
+        explicit CameraSettingsDialog( const KeybindingsManager & keybindingsManager, QWidget * parent = nullptr );
 
 #ifdef QT_DEBUG
         ~CameraSettingsDialog();
@@ -24,6 +26,7 @@ namespace Ouquitoure
 #endif
     private:
         Ui::CameraSettingsDialog ui;
+        const KeybindingsManager & keybindingsManager;
     };
 
 } // namespace Ouquitoure
