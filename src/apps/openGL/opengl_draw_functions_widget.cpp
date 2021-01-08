@@ -8,8 +8,10 @@
 namespace Ouquitoure
 {
 
-    OpenGLDrawFunctionsWidget::OpenGLDrawFunctionsWidget( const QString & name, QWidget * parent )
-        : OpenGLWidgetWithCamera( name, parent )
+    OpenGLDrawFunctionsWidget::OpenGLDrawFunctionsWidget( const QString &            name,
+                                                          const KeybindingsManager & keybindingsManager,
+                                                          QWidget *                  parent )
+        : OpenGLWidgetWithCamera( name, keybindingsManager, parent )
 
         // glDrawArrays
         , drawArrBuffers( this, 2 )

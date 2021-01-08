@@ -7,6 +7,7 @@
 
 namespace Ouquitoure
 {
+    class KeybindingsManager;
 
     /**
      * @brief OpenGL draw functions view widget class
@@ -39,7 +40,7 @@ namespace Ouquitoure
         };
 
     public:
-        explicit OpenGLDrawFunctionsWidget( const QString & name, QWidget * parent = nullptr );
+        OpenGLDrawFunctionsWidget( const QString & name, const KeybindingsManager & keybindingsManager, QWidget * parent = nullptr );
         ~OpenGLDrawFunctionsWidget();
 
         QString getDrawFunctionName( DRAW_FUNCTIONS functionCode );

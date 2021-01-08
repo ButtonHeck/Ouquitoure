@@ -3,8 +3,6 @@
 #include "Apps/AppType"
 #include "Log"
 #include "Apps/OpenGL/OpenGLAppBase"
-#include "Apps/OpenGL/OpenGLWidgetBase"
-#include "Apps/OpenGL/OpenGLWidgetWithCamera"
 #include "Apps/Software/SoftwareAppBase"
 #include "Utils/LogicalTokens"
 #include "CameraSettingsDialog"
@@ -36,10 +34,9 @@ namespace Ouquitoure
 
         // load applications
         connect( &appLibraryManager, SIGNAL( applicationCreated( AppWindowBase * ) ), this, SLOT( addApplication( AppWindowBase * ) ) );
-        appLibraryManager.loadApplications();
+        appLibraryManager.loadApplications( keybindingsManager );
 
-        // setup keybindings
-        connect( &keybindingsManager, SIGNAL( cameraControlsChanged() ), this, SLOT( updateCameraKeybindings() ) );
+        // send signal to initialize camera controls for applications loaded previously
         emit keybindingsManager.cameraControlsChanged();
 
         // opengl stuff
@@ -200,31 +197,6 @@ namespace Ouquitoure
     void CoreAppWindow::showCameraSettingsDialog()
     {
         cameraSettingsDialog->show();
-    }
-
-    void CoreAppWindow::updateCameraKeybindings()
-    {
-        const auto & applicationNames = openGLAppsCollectionModel->getApplicationNames();
-        for( const auto & appName: applicationNames )
-        {
-            AppWindowBase * app = openGLAppsCollectionModel->getApplication( appName );
-            if( app )
-            {
-                if( OpenGLAppBase * openglApp = dynamic_cast<OpenGLAppBase *>( app ) )
-                {
-                    OpenGLWidgetBase & viewWidget = openglApp->getViewWidget();
-                    if( OpenGLWidgetWithCamera * cameraViewWidget = dynamic_cast<OpenGLWidgetWithCamera *>( &viewWidget ) )
-                    {
-                        cameraViewWidget->getCamera().setMoveDirectionKey( FORWARD, keybindingsManager.getCameraControlsKey( FORWARD ) );
-                        cameraViewWidget->getCamera().setMoveDirectionKey( BACKWARD, keybindingsManager.getCameraControlsKey( BACKWARD ) );
-                        cameraViewWidget->getCamera().setMoveDirectionKey( LEFT, keybindingsManager.getCameraControlsKey( LEFT ) );
-                        cameraViewWidget->getCamera().setMoveDirectionKey( RIGHT, keybindingsManager.getCameraControlsKey( RIGHT ) );
-                        cameraViewWidget->getCamera().setMoveDirectionKey( UP, keybindingsManager.getCameraControlsKey( UP ) );
-                        cameraViewWidget->getCamera().setMoveDirectionKey( DOWN, keybindingsManager.getCameraControlsKey( DOWN ) );
-                    }
-                }
-            }
-        }
     }
 
     APP_TYPE CoreAppWindow::getViewTabCurrentAppType()

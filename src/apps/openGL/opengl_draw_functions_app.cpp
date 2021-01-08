@@ -1,5 +1,6 @@
 #include "Apps/OpenGL/OpenGLDrawFunctionsApp"
 #include "Log"
+#include "KeybindingsManager"
 
 #include <QKeyEvent>
 #include <QCheckBox>
@@ -7,9 +8,11 @@
 namespace Ouquitoure
 {
 
-    OpenGLDrawFunctionsApp::OpenGLDrawFunctionsApp( const QString & appName, QWidget * parent )
+    OpenGLDrawFunctionsApp::OpenGLDrawFunctionsApp( const QString &            appName,
+                                                    QWidget *                  parent,
+                                                    const KeybindingsManager & keybindingsManager )
         : OpenGLAppBase( appName, parent )
-        , viewWidget( appName, parent )
+        , viewWidget( appName, keybindingsManager, parent )
     {
         initializeDescription();
         installOpenGLViewWidget( viewWidget );

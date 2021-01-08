@@ -4,6 +4,7 @@
 #include "Apps/OpenGL/SubroutinesExampleApp"
 #include "Apps/OpenGL/BlendModesApp"
 #include "Apps/OpenGL/ImageProcessingApp"
+#include "KeybindingsManager"
 
 namespace Ouquitoure
 {
@@ -13,12 +14,12 @@ namespace Ouquitoure
     {
     }
 
-    void AppLibraryManager::loadApplications()
+    void AppLibraryManager::loadApplications( const KeybindingsManager & keybindingsManager )
     {
         OpenGLAppBase * app = new ColoredTriangleApp( "Colored Triangle", &invisibleParentForApps );
         emit            applicationCreated( app );
 
-        app = new OpenGLDrawFunctionsApp( "OpenGL Draw Functions", &invisibleParentForApps );
+        app = new OpenGLDrawFunctionsApp( "OpenGL Draw Functions", &invisibleParentForApps, keybindingsManager );
         emit applicationCreated( app );
 
         app = new SubroutinesExampleApp( "Subroutines example", &invisibleParentForApps );

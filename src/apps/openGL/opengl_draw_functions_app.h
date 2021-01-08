@@ -5,6 +5,7 @@
 
 namespace Ouquitoure
 {
+    class KeybindingsManager;
 
     /**
      * @brief OpenGL draw functions application class
@@ -13,7 +14,7 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
-        explicit OpenGLDrawFunctionsApp( const QString & appName, QWidget * parent );
+        OpenGLDrawFunctionsApp( const QString & appName, QWidget * parent, const KeybindingsManager & keybindingsManager );
 
     protected:
         void initializeDescription() override;

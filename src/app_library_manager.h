@@ -6,6 +6,7 @@
 
 namespace Ouquitoure
 {
+    class KeybindingsManager;
 
     /**
      * @brief Applications loader class
@@ -17,7 +18,7 @@ namespace Ouquitoure
         AppLibraryManager();
 
         /// @brief instantiates all the applications and emits signals that one was created
-        void loadApplications();
+        void loadApplications( const KeybindingsManager & keybindingsManager );
 
     signals:
         /// @brief notifies receiver that manager has added new application

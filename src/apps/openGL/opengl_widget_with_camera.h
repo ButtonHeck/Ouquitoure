@@ -5,6 +5,7 @@
 
 namespace Ouquitoure
 {
+    class KeybindingsManager;
 
     /**
      * @brief Base class for all OpenGL view widgets that use virtual camera
@@ -14,9 +15,7 @@ namespace Ouquitoure
         Q_OBJECT
     public:
         /// @brief besides constructing, connects camera update signal with this widget
-        explicit OpenGLWidgetWithCamera( const QString & name, QWidget * parent = nullptr );
-
-        Camera & getCamera();
+        OpenGLWidgetWithCamera( const QString & name, const KeybindingsManager & keybindingsManager, QWidget * parent = nullptr );
 
         void mousePressEvent( QMouseEvent * event ) override;
         void mouseReleaseEvent( QMouseEvent * event ) override;
@@ -29,9 +28,13 @@ namespace Ouquitoure
     protected slots:
         void updateViewMatrixForMainProgram();
         void updateProjectionMatrixForMainProgram();
+        void updateCameraControls();
 
     protected:
         Camera camera;
+
+        /// @brief reference to keybindings manager needs to update camera settings
+        const KeybindingsManager & keybindingsManager;
     };
 
 } // namespace Ouquitoure

@@ -16,7 +16,7 @@ namespace Ouquitoure
     public:
         KeybindingsManager();
 
-        Qt::Key getCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection );
+        Qt::Key getCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection ) const;
         void    setCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection, Qt::Key newKey );
 
     signals:

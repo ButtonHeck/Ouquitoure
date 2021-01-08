@@ -1,4 +1,5 @@
 #include "Apps/OpenGL/OpenGLWidgetWithCamera"
+#include "KeybindingsManager"
 
 #include <QMouseEvent>
 #include <glm/gtc/matrix_transform.hpp>
@@ -7,16 +8,13 @@
 namespace Ouquitoure
 {
 
-    OpenGLWidgetWithCamera::OpenGLWidgetWithCamera( const QString & name, QWidget * parent )
+    OpenGLWidgetWithCamera::OpenGLWidgetWithCamera( const QString & name, const KeybindingsManager & keybindingsManager, QWidget * parent )
         : OpenGLWidgetBase( name, parent )
         , camera( 0.0f, 0.0f, 5.0f )
+        , keybindingsManager( keybindingsManager )
     {
         connect( &camera, SIGNAL( viewChanged() ), this, SLOT( updateViewMatrixForMainProgram() ) );
-    }
-
-    Camera & OpenGLWidgetWithCamera::getCamera()
-    {
-        return camera;
+        connect( &keybindingsManager, SIGNAL( cameraControlsChanged() ), this, SLOT( updateCameraControls() ) );
     }
 
     void OpenGLWidgetWithCamera::mousePressEvent( QMouseEvent * event )
@@ -99,6 +97,16 @@ namespace Ouquitoure
         glUniformMatrix4fv( mainProgram->uniformLocation( "u_projection" ), 1, GL_FALSE, glm::value_ptr( PROJECTION_MATRIX ) );
 
         update();
+    }
+
+    void OpenGLWidgetWithCamera::updateCameraControls()
+    {
+        camera.setMoveDirectionKey( FORWARD, keybindingsManager.getCameraControlsKey( FORWARD ) );
+        camera.setMoveDirectionKey( BACKWARD, keybindingsManager.getCameraControlsKey( BACKWARD ) );
+        camera.setMoveDirectionKey( LEFT, keybindingsManager.getCameraControlsKey( LEFT ) );
+        camera.setMoveDirectionKey( RIGHT, keybindingsManager.getCameraControlsKey( RIGHT ) );
+        camera.setMoveDirectionKey( UP, keybindingsManager.getCameraControlsKey( UP ) );
+        camera.setMoveDirectionKey( DOWN, keybindingsManager.getCameraControlsKey( DOWN ) );
     }
 
 } // namespace Ouquitoure
