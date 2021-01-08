@@ -14,14 +14,6 @@ namespace Ouquitoure
     {
         updateViewDirectionVectors();
         startTimer( 1000.0f / DEFAULT_FPS );
-
-        // explicitly define keys for movement
-        keys[ FORWARD ]  = false;
-        keys[ LEFT ]     = false;
-        keys[ BACKWARD ] = false;
-        keys[ RIGHT ]    = false;
-        keys[ UP ]       = false;
-        keys[ DOWN ]     = false;
     }
 
     glm::mat4 Camera::getViewMatrix() const
@@ -71,6 +63,11 @@ namespace Ouquitoure
         emit viewChanged();
     }
 
+    void Camera::setMoveDirectionKey( CAMERA_MOVE_DIRECTION moveDirection, Qt::Key newKey )
+    {
+        bindings[ moveDirection ] = newKey;
+    }
+
     void Camera::timerEvent( QTimerEvent * event )
     {
         Q_UNUSED( event );
@@ -79,39 +76,39 @@ namespace Ouquitoure
         {
             if( keys[ key ] )
             {
-                move( (CAMERA_MOVE_DIRECTION)key, moveSensitivity );
+                move( key, moveSensitivity );
             }
         }
     }
 
-    void Camera::move( CAMERA_MOVE_DIRECTION direction, float velocity )
+    void Camera::move( int direction, float velocity )
     {
         // Forward / Backward
-        if( direction == FORWARD )
+        if( direction == bindings[ FORWARD ] )
         {
             position += front * velocity;
         }
-        else if( direction == BACKWARD )
+        else if( direction == bindings[ BACKWARD ] )
         {
             position -= front * velocity;
         }
 
         // Left / Right
-        if( direction == LEFT )
+        if( direction == bindings[ LEFT ] )
         {
             position -= right * velocity;
         }
-        else if( direction == RIGHT )
+        else if( direction == bindings[ RIGHT ] )
         {
             position += right * velocity;
         }
 
         // Up / Down
-        if( direction == UP )
+        if( direction == bindings[ UP ] )
         {
             position += worldUp * velocity;
         }
-        else if( direction == DOWN )
+        else if( direction == bindings[ DOWN ] )
         {
             position -= worldUp * velocity;
         }

@@ -49,6 +49,9 @@ namespace Ouquitoure
         /// @brief sets position coordinates
         void setPosition( float x, float y, float z );
 
+        /// @brief set new binding for movement
+        void setMoveDirectionKey( CAMERA_MOVE_DIRECTION moveDirection, Qt::Key newKey );
+
     signals:
         /// @brief use this signal in case position or view vectors were changed
         void viewChanged();
@@ -58,7 +61,7 @@ namespace Ouquitoure
         void timerEvent( QTimerEvent * event ) override;
 
         /// @brief updates position of the camera
-        void move( CAMERA_MOVE_DIRECTION direction, float velocity = 1.0f );
+        void move( int direction, float velocity = 1.0f );
 
         /// @brief updates front, right and up vectors based on current yaw and pitch angles
         void updateViewDirectionVectors();
@@ -82,7 +85,8 @@ namespace Ouquitoure
         float mouseSensitivity = DEFAULT_MOUSE_SENSITIVITY;
 
         // Key map
-        QMap<int, bool> keys;
+        QMap<int, bool>                      keys;
+        QMap<CAMERA_MOVE_DIRECTION, Qt::Key> bindings;
     };
 
 } // namespace Ouquitoure

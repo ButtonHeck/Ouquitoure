@@ -69,4 +69,9 @@ namespace Ouquitoure
         }
     }
 
+    OpenGLWidgetBase & OpenGLAppBase::getViewWidget()
+    {
+        return dynamic_cast<OpenGLWidgetBase &>( *viewDockWidget->widget() );
+    }
+
 } // namespace Ouquitoure

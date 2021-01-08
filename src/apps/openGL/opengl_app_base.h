@@ -28,6 +28,9 @@ namespace Ouquitoure
         void resizeEvent( QResizeEvent * event ) override;
         void closeEvent( QCloseEvent * event ) override;
 
+        /// @brief get view widget used in this application
+        OpenGLWidgetBase & getViewWidget();
+
     protected:
         /// @brief sets given view widget as the dock widget contents
         void installOpenGLViewWidget( OpenGLWidgetBase & widget );

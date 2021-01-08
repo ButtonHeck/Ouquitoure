@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AppLibraryManager"
+#include "KeybindingsManager"
 
 #include <QMainWindow>
 #include <QVector>
@@ -57,6 +58,9 @@ namespace Ouquitoure
         /// @brief shows 3D camera settings dialog
         void showCameraSettingsDialog();
 
+        /// @brief update all camera using applications its key bindings
+        void updateCameraKeybindings();
+
     private:
         /// @brief utility function to get application type based on the view tab widget current index
         APP_TYPE getViewTabCurrentAppType();
@@ -87,5 +91,6 @@ namespace Ouquitoure
         AppCollectionModel *   softwareAppsCollectionModel;
         AppLibraryManager      appLibraryManager;
         CameraSettingsDialog * cameraSettingsDialog;
+        KeybindingsManager     keybindingsManager;
     };
 } // namespace Ouquitoure
