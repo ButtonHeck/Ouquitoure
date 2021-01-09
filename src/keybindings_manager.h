@@ -14,16 +14,23 @@ namespace Ouquitoure
     {
         Q_OBJECT
     public:
+        static QString getStringRepresentation( Qt::Key key );
+
+    public:
         KeybindingsManager();
 
         Qt::Key getCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection ) const;
         void    setCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection, Qt::Key newKey );
-        QString getStringRepresentation( Qt::Key key ) const;
+        bool    eventFilter( QObject * watched, QEvent * event ) override;
+
+    public slots:
+        void prepareRecordCameraControls();
 
     signals:
         void cameraControlsChanged();
 
     private:
         phmap::flat_hash_map<CAMERA_MOVE_DIRECTION, Qt::Key> cameraKeys;
+        CAMERA_MOVE_DIRECTION                                cameraMoveDirectionToRecord;
     };
 } // namespace Ouquitoure

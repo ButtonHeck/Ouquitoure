@@ -13,6 +13,7 @@ namespace Ouquitoure
         LEFT,
         UP,
         DOWN,
-        NUM_DIRECTIONS
+        NUM_DIRECTIONS,
+        EMPTY
     };
 } // namespace Ouquitoure

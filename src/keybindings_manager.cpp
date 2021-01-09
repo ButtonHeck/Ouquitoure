@@ -1,12 +1,14 @@
 #include "KeybindingsManager"
 
 #include <QKeySequence>
+#include <QKeyEvent>
 
 namespace Ouquitoure
 {
 
     KeybindingsManager::KeybindingsManager()
         : cameraKeys( CAMERA_MOVE_DIRECTION::NUM_DIRECTIONS )
+        , cameraMoveDirectionToRecord( CAMERA_MOVE_DIRECTION::EMPTY )
     {
         cameraKeys[ FORWARD ]  = Qt::Key_W;
         cameraKeys[ BACKWARD ] = Qt::Key_S;
@@ -23,10 +25,14 @@ namespace Ouquitoure
 
     void KeybindingsManager::setCameraControlsKey( CAMERA_MOVE_DIRECTION moveDirection, Qt::Key newKey )
     {
-        cameraKeys[ moveDirection ] = newKey;
+        if( newKey != Qt::Key_Escape )
+        {
+            cameraKeys[ moveDirection ] = newKey;
+        }
+        emit cameraControlsChanged();
     }
 
-    QString KeybindingsManager::getStringRepresentation( Qt::Key key ) const
+    QString KeybindingsManager::getStringRepresentation( Qt::Key key )
     {
         if( key == Qt::Key_Shift )
         {
@@ -43,6 +49,46 @@ namespace Ouquitoure
         else
         {
             return QKeySequence( key ).toString();
+        }
+    }
+
+    bool KeybindingsManager::eventFilter( QObject * watched, QEvent * event )
+    {
+        if( event->type() == QEvent::KeyPress )
+        {
+            QKeyEvent * key = static_cast<QKeyEvent *>( event );
+            setCameraControlsKey( cameraMoveDirectionToRecord, Qt::Key( key->key() ) );
+            // ignoring any other key records until next record
+            cameraMoveDirectionToRecord = CAMERA_MOVE_DIRECTION::EMPTY;
+        }
+        return QObject::eventFilter( watched, event );
+    }
+
+    void KeybindingsManager::prepareRecordCameraControls()
+    {
+        if( sender()->objectName().contains( "Forward", Qt::CaseInsensitive ) )
+        {
+            cameraMoveDirectionToRecord = FORWARD;
+        }
+        if( sender()->objectName().contains( "Backward", Qt::CaseInsensitive ) )
+        {
+            cameraMoveDirectionToRecord = BACKWARD;
+        }
+        if( sender()->objectName().contains( "Left", Qt::CaseInsensitive ) )
+        {
+            cameraMoveDirectionToRecord = LEFT;
+        }
+        if( sender()->objectName().contains( "Right", Qt::CaseInsensitive ) )
+        {
+            cameraMoveDirectionToRecord = RIGHT;
+        }
+        if( sender()->objectName().contains( "Up", Qt::CaseInsensitive ) )
+        {
+            cameraMoveDirectionToRecord = UP;
+        }
+        if( sender()->objectName().contains( "Down", Qt::CaseInsensitive ) )
+        {
+            cameraMoveDirectionToRecord = DOWN;
         }
     }
 

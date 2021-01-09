@@ -4,6 +4,7 @@
 
 #include <QDialog>
 #include <QMainWindow>
+#include <QButtonGroup>
 
 namespace Ouquitoure
 {
@@ -24,9 +25,16 @@ namespace Ouquitoure
 #else
         ~CameraSettingsDialog() = default;
 #endif
+    private slots:
+        void updateControlKeysView();
+        void clearRecordButtonsFocus();
+        void disableRecordButtons();
+        void enableRecordButtons();
+
     private:
-        Ui::CameraSettingsDialog ui;
+        Ui::CameraSettingsDialog   ui;
         const KeybindingsManager & keybindingsManager;
+        QButtonGroup               recButtons;
     };
 
 } // namespace Ouquitoure
