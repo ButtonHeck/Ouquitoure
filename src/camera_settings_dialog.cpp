@@ -43,6 +43,7 @@ namespace Ouquitoure
     {
         OQ_LOG_DEBUG << "Camera settings dialog dtor";
     }
+#endif
 
     void CameraSettingsDialog::updateControlKeysView()
     {
@@ -80,6 +81,5 @@ namespace Ouquitoure
             recButton->setEnabled( true );
         }
     }
-#endif
 
 } // namespace Ouquitoure
