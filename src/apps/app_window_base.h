@@ -13,12 +13,13 @@ namespace Ouquitoure
     class AppWindowBase : public QMainWindow
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( AppWindowBase )
     public:
         explicit AppWindowBase( QWidget * parent = nullptr );
         virtual ~AppWindowBase() = default;
 
         /// @return application info object
-        const AppInfo & getInfo() const noexcept;
+        [[nodiscard]] const AppInfo & getInfo() const noexcept;
 
     protected:
         /// @brief initializes description object (name, author, brief etc.)

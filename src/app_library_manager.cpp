@@ -9,11 +9,6 @@
 namespace Ouquitoure
 {
 
-    AppLibraryManager::AppLibraryManager()
-        : invisibleParentForApps()
-    {
-    }
-
     void AppLibraryManager::loadApplications( const KeybindingsManager & keybindingsManager )
     {
         OpenGLAppBase * app = new ColoredTriangleApp( "Colored Triangle", &invisibleParentForApps );

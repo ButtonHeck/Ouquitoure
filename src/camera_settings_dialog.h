@@ -14,9 +14,10 @@ namespace Ouquitoure
      * @brief Camera settings dialog,
      * keyboard bindings, fov and other settings
      */
-    class CameraSettingsDialog : public QDialog
+    class CameraSettingsDialog final : public QDialog
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( CameraSettingsDialog )
     public:
         explicit CameraSettingsDialog( const KeybindingsManager & keybindingsManager, QWidget * parent = nullptr );
 

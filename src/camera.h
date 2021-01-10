@@ -29,13 +29,13 @@ namespace Ouquitoure
         Camera( float x, float y, float z, float yaw = -90.0f, float pitch = 0.0f );
 
         /// @brief get view matrix for the current camera setup
-        glm::mat4 getViewMatrix() const;
+        [[nodiscard]] glm::mat4 getViewMatrix() const;
 
         /// @brief set field of view (in degrees)
         void setFov( float fov ) noexcept;
 
         /// @brief get current field of view value (in degrees)
-        float getFov() const noexcept;
+        [[nodiscard]] float getFov() const noexcept;
 
         /// @brief record key press/release event
         void processKeyboardInput( int keyCode, bool isPressed );

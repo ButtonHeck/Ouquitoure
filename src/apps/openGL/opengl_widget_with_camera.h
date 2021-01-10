@@ -13,6 +13,7 @@ namespace Ouquitoure
     class OpenGLWidgetWithCamera : public OpenGLWidgetBase
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( OpenGLWidgetWithCamera )
     public:
         /// @brief besides constructing, connects camera update signal with this widget
         OpenGLWidgetWithCamera( const QString & name, const KeybindingsManager & keybindingsManager, QWidget * parent = nullptr );

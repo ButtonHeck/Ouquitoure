@@ -19,10 +19,10 @@ namespace Ouquitoure
     public:
         RGBGuiPalettes();
 
-        const QPalette & getPalette( size_t index ) const noexcept;
-        const QPalette & getPalette( Qt::GlobalColor color ) const noexcept;
-        const QString &  getLabel( size_t index ) const noexcept;
-        const QString &  getLabel( Qt::GlobalColor color ) const noexcept;
+        [[nodiscard]] const QPalette & getPalette( size_t index ) const noexcept;
+        [[nodiscard]] const QPalette & getPalette( Qt::GlobalColor color ) const noexcept;
+        [[nodiscard]] const QString &  getLabel( size_t index ) const noexcept;
+        [[nodiscard]] const QString &  getLabel( Qt::GlobalColor color ) const noexcept;
 
     private:
         std::array<QPalette, NUM_ELEMENTS + 1>      palettes;

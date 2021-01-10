@@ -23,11 +23,10 @@ namespace Ouquitoure
      */
     class BufferCollection final
     {
+        Q_DISABLE_COPY( BufferCollection )
     public:
         BufferCollection( QOpenGLFunctions_4_5_Core * const functions, size_t size );
         BufferCollection( BufferCollection && old ) noexcept;
-        BufferCollection( const BufferCollection & copy ) = delete;
-        BufferCollection & operator=( const BufferCollection & rhs ) = delete;
         ~BufferCollection();
 
         /// @brief replaces all bind-to-zero GL calls boilerplate code in one function

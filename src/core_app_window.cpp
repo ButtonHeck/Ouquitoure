@@ -201,8 +201,8 @@ namespace Ouquitoure
 
     APP_TYPE CoreAppWindow::getViewTabCurrentAppType()
     {
-        const auto APP_TABLE_VIEW_CURRENT_TAB_INDEX = ui->appLibraryTabWidget->currentIndex();
-        switch( APP_TABLE_VIEW_CURRENT_TAB_INDEX )
+        const auto appTableViewCurrentIndex = ui->appLibraryTabWidget->currentIndex();
+        switch( appTableViewCurrentIndex )
         {
         case 0:
             return OQ_APP_TYPE_OPENGL;

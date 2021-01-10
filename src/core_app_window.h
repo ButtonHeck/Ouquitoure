@@ -22,9 +22,10 @@ namespace Ouquitoure
     /**
      * @brief Ouquitoure main window class
      */
-    class CoreAppWindow : public QMainWindow
+    class CoreAppWindow final : public QMainWindow
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( CoreAppWindow )
     public:
         /// @brief all Qt connections and ui setup happens here
         explicit CoreAppWindow( QWidget * parent = nullptr );
@@ -60,27 +61,27 @@ namespace Ouquitoure
 
     private:
         /// @brief utility function to get application type based on the view tab widget current index
-        APP_TYPE getViewTabCurrentAppType();
+        [[nodiscard]] APP_TYPE getViewTabCurrentAppType();
 
         /// @brief get the name of the app that is to be launched
         /// @param type application type
-        QString getCurrentlyChosenAppName( APP_TYPE type );
+        [[nodiscard]] QString getCurrentlyChosenAppName( APP_TYPE type );
 
         /// @brief get pointer of application collection model for a given application type enumerator
         /// @return application collection model pointer or nullptr if enumerator is incorrect or not implemented
-        AppCollectionModel * getAppCollectionModelForType( APP_TYPE appType );
+        [[nodiscard]] AppCollectionModel * getAppCollectionModelForType( APP_TYPE appType );
 
         /// @brief get app window that is currently chosen in the preview
         /// @return application window pointer or nullptr if no app with the given name was found
-        AppWindowBase * getCurrentlyChosenAppWindow( APP_TYPE appType, const QString & appName );
+        [[nodiscard]] AppWindowBase * getCurrentlyChosenAppWindow( APP_TYPE appType, const QString & appName );
 
         /// @brief get application collection view for a given app type enumerator
         /// @return application collection view pointer or nullptr if enumerator is incorrect or not implemented
-        AppCollectionView * getAppCollectionViewForType( APP_TYPE appType );
+        [[nodiscard]] AppCollectionView * getAppCollectionViewForType( APP_TYPE appType );
 
         /// @brief get selection of a view for a given app type enumerator
         /// @return selection model pointer or nullptr if enumerator is incorrect or not implemented
-        QItemSelectionModel * getSelectionModelForType( APP_TYPE appType );
+        [[nodiscard]] QItemSelectionModel * getSelectionModelForType( APP_TYPE appType );
 
     private:
         Ui::CoreAppWindow *    ui;

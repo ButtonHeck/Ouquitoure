@@ -11,11 +11,12 @@ namespace Ouquitoure
     /**
      * @brief Applications loader class
      */
-    class AppLibraryManager : public QObject
+    class AppLibraryManager final : public QObject
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( AppLibraryManager )
     public:
-        AppLibraryManager();
+        AppLibraryManager() = default;
 
         /// @brief instantiates all the applications and emits signals that one was created
         void loadApplications( const KeybindingsManager & keybindingsManager );

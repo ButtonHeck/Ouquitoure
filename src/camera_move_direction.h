@@ -1,7 +1,5 @@
 #pragma once
 
-#include <qnamespace.h>
-
 namespace Ouquitoure
 {
     /// @brief enumeration of the possible camera move directions

@@ -17,9 +17,11 @@ namespace Ouquitoure
         label->setText( "Software" );
     }
 
+#ifdef QT_DEBUG
     SoftwareAppBase::~SoftwareAppBase()
     {
         OQ_LOG_DEBUG << appName << " app dtor";
     }
+#endif
 
 } // namespace Ouquitoure

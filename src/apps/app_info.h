@@ -3,7 +3,6 @@
 #include "Apps/AppType"
 #include "Apps/AppDescription"
 
-#include <QString>
 #include <QStringList>
 
 namespace Ouquitoure
@@ -17,14 +16,13 @@ namespace Ouquitoure
     public:
         AppInfo() = default;
         AppInfo( const QString & name, const std::initializer_list<QString> & tags, APP_TYPE type );
-        const QString &        getName() const noexcept;
-        const QStringList &    getTags() const noexcept;
-        APP_TYPE               getType() const noexcept;
-        AppDescription &       getDescription() noexcept;
-        const AppDescription & getDescription() const noexcept;
+        [[nodiscard]] const QString &        getName() const noexcept;
+        [[nodiscard]] const QStringList &    getTags() const noexcept;
+        [[nodiscard]] APP_TYPE               getType() const noexcept;
+        [[nodiscard]] AppDescription &       getDescription() noexcept;
+        [[nodiscard]] const AppDescription & getDescription() const noexcept;
 
     private:
-        QString        name;
         QStringList    tags;
         APP_TYPE       type;
         AppDescription description;

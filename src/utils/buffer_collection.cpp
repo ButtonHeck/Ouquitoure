@@ -1,5 +1,4 @@
 #include "Utils/BufferCollection"
-#include "Log"
 
 #include <QOpenGLFunctions_4_5_Core>
 

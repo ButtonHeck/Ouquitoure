@@ -13,6 +13,7 @@ namespace Ouquitoure
      */
     class OpenGLWidgetBase : public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
     {
+        Q_DISABLE_COPY_MOVE( OpenGLWidgetBase )
     public:
         explicit OpenGLWidgetBase( const QString & name, QWidget * parent = nullptr );
 #ifdef QT_DEBUG

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <CameraMoveDirection>
+#include "CameraMoveDirection"
 
 #include <QObject>
 #include <parallel_hashmap/phmap.h>
@@ -10,11 +10,12 @@ namespace Ouquitoure
     /**
      * @brief The manager of all the key bindings of the Ouquitoure
      */
-    class KeybindingsManager : public QObject
+    class KeybindingsManager final : public QObject
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( KeybindingsManager )
     public:
-        static QString getStringRepresentation( Qt::Key key );
+        [[nodiscard]] static QString getStringRepresentation( Qt::Key key );
 
     public:
         KeybindingsManager();

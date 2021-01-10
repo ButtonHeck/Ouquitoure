@@ -1,5 +1,4 @@
 #include "Apps/AppWindowBase"
-#include "Log"
 
 namespace Ouquitoure
 {

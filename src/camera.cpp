@@ -38,10 +38,9 @@ namespace Ouquitoure
 
     void Camera::processMouseMove( int x, int y )
     {
-        int deltaX     = x - lastMousePos.x;
-        int deltaY     = lastMousePos.y - y;
-        lastMousePos.x = x;
-        lastMousePos.y = y;
+        int deltaX   = x - lastMousePos.x;
+        int deltaY   = lastMousePos.y - y;
+        lastMousePos = { x, y };
         yaw += deltaX * mouseSensitivity;
         pitch += deltaY * mouseSensitivity;
         pitch = glm::clamp( pitch, MIN_PITCH, MAX_PITCH );
@@ -51,15 +50,12 @@ namespace Ouquitoure
 
     void Camera::updateLastPos( int x, int y )
     {
-        lastMousePos.x = x;
-        lastMousePos.y = y;
+        lastMousePos = { x, y };
     }
 
     void Camera::setPosition( float x, float y, float z )
     {
-        position.x = x;
-        position.y = y;
-        position.z = z;
+        position = { x, y, z };
         emit viewChanged();
     }
 

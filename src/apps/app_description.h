@@ -25,13 +25,14 @@ namespace Ouquitoure
                         const QVector<ReferenceInfo> & references,
                         const QString &                notes );
 
-        void setName( const QString & name );
-        void setAuthor( const QString & author );
-        void setEmail( const QString & email );
-        void setBrief( const QString & brief );
-        void setAppImage( const QString & appImageFilename );
-        void addReference( const ReferenceInfo & reference );
-        void setNotes( const QString & notes );
+        [[nodiscard]] const QString & getName() const noexcept;
+        void                          setName( const QString & name );
+        void                          setAuthor( const QString & author );
+        void                          setEmail( const QString & email );
+        void                          setBrief( const QString & brief );
+        void                          setAppImage( const QString & appImageFilename );
+        void                          addReference( const ReferenceInfo & reference );
+        void                          setNotes( const QString & notes );
 
         /// @brief assembles html string from all descritpion details provided
         QString getFullDescription() const;

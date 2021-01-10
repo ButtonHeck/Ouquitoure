@@ -15,6 +15,7 @@ namespace Ouquitoure
     class OpenGLAppBase : public AppWindowBase
     {
         Q_OBJECT
+        Q_DISABLE_COPY_MOVE( OpenGLAppBase )
     public:
         /// @brief setup generic ui and layout stuff
         explicit OpenGLAppBase( const QString & name, QWidget * parent = nullptr );

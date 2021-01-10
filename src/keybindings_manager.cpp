@@ -70,23 +70,23 @@ namespace Ouquitoure
         {
             cameraMoveDirectionToRecord = FORWARD;
         }
-        if( sender()->objectName().contains( "Backward", Qt::CaseInsensitive ) )
+        else if( sender()->objectName().contains( "Backward", Qt::CaseInsensitive ) )
         {
             cameraMoveDirectionToRecord = BACKWARD;
         }
-        if( sender()->objectName().contains( "Left", Qt::CaseInsensitive ) )
+        else if( sender()->objectName().contains( "Left", Qt::CaseInsensitive ) )
         {
             cameraMoveDirectionToRecord = LEFT;
         }
-        if( sender()->objectName().contains( "Right", Qt::CaseInsensitive ) )
+        else if( sender()->objectName().contains( "Right", Qt::CaseInsensitive ) )
         {
             cameraMoveDirectionToRecord = RIGHT;
         }
-        if( sender()->objectName().contains( "Up", Qt::CaseInsensitive ) )
+        else if( sender()->objectName().contains( "Up", Qt::CaseInsensitive ) )
         {
             cameraMoveDirectionToRecord = UP;
         }
-        if( sender()->objectName().contains( "Down", Qt::CaseInsensitive ) )
+        else if( sender()->objectName().contains( "Down", Qt::CaseInsensitive ) )
         {
             cameraMoveDirectionToRecord = DOWN;
         }

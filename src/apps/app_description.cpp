@@ -20,6 +20,11 @@ namespace Ouquitoure
     {
     }
 
+    const QString & AppDescription::getName() const noexcept
+    {
+        return name;
+    }
+
     void AppDescription::setName( const QString & name )
     {
         this->name = name;
